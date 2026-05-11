@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@atlas/shared": ["../../packages/shared/src/index.ts"],
+      "@atlas/db": ["../../packages/db/src/index.ts"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register", "dotenv/config"]
+  },
+  "include": ["src"]
+}
