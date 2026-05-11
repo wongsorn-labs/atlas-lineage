@@ -1,0 +1,22 @@
+{
+  "name": "@atlas/db",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@atlas/shared": "workspace:*",
+    "better-sqlite3": "^9.6.0",
+    "drizzle-orm": "^0.31.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.10",
+    "drizzle-kit": "^0.22.8",
+    "typescript": "^5.5.0"
+  }
+}
