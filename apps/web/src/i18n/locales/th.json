@@ -1,0 +1,42 @@
+{
+  "app": { "title": "Atlas Lineage" },
+  "sidebar": {
+    "add": "เพิ่ม",
+    "allPeople": "← บุคคลทั้งหมด",
+    "noCoordinates": "ไม่มีพิกัด",
+    "empty": "เพิ่มสมาชิกในครอบครัวคนแรกเพื่อเริ่มต้น"
+  },
+  "person": {
+    "addTitle": "เพิ่มบุคคล",
+    "editTitle": "แก้ไข {{name}}",
+    "name": "ชื่อ",
+    "birthYear": "ปีเกิด",
+    "deathYear": "ปีเสียชีวิต",
+    "latitude": "ละติจูด",
+    "longitude": "ลองจิจูด",
+    "birthPlace": "สถานที่เกิด",
+    "notes": "หมายเหตุ",
+    "addButton": "เพิ่มบุคคล",
+    "updateButton": "อัปเดต",
+    "cancel": "ยกเลิก",
+    "deleteConfirm": "ลบ {{name}}?",
+    "namePlaceholder": "ชื่อเต็ม"
+  },
+  "relationship": {
+    "addTitle": "เพิ่มความสัมพันธ์สำหรับ {{name}}",
+    "relatedPerson": "บุคคลที่เกี่ยวข้อง",
+    "type": "ประเภทความสัมพันธ์",
+    "selectPerson": "เลือกบุคคล…",
+    "selectType": "เลือกประเภท…",
+    "addButton": "เพิ่มความสัมพันธ์",
+    "cancel": "ยกเลิก",
+    "types": {
+      "parent": "พ่อแม่",
+      "child": "ลูก",
+      "sibling": "พี่น้อง",
+      "spouse": "คู่สมรส",
+      "partner": "คู่รัก"
+    }
+  },
+  "saving": "กำลังบันทึก…"
+}

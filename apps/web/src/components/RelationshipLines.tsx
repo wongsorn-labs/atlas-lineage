@@ -1,5 +1,5 @@
 import { Polyline } from 'react-leaflet';
-import type { Person, Relationship, RelationshipType } from '@atlas/shared';
+import type { Person, Relationship, RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 
 const COLORS: Record<RelationshipType, string> = {
   parent: '#16a34a',

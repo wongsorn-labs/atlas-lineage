@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
-import type { CreateRelationshipInput } from '@atlas/shared';
+import type { CreateRelationshipInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 const KEY = ['relationships'] as const;
 

@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { db } from '../client';
 import { relationships } from '../schema';
-import type { Relationship, CreateRelationshipInput } from '@atlas/shared';
+import type { Relationship, CreateRelationshipInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 function mapRelationship(row: typeof relationships.$inferSelect): Relationship {
   return {

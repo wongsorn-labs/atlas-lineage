@@ -1,8 +1,9 @@
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { Person, RelationshipType } from '@atlas/shared';
+import type { Person, RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 
 const TYPES: RelationshipType[] = ['parent', 'child', 'sibling', 'spouse', 'partner'];
 
@@ -26,6 +27,7 @@ export function RelationshipForm({
   onCancel,
   isLoading,
 }: RelationshipFormProps) {
+  const { t } = useTranslation();
   const { handleSubmit, control, formState: { errors } } = useForm<RelationshipFormValues>();
 
   const others = allPersons.filter((p) => p.id !== currentPerson.id);
@@ -33,15 +35,15 @@ export function RelationshipForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       <div>
-        <Label>Related person</Label>
+        <Label>{t('relationship.relatedPerson')}</Label>
         <Controller
           name="relatedPersonId"
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a person…" />
+              <SelectTrigger data-testid="related-person-select">
+                <SelectValue placeholder={t('relationship.selectPerson')} />
               </SelectTrigger>
               <SelectContent>
                 {others.map((p) => (
@@ -57,20 +59,20 @@ export function RelationshipForm({
       </div>
 
       <div>
-        <Label>Relationship type</Label>
+        <Label>{t('relationship.type')}</Label>
         <Controller
           name="type"
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select type…" />
+              <SelectTrigger data-testid="relationship-type-select">
+                <SelectValue placeholder={t('relationship.selectType')} />
               </SelectTrigger>
               <SelectContent>
-                {TYPES.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                {TYPES.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {t(`relationship.types.${type}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -82,10 +84,10 @@ export function RelationshipForm({
 
       <div className="flex gap-2 pt-2">
         <Button type="submit" disabled={isLoading} className="flex-1">
-          {isLoading ? 'Saving…' : 'Add Relationship'}
+          {isLoading ? t('saving') : t('relationship.addButton')}
         </Button>
         <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
+          {t('relationship.cancel')}
         </Button>
       </div>
     </form>

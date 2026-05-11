@@ -4,9 +4,9 @@ import {
   findRelationshipsByPerson,
   createRelationship,
   deleteRelationship,
-} from '@atlas/db';
+} from '@wongsorn-labs/atlas-lineage-db';
 import type { CreateRelationshipDto } from './dto/create-relationship.dto';
-import type { RelationshipType } from '@atlas/shared';
+import type { RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 
 @Injectable()
 export class RelationshipsService {

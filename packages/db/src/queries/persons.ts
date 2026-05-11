@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '../client';
 import { persons } from '../schema';
 import { encryptField, decryptField } from '../crypto';
-import type { Person, CreatePersonInput, UpdatePersonInput } from '@atlas/shared';
+import type { Person, CreatePersonInput, UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 function getKey(): string {
   const key = process.env.ENCRYPTION_KEY;

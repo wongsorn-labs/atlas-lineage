@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
-import type { CreatePersonInput, UpdatePersonInput } from '@atlas/shared';
+import type { CreatePersonInput, UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 const KEY = ['persons'] as const;
 

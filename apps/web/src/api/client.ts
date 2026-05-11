@@ -4,7 +4,7 @@ import type {
   CreatePersonInput,
   UpdatePersonInput,
   CreateRelationshipInput,
-} from '@atlas/shared';
+} from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
 

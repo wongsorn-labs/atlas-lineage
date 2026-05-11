@@ -1,0 +1,42 @@
+{
+  "app": { "title": "Atlas Lineage" },
+  "sidebar": {
+    "add": "Add",
+    "allPeople": "← All people",
+    "noCoordinates": "No coordinates",
+    "empty": "Add your first family member to get started."
+  },
+  "person": {
+    "addTitle": "Add person",
+    "editTitle": "Edit {{name}}",
+    "name": "Name",
+    "birthYear": "Birth year",
+    "deathYear": "Death year",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "birthPlace": "Birth place",
+    "notes": "Notes",
+    "addButton": "Add Person",
+    "updateButton": "Update",
+    "cancel": "Cancel",
+    "deleteConfirm": "Delete {{name}}?",
+    "namePlaceholder": "Full name"
+  },
+  "relationship": {
+    "addTitle": "Add relationship for {{name}}",
+    "relatedPerson": "Related person",
+    "type": "Relationship type",
+    "selectPerson": "Select a person…",
+    "selectType": "Select type…",
+    "addButton": "Add Relationship",
+    "cancel": "Cancel",
+    "types": {
+      "parent": "Parent",
+      "child": "Child",
+      "sibling": "Sibling",
+      "spouse": "Spouse",
+      "partner": "Partner"
+    }
+  },
+  "saving": "Saving…"
+}
