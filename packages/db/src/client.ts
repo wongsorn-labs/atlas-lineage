@@ -1,14 +1,9 @@
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { resolve } from 'path';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 import * as schema from './schema';
 
-const dbPath = process.env.DATABASE_PATH
-  ? resolve(process.cwd(), process.env.DATABASE_PATH)
-  : resolve(process.cwd(), 'atlas-lineage.db');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-const sqlite = new Database(dbPath);
-sqlite.pragma('journal_mode = WAL');
-sqlite.pragma('foreign_keys = ON');
-
-export const db = drizzle(sqlite, { schema });
+export const db = drizzle(pool, { schema });

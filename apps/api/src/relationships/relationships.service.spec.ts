@@ -31,17 +31,17 @@ describe('RelationshipsService', () => {
     expect(service.findByPerson(99)).toEqual([]);
   });
 
-  it('create returns new relationship', () => {
+  it('create returns new relationship', async () => {
     const dto = { personId: 1, relatedPersonId: 3, type: 'sibling' };
-    const result = service.create(dto as never);
+    const result = await service.create(dto as never);
     expect(result.personId).toBe(1);
   });
 
-  it('remove returns deleted:true', () => {
-    expect(service.remove(1)).toEqual({ deleted: true });
+  it('remove returns deleted:true', async () => {
+    await expect(service.remove(1)).resolves.toEqual({ deleted: true });
   });
 
-  it('remove throws NotFoundException when not found', () => {
-    expect(() => service.remove(99)).toThrow(NotFoundException);
+  it('remove throws NotFoundException when not found', async () => {
+    await expect(service.remove(99)).rejects.toThrow(NotFoundException);
   });
 });

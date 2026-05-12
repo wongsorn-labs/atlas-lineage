@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'http';
-import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { join } from 'path';
 import { AppModule } from '../apps/api/src/app.module';
 import { HttpExceptionFilter } from '../apps/api/src/common/filters/http-exception.filter';
@@ -15,7 +15,7 @@ let cachedHandler: ExpressHandler | null = null;
 async function bootstrap(): Promise<ExpressHandler> {
   if (cachedHandler) return cachedHandler;
 
-  migrate(db, {
+  await migrate(db, {
     migrationsFolder: join(process.cwd(), 'packages', 'db', 'drizzle'),
   });
 
