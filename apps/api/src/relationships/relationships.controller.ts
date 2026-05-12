@@ -8,13 +8,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { RelationshipsService } from './relationships.service';
 import { CreateRelationshipDto } from './dto/create-relationship.dto';
 
 @Controller('relationships')
 export class RelationshipsController {
-  constructor(private readonly relationshipsService: RelationshipsService) {}
+  constructor(@Inject(RelationshipsService) private readonly relationshipsService: RelationshipsService) {}
 
   @Get()
   findAll() {

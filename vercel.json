@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm --filter @wongsorn-labs/atlas-lineage-web build",
+  "outputDirectory": "apps/web/dist",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "functions": {
+    "api/index.ts": {
+      "memory": 1024,
+      "maxDuration": 30,
+      "includeFiles": "packages/db/drizzle/**"
+    }
+  },
+  "env": {
+    "DATABASE_PATH": "/tmp/atlas-lineage.db"
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
