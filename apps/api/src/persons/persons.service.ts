@@ -5,7 +5,7 @@ import {
   createPerson,
   updatePerson,
   deletePerson,
-} from '@atlas/db';
+} from '@wongsorn-labs/atlas-lineage-db';
 import type { CreatePersonDto } from './dto/create-person.dto';
 import type { UpdatePersonDto } from './dto/update-person.dto';
 

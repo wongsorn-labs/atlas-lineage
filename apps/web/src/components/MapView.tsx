@@ -4,7 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { PersonMarker } from './PersonMarker';
 import { RelationshipLines } from './RelationshipLines';
-import type { Person, Relationship } from '@atlas/shared';
+import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 // Fix Leaflet default marker icon paths broken by Vite bundling
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;

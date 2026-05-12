@@ -3,7 +3,7 @@ import { MapView } from './components/MapView';
 import { Sidebar } from './components/Sidebar';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
-import type { Person } from '@atlas/shared';
+import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 
 export default function App() {
   const { data: persons = [] } = usePersons();

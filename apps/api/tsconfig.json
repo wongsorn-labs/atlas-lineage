@@ -6,8 +6,8 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@atlas/shared": ["../../packages/shared/src/index.ts"],
-      "@atlas/db": ["../../packages/db/src/index.ts"]
+      "@wongsorn-labs/atlas-lineage-shared": ["../../packages/shared/src/index.ts"],
+      "@wongsorn-labs/atlas-lineage-db": ["../../packages/db/src/index.ts"]
     }
   },
   "ts-node": {

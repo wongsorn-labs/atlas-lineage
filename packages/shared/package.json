@@ -1,5 +1,5 @@
 {
-  "name": "@atlas/shared",
+  "name": "@wongsorn-labs/atlas-lineage-shared",
   "version": "0.0.1",
   "main": "./src/index.ts",
   "exports": {

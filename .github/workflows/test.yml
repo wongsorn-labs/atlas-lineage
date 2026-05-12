@@ -1,0 +1,47 @@
+name: Test
+
+on:
+  push:
+    branches: [main, master, "claude/**"]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: Unit & Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Test DB (with coverage)
+        run: pnpm --filter @wongsorn-labs/atlas-lineage-db test:cov
+
+      - name: Test API (with coverage)
+        run: pnpm --filter @wongsorn-labs/atlas-lineage-api test:cov
+
+      - name: Test Web (with coverage)
+        run: pnpm --filter @wongsorn-labs/atlas-lineage-web test:cov
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            packages/db/coverage/
+            apps/api/coverage/
+            apps/web/coverage/
+          retention-days: 14

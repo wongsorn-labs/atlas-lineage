@@ -3,16 +3,20 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "dev": "concurrently \"pnpm --filter @atlas/api dev\" \"pnpm --filter @atlas/web dev\"",
-    "build": "pnpm --filter @atlas/web build",
-    "db:generate": "pnpm --filter @atlas/db generate",
-    "db:migrate": "pnpm --filter @atlas/db migrate"
+    "dev": "concurrently \"pnpm --filter @wongsorn-labs/atlas-lineage-api dev\" \"pnpm --filter @wongsorn-labs/atlas-lineage-web dev\"",
+    "build": "pnpm --filter @wongsorn-labs/atlas-lineage-web build",
+    "db:generate": "pnpm --filter @wongsorn-labs/atlas-lineage-db generate",
+    "db:migrate": "pnpm --filter @wongsorn-labs/atlas-lineage-db migrate",
+    "test": "pnpm --filter @wongsorn-labs/atlas-lineage-db test && pnpm --filter @wongsorn-labs/atlas-lineage-api test && pnpm --filter @wongsorn-labs/atlas-lineage-web test",
+    "test:cov": "pnpm --filter @wongsorn-labs/atlas-lineage-db test:cov && pnpm --filter @wongsorn-labs/atlas-lineage-api test:cov && pnpm --filter @wongsorn-labs/atlas-lineage-web test:cov",
+    "test:e2e": "pnpm --filter @wongsorn-labs/atlas-lineage-e2e test",
+    "test:all": "pnpm test && pnpm test:e2e"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "typescript": "^5.5.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@nestjs/core", "better-sqlite3", "esbuild"]
+    "onlyBuiltDependencies": ["@nestjs/core", "better-sqlite3", "esbuild", "msw"]
   }
 }

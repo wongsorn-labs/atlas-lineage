@@ -16,6 +16,9 @@ dist/
 apps/web/dist/
 apps/web/.vite/
 
+# Coverage reports
+coverage/
+
 # OS
 .DS_Store
 Thumbs.db

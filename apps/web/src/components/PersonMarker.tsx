@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import type { Person } from '@atlas/shared';
+import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 
 const selectedIcon = new L.Icon({
   iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).href,
