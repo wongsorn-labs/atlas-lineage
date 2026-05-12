@@ -5,7 +5,8 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/main.js",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage"
   },
   "dependencies": {
     "@wongsorn-labs/atlas-lineage-db": "workspace:*",
