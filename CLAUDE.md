@@ -99,3 +99,40 @@ The app supports English (`en`) and Thai (`th`) via `react-i18next`. Locale file
 ### PWA
 
 The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `src/pwa/registerSW.ts`.
+
+## Commit Conventions
+
+This repo enforces [Conventional Commits](https://www.conventionalcommits.org/) via **commitlint** and **lefthook**.
+
+### Format
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Type** (required): `feat`, `fix`, `test`, `refactor`, `docs`, `perf`, `chore`, `ci`, `style`
+
+**Scope** (required): `api`, `web`, `db`, `e2e`, or the package/area affected
+
+**Subject** (required): Imperative, lowercase, no period, ≤50 chars
+
+**Examples:**
+```bash
+feat(api): add person search endpoint
+fix(web): correct map marker positioning on mobile
+test(db): add encryption edge cases
+refactor(shared): simplify Zod schema validation
+ci: update GitHub Actions workflow
+```
+
+**Enforcement:** Commits not matching the pattern are rejected. Use `git commit -m "type(scope): message"` or let your editor show the validation error to fix it.
+
+## Agent-Specific Guidance
+
+- **Claude Code** (claude.ai/code): See this file (CLAUDE.md)
+- **VS Code Copilot**: See copilot-instructions.md  
+- **Other AI Agents**: See AGENTS.md (shared guidelines)

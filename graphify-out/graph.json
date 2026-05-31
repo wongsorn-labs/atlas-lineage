@@ -1,0 +1,5934 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "schemas.ts",
+      "file_type": "code",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L1",
+      "id": "packages_shared_src_schemas_ts",
+      "community": 11,
+      "norm_label": "schemas.ts"
+    },
+    {
+      "label": "RelationshipTypeSchema",
+      "file_type": "code",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L3",
+      "id": "src_schemas_relationshiptypeschema",
+      "community": 11,
+      "norm_label": "relationshiptypeschema"
+    },
+    {
+      "label": "CreatePersonSchema",
+      "file_type": "code",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L5",
+      "id": "src_schemas_createpersonschema",
+      "community": 11,
+      "norm_label": "createpersonschema"
+    },
+    {
+      "label": "UpdatePersonSchema",
+      "file_type": "code",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L15",
+      "id": "src_schemas_updatepersonschema",
+      "community": 11,
+      "norm_label": "updatepersonschema"
+    },
+    {
+      "label": "CreateRelationshipSchema",
+      "file_type": "code",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L17",
+      "id": "src_schemas_createrelationshipschema",
+      "community": 11,
+      "norm_label": "createrelationshipschema"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L1",
+      "id": "packages_shared_src_types_ts",
+      "community": 10,
+      "norm_label": "types.ts"
+    },
+    {
+      "label": "RelationshipType",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L1",
+      "id": "src_types_relationshiptype",
+      "community": 10,
+      "norm_label": "relationshiptype"
+    },
+    {
+      "label": "Person",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L3",
+      "id": "src_types_person",
+      "community": 10,
+      "norm_label": "person"
+    },
+    {
+      "label": "Relationship",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L16",
+      "id": "src_types_relationship",
+      "community": 10,
+      "norm_label": "relationship"
+    },
+    {
+      "label": "CreatePersonInput",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L24",
+      "id": "src_types_createpersoninput",
+      "community": 10,
+      "norm_label": "createpersoninput"
+    },
+    {
+      "label": "UpdatePersonInput",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L34",
+      "id": "src_types_updatepersoninput",
+      "community": 10,
+      "norm_label": "updatepersoninput"
+    },
+    {
+      "label": "CreateRelationshipInput",
+      "file_type": "code",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L36",
+      "id": "src_types_createrelationshipinput",
+      "community": 10,
+      "norm_label": "createrelationshipinput"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "packages/shared/src/index.ts",
+      "source_location": "L1",
+      "id": "packages_shared_src_index_ts",
+      "community": 0,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "drizzle.config.ts",
+      "file_type": "code",
+      "source_file": "packages/db/drizzle.config.ts",
+      "source_location": "L1",
+      "id": "packages_db_drizzle_config_ts",
+      "community": 17,
+      "norm_label": "drizzle.config.ts"
+    },
+    {
+      "label": "jest.config.ts",
+      "file_type": "code",
+      "source_file": "packages/db/jest.config.ts",
+      "source_location": "L1",
+      "id": "packages_db_jest_config_ts",
+      "community": 14,
+      "norm_label": "jest.config.ts"
+    },
+    {
+      "label": "config",
+      "file_type": "code",
+      "source_file": "packages/db/jest.config.ts",
+      "source_location": "L3",
+      "id": "db_jest_config_config",
+      "community": 14,
+      "norm_label": "config"
+    },
+    {
+      "label": "schema.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/schema.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_schema_ts",
+      "community": 5,
+      "norm_label": "schema.ts"
+    },
+    {
+      "label": "persons",
+      "file_type": "code",
+      "source_file": "packages/db/src/schema.ts",
+      "source_location": "L4",
+      "id": "src_schema_persons",
+      "community": 5,
+      "norm_label": "persons"
+    },
+    {
+      "label": "relationships",
+      "file_type": "code",
+      "source_file": "packages/db/src/schema.ts",
+      "source_location": "L17",
+      "id": "src_schema_relationships",
+      "community": 5,
+      "norm_label": "relationships"
+    },
+    {
+      "label": "crypto.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_crypto_ts",
+      "community": 3,
+      "norm_label": "crypto.ts"
+    },
+    {
+      "label": "encrypt()",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L6",
+      "id": "src_crypto_encrypt",
+      "community": 3,
+      "norm_label": "encrypt()"
+    },
+    {
+      "label": "decrypt()",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L15",
+      "id": "src_crypto_decrypt",
+      "community": 3,
+      "norm_label": "decrypt()"
+    },
+    {
+      "label": "encryptField()",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L26",
+      "id": "src_crypto_encryptfield",
+      "community": 3,
+      "norm_label": "encryptfield()"
+    },
+    {
+      "label": "decryptField()",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L31",
+      "id": "src_crypto_decryptfield",
+      "community": 3,
+      "norm_label": "decryptfield()"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_client_ts",
+      "community": 5,
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "sqlite",
+      "file_type": "code",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L10",
+      "id": "src_client_sqlite",
+      "community": 5,
+      "norm_label": "sqlite"
+    },
+    {
+      "label": "db",
+      "file_type": "code",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L14",
+      "id": "src_client_db",
+      "community": 5,
+      "norm_label": "db"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/index.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_index_ts",
+      "community": 7,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "crypto.spec.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_crypto_spec_ts",
+      "community": 3,
+      "norm_label": "crypto.spec.ts"
+    },
+    {
+      "label": "KEY",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L3",
+      "id": "src_crypto_spec_key",
+      "community": 3,
+      "norm_label": "key"
+    },
+    {
+      "label": "blob",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L17",
+      "id": "src_crypto_spec_blob",
+      "community": 3,
+      "norm_label": "blob"
+    },
+    {
+      "label": "parts",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L18",
+      "id": "src_crypto_spec_parts",
+      "community": 3,
+      "norm_label": "parts"
+    },
+    {
+      "label": "wrongKey",
+      "file_type": "code",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L53",
+      "id": "src_crypto_spec_wrongkey",
+      "community": 3,
+      "norm_label": "wrongkey"
+    },
+    {
+      "label": "relationships.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_queries_relationships_ts",
+      "community": 5,
+      "norm_label": "relationships.ts"
+    },
+    {
+      "label": "mapRelationship()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L6",
+      "id": "queries_relationships_maprelationship",
+      "community": 5,
+      "norm_label": "maprelationship()"
+    },
+    {
+      "label": "findAllRelationships()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L16",
+      "id": "queries_relationships_findallrelationships",
+      "community": 5,
+      "norm_label": "findallrelationships()"
+    },
+    {
+      "label": "findRelationshipsByPerson()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L20",
+      "id": "queries_relationships_findrelationshipsbyperson",
+      "community": 5,
+      "norm_label": "findrelationshipsbyperson()"
+    },
+    {
+      "label": "createRelationship()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L29",
+      "id": "queries_relationships_createrelationship",
+      "community": 5,
+      "norm_label": "createrelationship()"
+    },
+    {
+      "label": "deleteRelationship()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L42",
+      "id": "queries_relationships_deleterelationship",
+      "community": 5,
+      "norm_label": "deleterelationship()"
+    },
+    {
+      "label": "persons.ts",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L1",
+      "id": "packages_db_src_queries_persons_ts",
+      "community": 3,
+      "norm_label": "persons.ts"
+    },
+    {
+      "label": "getKey()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L7",
+      "id": "queries_persons_getkey",
+      "community": 3,
+      "norm_label": "getkey()"
+    },
+    {
+      "label": "mapPerson()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L13",
+      "id": "queries_persons_mapperson",
+      "community": 3,
+      "norm_label": "mapperson()"
+    },
+    {
+      "label": "findAllPersons()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L29",
+      "id": "queries_persons_findallpersons",
+      "community": 2,
+      "norm_label": "findallpersons()"
+    },
+    {
+      "label": "findPersonById()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L33",
+      "id": "queries_persons_findpersonbyid",
+      "community": 3,
+      "norm_label": "findpersonbyid()"
+    },
+    {
+      "label": "createPerson()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L38",
+      "id": "queries_persons_createperson",
+      "community": 3,
+      "norm_label": "createperson()"
+    },
+    {
+      "label": "updatePerson()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L56",
+      "id": "queries_persons_updateperson",
+      "community": 3,
+      "norm_label": "updateperson()"
+    },
+    {
+      "label": "deletePerson()",
+      "file_type": "code",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L76",
+      "id": "queries_persons_deleteperson",
+      "community": 2,
+      "norm_label": "deleteperson()"
+    },
+    {
+      "label": "vite.config.ts",
+      "file_type": "code",
+      "source_file": "apps/web/vite.config.ts",
+      "source_location": "L1",
+      "id": "apps_web_vite_config_ts",
+      "community": 18,
+      "norm_label": "vite.config.ts"
+    },
+    {
+      "label": "vitest.config.ts",
+      "file_type": "code",
+      "source_file": "apps/web/vitest.config.ts",
+      "source_location": "L1",
+      "id": "apps_web_vitest_config_ts",
+      "community": 19,
+      "norm_label": "vitest.config.ts"
+    },
+    {
+      "label": "App.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_app_tsx",
+      "community": 0,
+      "norm_label": "app.tsx"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L8",
+      "id": "src_app_app",
+      "community": 0,
+      "norm_label": "app()"
+    },
+    {
+      "label": "main.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_main_tsx",
+      "community": 0,
+      "norm_label": "main.tsx"
+    },
+    {
+      "label": "queryClient",
+      "file_type": "code",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L9",
+      "id": "src_main_queryclient",
+      "community": 0,
+      "norm_label": "queryclient"
+    },
+    {
+      "label": "setup.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/test/setup.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_test_setup_ts",
+      "community": 9,
+      "norm_label": "setup.ts"
+    },
+    {
+      "label": "handlers.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/test/mocks/handlers.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_test_mocks_handlers_ts",
+      "community": 9,
+      "norm_label": "handlers.ts"
+    },
+    {
+      "label": "handlers",
+      "file_type": "code",
+      "source_file": "apps/web/src/test/mocks/handlers.ts",
+      "source_location": "L3",
+      "id": "mocks_handlers_handlers",
+      "community": 9,
+      "norm_label": "handlers"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/test/mocks/server.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_test_mocks_server_ts",
+      "community": 9,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "server",
+      "file_type": "code",
+      "source_file": "apps/web/src/test/mocks/server.ts",
+      "source_location": "L4",
+      "id": "mocks_server_server",
+      "community": 9,
+      "norm_label": "server"
+    },
+    {
+      "label": "Sidebar.test.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_sidebar_test_tsx",
+      "community": 0,
+      "norm_label": "sidebar.test.tsx"
+    },
+    {
+      "label": "wrapper()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L7",
+      "id": "components_sidebar_test_wrapper",
+      "community": 0,
+      "norm_label": "wrapper()"
+    },
+    {
+      "label": "makePerson()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L15",
+      "id": "components_sidebar_test_makeperson",
+      "community": 0,
+      "norm_label": "makeperson()"
+    },
+    {
+      "label": "persons",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L28",
+      "id": "components_sidebar_test_persons",
+      "community": 0,
+      "norm_label": "persons"
+    },
+    {
+      "label": "onSelectPerson",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L35",
+      "id": "components_sidebar_test_onselectperson",
+      "community": 0,
+      "norm_label": "onselectperson"
+    },
+    {
+      "label": "PersonCard.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_personcard_tsx",
+      "community": 1,
+      "norm_label": "personcard.tsx"
+    },
+    {
+      "label": "PersonCardProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L14",
+      "id": "components_personcard_personcardprops",
+      "community": 1,
+      "norm_label": "personcardprops"
+    },
+    {
+      "label": "PersonCard()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L20",
+      "id": "components_personcard_personcard",
+      "community": 1,
+      "norm_label": "personcard()"
+    },
+    {
+      "label": "RelationshipForm.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_relationshipform_tsx",
+      "community": 8,
+      "norm_label": "relationshipform.tsx"
+    },
+    {
+      "label": "TYPES",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L8",
+      "id": "components_relationshipform_types",
+      "community": 8,
+      "norm_label": "types"
+    },
+    {
+      "label": "RelationshipFormValues",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L10",
+      "id": "components_relationshipform_relationshipformvalues",
+      "community": 8,
+      "norm_label": "relationshipformvalues"
+    },
+    {
+      "label": "RelationshipFormProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L15",
+      "id": "components_relationshipform_relationshipformprops",
+      "community": 8,
+      "norm_label": "relationshipformprops"
+    },
+    {
+      "label": "RelationshipForm()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L23",
+      "id": "components_relationshipform_relationshipform",
+      "community": 8,
+      "norm_label": "relationshipform()"
+    },
+    {
+      "label": "PersonForm.test.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_personform_test_tsx",
+      "community": 4,
+      "norm_label": "personform.test.tsx"
+    },
+    {
+      "label": "noop()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L5",
+      "id": "components_personform_test_noop",
+      "community": 4,
+      "norm_label": "noop()"
+    },
+    {
+      "label": "user",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L20",
+      "id": "components_personform_test_user",
+      "community": 4,
+      "norm_label": "user"
+    },
+    {
+      "label": "onSubmit",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L30",
+      "id": "components_personform_test_onsubmit",
+      "community": 4,
+      "norm_label": "onsubmit"
+    },
+    {
+      "label": "onCancel",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L44",
+      "id": "components_personform_test_oncancel",
+      "community": 4,
+      "norm_label": "oncancel"
+    },
+    {
+      "label": "initial",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L51",
+      "id": "components_personform_test_initial",
+      "community": 4,
+      "norm_label": "initial"
+    },
+    {
+      "label": "MapView.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_mapview_tsx",
+      "community": 0,
+      "norm_label": "mapview.tsx"
+    },
+    {
+      "label": "MapViewProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L17",
+      "id": "components_mapview_mapviewprops",
+      "community": 0,
+      "norm_label": "mapviewprops"
+    },
+    {
+      "label": "MapView()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L24",
+      "id": "components_mapview_mapview",
+      "community": 0,
+      "norm_label": "mapview()"
+    },
+    {
+      "label": "PersonForm.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_personform_tsx",
+      "community": 4,
+      "norm_label": "personform.tsx"
+    },
+    {
+      "label": "toNum()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L11",
+      "id": "components_personform_tonum",
+      "community": 4,
+      "norm_label": "tonum()"
+    },
+    {
+      "label": "schema",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L13",
+      "id": "components_personform_schema",
+      "community": 4,
+      "norm_label": "schema"
+    },
+    {
+      "label": "FormValues",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L23",
+      "id": "components_personform_formvalues",
+      "community": 4,
+      "norm_label": "formvalues"
+    },
+    {
+      "label": "PersonFormProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L25",
+      "id": "components_personform_personformprops",
+      "community": 4,
+      "norm_label": "personformprops"
+    },
+    {
+      "label": "PersonForm()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L32",
+      "id": "components_personform_personform",
+      "community": 4,
+      "norm_label": "personform()"
+    },
+    {
+      "label": "RelationshipLines.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_relationshiplines_tsx",
+      "community": 0,
+      "norm_label": "relationshiplines.tsx"
+    },
+    {
+      "label": "COLORS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L4",
+      "id": "components_relationshiplines_colors",
+      "community": 0,
+      "norm_label": "colors"
+    },
+    {
+      "label": "RelationshipLinesProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L12",
+      "id": "components_relationshiplines_relationshiplinesprops",
+      "community": 0,
+      "norm_label": "relationshiplinesprops"
+    },
+    {
+      "label": "RelationshipLines()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L17",
+      "id": "components_relationshiplines_relationshiplines",
+      "community": 0,
+      "norm_label": "relationshiplines()"
+    },
+    {
+      "label": "Sidebar.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_sidebar_tsx",
+      "community": 1,
+      "norm_label": "sidebar.tsx"
+    },
+    {
+      "label": "SidebarProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L11",
+      "id": "components_sidebar_sidebarprops",
+      "community": 1,
+      "norm_label": "sidebarprops"
+    },
+    {
+      "label": "Sidebar()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L17",
+      "id": "components_sidebar_sidebar",
+      "community": 0,
+      "norm_label": "sidebar()"
+    },
+    {
+      "label": "PersonMarker.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_personmarker_tsx",
+      "community": 0,
+      "norm_label": "personmarker.tsx"
+    },
+    {
+      "label": "selectedIcon",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L5",
+      "id": "components_personmarker_selectedicon",
+      "community": 0,
+      "norm_label": "selectedicon"
+    },
+    {
+      "label": "PersonMarkerProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L14",
+      "id": "components_personmarker_personmarkerprops",
+      "community": 0,
+      "norm_label": "personmarkerprops"
+    },
+    {
+      "label": "PersonMarker()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L20",
+      "id": "components_personmarker_personmarker",
+      "community": 0,
+      "norm_label": "personmarker()"
+    },
+    {
+      "label": "card.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_card_tsx",
+      "community": 1,
+      "norm_label": "card.tsx"
+    },
+    {
+      "label": "Card",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L4",
+      "id": "ui_card_card",
+      "community": 1,
+      "norm_label": "card"
+    },
+    {
+      "label": "CardHeader",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L15",
+      "id": "ui_card_cardheader",
+      "community": 1,
+      "norm_label": "cardheader"
+    },
+    {
+      "label": "CardTitle",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L22",
+      "id": "ui_card_cardtitle",
+      "community": 1,
+      "norm_label": "cardtitle"
+    },
+    {
+      "label": "CardContent",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L29",
+      "id": "ui_card_cardcontent",
+      "community": 1,
+      "norm_label": "cardcontent"
+    },
+    {
+      "label": "CardFooter",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L36",
+      "id": "ui_card_cardfooter",
+      "community": 1,
+      "norm_label": "cardfooter"
+    },
+    {
+      "label": "label.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/label.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_label_tsx",
+      "community": 8,
+      "norm_label": "label.tsx"
+    },
+    {
+      "label": "Label",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/label.tsx",
+      "source_location": "L5",
+      "id": "ui_label_label",
+      "community": 8,
+      "norm_label": "label"
+    },
+    {
+      "label": "dialog.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_dialog_tsx",
+      "community": 1,
+      "norm_label": "dialog.tsx"
+    },
+    {
+      "label": "DialogOverlay",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L11",
+      "id": "ui_dialog_dialogoverlay",
+      "community": 1,
+      "norm_label": "dialogoverlay"
+    },
+    {
+      "label": "DialogContent",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L26",
+      "id": "ui_dialog_dialogcontent",
+      "community": 1,
+      "norm_label": "dialogcontent"
+    },
+    {
+      "label": "DialogHeader()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L50",
+      "id": "ui_dialog_dialogheader",
+      "community": 1,
+      "norm_label": "dialogheader()"
+    },
+    {
+      "label": "DialogTitle",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L55",
+      "id": "ui_dialog_dialogtitle",
+      "community": 1,
+      "norm_label": "dialogtitle"
+    },
+    {
+      "label": "badge.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_badge_tsx",
+      "community": 1,
+      "norm_label": "badge.tsx"
+    },
+    {
+      "label": "badgeVariants",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L5",
+      "id": "ui_badge_badgevariants",
+      "community": 1,
+      "norm_label": "badgevariants"
+    },
+    {
+      "label": "BadgeProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L25",
+      "id": "ui_badge_badgeprops",
+      "community": 1,
+      "norm_label": "badgeprops"
+    },
+    {
+      "label": "Badge()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L29",
+      "id": "ui_badge_badge",
+      "community": 1,
+      "norm_label": "badge()"
+    },
+    {
+      "label": "button.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_button_tsx",
+      "community": 1,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "buttonVariants",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L6",
+      "id": "ui_button_buttonvariants",
+      "community": 1,
+      "norm_label": "buttonvariants"
+    },
+    {
+      "label": "ButtonProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L29",
+      "id": "ui_button_buttonprops",
+      "community": 1,
+      "norm_label": "buttonprops"
+    },
+    {
+      "label": "Button",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L35",
+      "id": "ui_button_button",
+      "community": 1,
+      "norm_label": "button"
+    },
+    {
+      "label": "select.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_select_tsx",
+      "community": 8,
+      "norm_label": "select.tsx"
+    },
+    {
+      "label": "SelectTrigger",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L10",
+      "id": "ui_select_selecttrigger",
+      "community": 8,
+      "norm_label": "selecttrigger"
+    },
+    {
+      "label": "SelectContent",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L30",
+      "id": "ui_select_selectcontent",
+      "community": 8,
+      "norm_label": "selectcontent"
+    },
+    {
+      "label": "SelectItem",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L51",
+      "id": "ui_select_selectitem",
+      "community": 8,
+      "norm_label": "selectitem"
+    },
+    {
+      "label": "textarea.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_textarea_tsx",
+      "community": 4,
+      "norm_label": "textarea.tsx"
+    },
+    {
+      "label": "TextareaProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L4",
+      "id": "ui_textarea_textareaprops",
+      "community": 4,
+      "norm_label": "textareaprops"
+    },
+    {
+      "label": "Textarea",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L6",
+      "id": "ui_textarea_textarea",
+      "community": 4,
+      "norm_label": "textarea"
+    },
+    {
+      "label": "input.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_input_tsx",
+      "community": 4,
+      "norm_label": "input.tsx"
+    },
+    {
+      "label": "InputProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L4",
+      "id": "ui_input_inputprops",
+      "community": 4,
+      "norm_label": "inputprops"
+    },
+    {
+      "label": "Input",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L6",
+      "id": "ui_input_input",
+      "community": 4,
+      "norm_label": "input"
+    },
+    {
+      "label": "usePersons.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_hooks_usepersons_ts",
+      "community": 0,
+      "norm_label": "usepersons.ts"
+    },
+    {
+      "label": "KEY",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L5",
+      "id": "hooks_usepersons_key",
+      "community": 0,
+      "norm_label": "key"
+    },
+    {
+      "label": "usePersons()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L7",
+      "id": "hooks_usepersons_usepersons",
+      "community": 0,
+      "norm_label": "usepersons()"
+    },
+    {
+      "label": "useCreatePerson()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L11",
+      "id": "hooks_usepersons_usecreateperson",
+      "community": 0,
+      "norm_label": "usecreateperson()"
+    },
+    {
+      "label": "useUpdatePerson()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L19",
+      "id": "hooks_usepersons_useupdateperson",
+      "community": 1,
+      "norm_label": "useupdateperson()"
+    },
+    {
+      "label": "useDeletePerson()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L28",
+      "id": "hooks_usepersons_usedeleteperson",
+      "community": 1,
+      "norm_label": "usedeleteperson()"
+    },
+    {
+      "label": "usePersons.test.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_hooks_usepersons_test_ts",
+      "community": 9,
+      "norm_label": "usepersons.test.ts"
+    },
+    {
+      "label": "makeWrapper()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L8",
+      "id": "hooks_usepersons_test_makewrapper",
+      "community": 9,
+      "norm_label": "makewrapper()"
+    },
+    {
+      "label": "persons",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L16",
+      "id": "hooks_usepersons_test_persons",
+      "community": 9,
+      "norm_label": "persons"
+    },
+    {
+      "label": "{ result }",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L19",
+      "id": "hooks_usepersons_test_result",
+      "community": 9,
+      "norm_label": "{ result }"
+    },
+    {
+      "label": "created",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L27",
+      "id": "hooks_usepersons_test_created",
+      "community": 9,
+      "norm_label": "created"
+    },
+    {
+      "label": "useRelationships.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_hooks_userelationships_ts",
+      "community": 0,
+      "norm_label": "userelationships.ts"
+    },
+    {
+      "label": "KEY",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L5",
+      "id": "hooks_userelationships_key",
+      "community": 0,
+      "norm_label": "key"
+    },
+    {
+      "label": "useRelationships()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L7",
+      "id": "hooks_userelationships_userelationships",
+      "community": 0,
+      "norm_label": "userelationships()"
+    },
+    {
+      "label": "useCreateRelationship()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L11",
+      "id": "hooks_userelationships_usecreaterelationship",
+      "community": 1,
+      "norm_label": "usecreaterelationship()"
+    },
+    {
+      "label": "useDeleteRelationship()",
+      "file_type": "code",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L19",
+      "id": "hooks_userelationships_usedeleterelationship",
+      "community": 1,
+      "norm_label": "usedeleterelationship()"
+    },
+    {
+      "label": "registerSW.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/pwa/registerSW.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_pwa_registersw_ts",
+      "community": 0,
+      "norm_label": "registersw.ts"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_utils_ts",
+      "community": 1,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L4",
+      "id": "lib_utils_cn",
+      "community": 1,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_api_client_ts",
+      "community": 0,
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "request()",
+      "file_type": "code",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L11",
+      "id": "api_client_request",
+      "community": 0,
+      "norm_label": "request()"
+    },
+    {
+      "label": "api",
+      "file_type": "code",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L24",
+      "id": "api_client_api",
+      "community": 0,
+      "norm_label": "api"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/i18n/index.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_i18n_index_ts",
+      "community": 0,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "jest.config.ts",
+      "file_type": "code",
+      "source_file": "apps/api/jest.config.ts",
+      "source_location": "L1",
+      "id": "apps_api_jest_config_ts",
+      "community": 15,
+      "norm_label": "jest.config.ts"
+    },
+    {
+      "label": "config",
+      "file_type": "code",
+      "source_file": "apps/api/jest.config.ts",
+      "source_location": "L3",
+      "id": "api_jest_config_config",
+      "community": 15,
+      "norm_label": "config"
+    },
+    {
+      "label": "main.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_main_ts",
+      "community": 6,
+      "norm_label": "main.ts"
+    },
+    {
+      "label": "bootstrap()",
+      "file_type": "code",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L7",
+      "id": "src_main_bootstrap",
+      "community": 6,
+      "norm_label": "bootstrap()"
+    },
+    {
+      "label": "app.module.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_app_module_ts",
+      "community": 6,
+      "norm_label": "app.module.ts"
+    },
+    {
+      "label": "AppModule",
+      "file_type": "code",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L10",
+      "id": "src_app_module_appmodule",
+      "community": 6,
+      "norm_label": "appmodule"
+    },
+    {
+      "label": "health.controller.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/health.controller.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_health_controller_ts",
+      "community": 6,
+      "norm_label": "health.controller.ts"
+    },
+    {
+      "label": "HealthController",
+      "file_type": "code",
+      "source_file": "apps/api/src/health.controller.ts",
+      "source_location": "L4",
+      "id": "src_health_controller_healthcontroller",
+      "community": 6,
+      "norm_label": "healthcontroller"
+    },
+    {
+      "label": ".check()",
+      "file_type": "code",
+      "source_file": "apps/api/src/health.controller.ts",
+      "source_location": "L6",
+      "id": "src_health_controller_healthcontroller_check",
+      "community": 6,
+      "norm_label": ".check()"
+    },
+    {
+      "label": "http-exception.filter.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/common/filters/http-exception.filter.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_common_filters_http_exception_filter_ts",
+      "community": 6,
+      "norm_label": "http-exception.filter.ts"
+    },
+    {
+      "label": "HttpExceptionFilter",
+      "file_type": "code",
+      "source_file": "apps/api/src/common/filters/http-exception.filter.ts",
+      "source_location": "L5",
+      "id": "filters_http_exception_filter_httpexceptionfilter",
+      "community": 6,
+      "norm_label": "httpexceptionfilter"
+    },
+    {
+      "label": ".catch()",
+      "file_type": "code",
+      "source_file": "apps/api/src/common/filters/http-exception.filter.ts",
+      "source_location": "L6",
+      "id": "filters_http_exception_filter_httpexceptionfilter_catch",
+      "community": 6,
+      "norm_label": ".catch()"
+    },
+    {
+      "label": "persons.controller.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_persons_controller_ts",
+      "community": 2,
+      "norm_label": "persons.controller.ts"
+    },
+    {
+      "label": "PersonsController",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L18",
+      "id": "persons_persons_controller_personscontroller",
+      "community": 2,
+      "norm_label": "personscontroller"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L19",
+      "id": "persons_persons_controller_personscontroller_constructor",
+      "community": 2,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".findAll()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L22",
+      "id": "persons_persons_controller_personscontroller_findall",
+      "community": 2,
+      "norm_label": ".findall()"
+    },
+    {
+      "label": ".findOne()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L27",
+      "id": "persons_persons_controller_personscontroller_findone",
+      "community": 2,
+      "norm_label": ".findone()"
+    },
+    {
+      "label": ".create()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L32",
+      "id": "persons_persons_controller_personscontroller_create",
+      "community": 2,
+      "norm_label": ".create()"
+    },
+    {
+      "label": ".update()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L37",
+      "id": "persons_persons_controller_personscontroller_update",
+      "community": 2,
+      "norm_label": ".update()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L43",
+      "id": "persons_persons_controller_personscontroller_remove",
+      "community": 2,
+      "norm_label": ".remove()"
+    },
+    {
+      "label": "persons.controller.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_persons_controller_spec_ts",
+      "community": 6,
+      "norm_label": "persons.controller.spec.ts"
+    },
+    {
+      "label": "mockPerson",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L8",
+      "id": "persons_persons_controller_spec_mockperson",
+      "community": 6,
+      "norm_label": "mockperson"
+    },
+    {
+      "label": "persons.service.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_persons_service_ts",
+      "community": 2,
+      "norm_label": "persons.service.ts"
+    },
+    {
+      "label": "PersonsService",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L13",
+      "id": "persons_persons_service_personsservice",
+      "community": 2,
+      "norm_label": "personsservice"
+    },
+    {
+      "label": ".findAll()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L14",
+      "id": "persons_persons_service_personsservice_findall",
+      "community": 2,
+      "norm_label": ".findall()"
+    },
+    {
+      "label": ".findOne()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L18",
+      "id": "persons_persons_service_personsservice_findone",
+      "community": 2,
+      "norm_label": ".findone()"
+    },
+    {
+      "label": ".create()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L24",
+      "id": "persons_persons_service_personsservice_create",
+      "community": 3,
+      "norm_label": ".create()"
+    },
+    {
+      "label": ".update()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L28",
+      "id": "persons_persons_service_personsservice_update",
+      "community": 3,
+      "norm_label": ".update()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L34",
+      "id": "persons_persons_service_personsservice_remove",
+      "community": 2,
+      "norm_label": ".remove()"
+    },
+    {
+      "label": "persons.service.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_persons_service_spec_ts",
+      "community": 2,
+      "norm_label": "persons.service.spec.ts"
+    },
+    {
+      "label": "mockPerson",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L6",
+      "id": "persons_persons_service_spec_mockperson",
+      "community": 2,
+      "norm_label": "mockperson"
+    },
+    {
+      "label": "dto",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L39",
+      "id": "persons_persons_service_spec_dto",
+      "community": 2,
+      "norm_label": "dto"
+    },
+    {
+      "label": "result",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L40",
+      "id": "persons_persons_service_spec_result",
+      "community": 2,
+      "norm_label": "result"
+    },
+    {
+      "label": "persons.module.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_persons_module_ts",
+      "community": 2,
+      "norm_label": "persons.module.ts"
+    },
+    {
+      "label": "PersonsModule",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L9",
+      "id": "persons_persons_module_personsmodule",
+      "community": 6,
+      "norm_label": "personsmodule"
+    },
+    {
+      "label": "update-person.dto.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/dto/update-person.dto.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_dto_update_person_dto_ts",
+      "community": 2,
+      "norm_label": "update-person.dto.ts"
+    },
+    {
+      "label": "UpdatePersonDto",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/dto/update-person.dto.ts",
+      "source_location": "L4",
+      "id": "dto_update_person_dto_updatepersondto",
+      "community": 2,
+      "norm_label": "updatepersondto"
+    },
+    {
+      "label": "create-person.dto.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/dto/create-person.dto.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_persons_dto_create_person_dto_ts",
+      "community": 2,
+      "norm_label": "create-person.dto.ts"
+    },
+    {
+      "label": "CreatePersonDto",
+      "file_type": "code",
+      "source_file": "apps/api/src/persons/dto/create-person.dto.ts",
+      "source_location": "L4",
+      "id": "dto_create_person_dto_createpersondto",
+      "community": 2,
+      "norm_label": "createpersondto"
+    },
+    {
+      "label": "relationships.controller.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_relationships_controller_ts",
+      "community": 7,
+      "norm_label": "relationships.controller.ts"
+    },
+    {
+      "label": "RelationshipsController",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L16",
+      "id": "relationships_relationships_controller_relationshipscontroller",
+      "community": 7,
+      "norm_label": "relationshipscontroller"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L17",
+      "id": "relationships_relationships_controller_relationshipscontroller_constructor",
+      "community": 7,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".findAll()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L20",
+      "id": "relationships_relationships_controller_relationshipscontroller_findall",
+      "community": 7,
+      "norm_label": ".findall()"
+    },
+    {
+      "label": ".findByPerson()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L25",
+      "id": "relationships_relationships_controller_relationshipscontroller_findbyperson",
+      "community": 7,
+      "norm_label": ".findbyperson()"
+    },
+    {
+      "label": ".create()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L30",
+      "id": "relationships_relationships_controller_relationshipscontroller_create",
+      "community": 7,
+      "norm_label": ".create()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L36",
+      "id": "relationships_relationships_controller_relationshipscontroller_remove",
+      "community": 7,
+      "norm_label": ".remove()"
+    },
+    {
+      "label": "relationships.module.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_relationships_module_ts",
+      "community": 6,
+      "norm_label": "relationships.module.ts"
+    },
+    {
+      "label": "RelationshipsModule",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L9",
+      "id": "relationships_relationships_module_relationshipsmodule",
+      "community": 6,
+      "norm_label": "relationshipsmodule"
+    },
+    {
+      "label": "relationships.service.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_relationships_service_ts",
+      "community": 7,
+      "norm_label": "relationships.service.ts"
+    },
+    {
+      "label": "RelationshipsService",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L12",
+      "id": "relationships_relationships_service_relationshipsservice",
+      "community": 5,
+      "norm_label": "relationshipsservice"
+    },
+    {
+      "label": ".findAll()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L13",
+      "id": "relationships_relationships_service_relationshipsservice_findall",
+      "community": 5,
+      "norm_label": ".findall()"
+    },
+    {
+      "label": ".findByPerson()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L17",
+      "id": "relationships_relationships_service_relationshipsservice_findbyperson",
+      "community": 5,
+      "norm_label": ".findbyperson()"
+    },
+    {
+      "label": ".create()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L21",
+      "id": "relationships_relationships_service_relationshipsservice_create",
+      "community": 5,
+      "norm_label": ".create()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L29",
+      "id": "relationships_relationships_service_relationshipsservice_remove",
+      "community": 5,
+      "norm_label": ".remove()"
+    },
+    {
+      "label": "relationships.service.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_relationships_service_spec_ts",
+      "community": 7,
+      "norm_label": "relationships.service.spec.ts"
+    },
+    {
+      "label": "mockRel",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L6",
+      "id": "relationships_relationships_service_spec_mockrel",
+      "community": 7,
+      "norm_label": "mockrel"
+    },
+    {
+      "label": "dto",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L35",
+      "id": "relationships_relationships_service_spec_dto",
+      "community": 7,
+      "norm_label": "dto"
+    },
+    {
+      "label": "result",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L36",
+      "id": "relationships_relationships_service_spec_result",
+      "community": 7,
+      "norm_label": "result"
+    },
+    {
+      "label": "relationships.controller.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "community": 6,
+      "norm_label": "relationships.controller.spec.ts"
+    },
+    {
+      "label": "mockRel",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L8",
+      "id": "relationships_relationships_controller_spec_mockrel",
+      "community": 6,
+      "norm_label": "mockrel"
+    },
+    {
+      "label": "create-relationship.dto.ts",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/dto/create-relationship.dto.ts",
+      "source_location": "L1",
+      "id": "apps_api_src_relationships_dto_create_relationship_dto_ts",
+      "community": 7,
+      "norm_label": "create-relationship.dto.ts"
+    },
+    {
+      "label": "CreateRelationshipDto",
+      "file_type": "code",
+      "source_file": "apps/api/src/relationships/dto/create-relationship.dto.ts",
+      "source_location": "L4",
+      "id": "dto_create_relationship_dto_createrelationshipdto",
+      "community": 7,
+      "norm_label": "createrelationshipdto"
+    },
+    {
+      "label": "global-setup.ts",
+      "file_type": "code",
+      "source_file": "apps/e2e/global-setup.ts",
+      "source_location": "L1",
+      "id": "apps_e2e_global_setup_ts",
+      "community": 13,
+      "norm_label": "global-setup.ts"
+    },
+    {
+      "label": "TEST_DB",
+      "file_type": "code",
+      "source_file": "apps/e2e/global-setup.ts",
+      "source_location": "L5",
+      "id": "e2e_global_setup_test_db",
+      "community": 13,
+      "norm_label": "test_db"
+    },
+    {
+      "label": "globalSetup()",
+      "file_type": "code",
+      "source_file": "apps/e2e/global-setup.ts",
+      "source_location": "L7",
+      "id": "e2e_global_setup_globalsetup",
+      "community": 13,
+      "norm_label": "globalsetup()"
+    },
+    {
+      "label": "playwright.config.ts",
+      "file_type": "code",
+      "source_file": "apps/e2e/playwright.config.ts",
+      "source_location": "L1",
+      "id": "apps_e2e_playwright_config_ts",
+      "community": 16,
+      "norm_label": "playwright.config.ts"
+    },
+    {
+      "label": "TEST_DB",
+      "file_type": "code",
+      "source_file": "apps/e2e/playwright.config.ts",
+      "source_location": "L7",
+      "id": "e2e_playwright_config_test_db",
+      "community": 16,
+      "norm_label": "test_db"
+    },
+    {
+      "label": "helpers.ts",
+      "file_type": "code",
+      "source_file": "apps/e2e/tests/helpers.ts",
+      "source_location": "L1",
+      "id": "apps_e2e_tests_helpers_ts",
+      "community": 12,
+      "norm_label": "helpers.ts"
+    },
+    {
+      "label": "clearDatabase()",
+      "file_type": "code",
+      "source_file": "apps/e2e/tests/helpers.ts",
+      "source_location": "L5",
+      "id": "tests_helpers_cleardatabase",
+      "community": 12,
+      "norm_label": "cleardatabase()"
+    },
+    {
+      "label": "relationships.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/e2e/tests/relationships.spec.ts",
+      "source_location": "L1",
+      "id": "apps_e2e_tests_relationships_spec_ts",
+      "community": 12,
+      "norm_label": "relationships.spec.ts"
+    },
+    {
+      "label": "persons.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/e2e/tests/persons.spec.ts",
+      "source_location": "L1",
+      "id": "apps_e2e_tests_persons_spec_ts",
+      "community": 12,
+      "norm_label": "persons.spec.ts"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_shared_src_schemas_ts",
+      "target": "src_schemas_relationshiptypeschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "packages_shared_src_schemas_ts",
+      "target": "src_schemas_createpersonschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "packages_shared_src_schemas_ts",
+      "target": "src_schemas_updatepersonschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/schemas.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "packages_shared_src_schemas_ts",
+      "target": "src_schemas_createrelationshipschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_relationshiptype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_person",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_relationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_createpersoninput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_updatepersoninput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/shared/src/types.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "packages_shared_src_types_ts",
+      "target": "src_types_createrelationshipinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshiplines_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personmarker_tsx",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apps_web_src_api_client_ts",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_ts",
+      "target": "packages_shared_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/jest.config.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_jest_config_ts",
+      "target": "db_jest_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/schema.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_db_src_schema_ts",
+      "target": "src_schema_persons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/schema.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "packages_db_src_schema_ts",
+      "target": "src_schema_relationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_db_src_client_ts",
+      "target": "packages_db_src_schema_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "packages_db_src_schema_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "packages_db_src_schema_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "src_schema_persons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "src_schema_relationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_ts",
+      "target": "src_crypto_encrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_ts",
+      "target": "src_crypto_decrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_ts",
+      "target": "src_crypto_encryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_ts",
+      "target": "src_crypto_decryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "packages_db_src_crypto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "packages_db_src_crypto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "src_crypto_encryptfield",
+      "target": "src_crypto_encrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_encrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "src_crypto_decryptfield",
+      "target": "src_crypto_decrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_decrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_encryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "src_crypto_encryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "queries_persons_createperson",
+      "target": "src_crypto_encryptfield"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "queries_persons_updateperson",
+      "target": "src_crypto_encryptfield"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_decryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "src_crypto_decryptfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "queries_persons_mapperson",
+      "target": "src_crypto_decryptfield"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "packages_db_src_client_ts",
+      "target": "src_client_sqlite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/client.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "packages_db_src_client_ts",
+      "target": "src_client_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "packages_db_src_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "packages_db_src_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "src_client_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "src_client_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "packages_db_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_ts",
+      "target": "packages_db_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_spec_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_spec_blob",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_spec_parts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/crypto.spec.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "packages_db_src_crypto_spec_ts",
+      "target": "src_crypto_spec_wrongkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "queries_relationships_maprelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "queries_relationships_findallrelationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "queries_relationships_findrelationshipsbyperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "queries_relationships_createrelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_relationships_ts",
+      "target": "queries_relationships_deleterelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/relationships.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "queries_relationships_createrelationship",
+      "target": "queries_relationships_maprelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice_findall",
+      "target": "queries_relationships_findallrelationships"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice_findbyperson",
+      "target": "queries_relationships_findrelationshipsbyperson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice_create",
+      "target": "queries_relationships_createrelationship"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice_remove",
+      "target": "queries_relationships_deleterelationship"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_getkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_mapperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_findallpersons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_findpersonbyid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_createperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_updateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "packages_db_src_queries_persons_ts",
+      "target": "queries_persons_deleteperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "queries_persons_mapperson",
+      "target": "queries_persons_getkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "queries_persons_createperson",
+      "target": "queries_persons_getkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "queries_persons_updateperson",
+      "target": "queries_persons_getkey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "queries_persons_findpersonbyid",
+      "target": "queries_persons_mapperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "queries_persons_createperson",
+      "target": "queries_persons_mapperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/db/src/queries/persons.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "queries_persons_updateperson",
+      "target": "queries_persons_mapperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice_findall",
+      "target": "queries_persons_findallpersons"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice_findone",
+      "target": "queries_persons_findpersonbyid"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice_create",
+      "target": "queries_persons_createperson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice_update",
+      "target": "queries_persons_updateperson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice_remove",
+      "target": "queries_persons_deleteperson"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "apps_web_src_components_mapview_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "components_mapview_mapview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "apps_web_src_components_sidebar_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "components_sidebar_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "apps_web_src_hooks_usepersons_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "hooks_usepersons_usepersons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "apps_web_src_hooks_userelationships_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "hooks_userelationships_userelationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_app_tsx",
+      "target": "src_app_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_main_tsx",
+      "target": "apps_web_src_app_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_app_app",
+      "target": "hooks_usepersons_usepersons"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/App.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_app_app",
+      "target": "hooks_userelationships_userelationships"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apps_web_src_main_tsx",
+      "target": "apps_web_src_i18n_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_main_tsx",
+      "target": "apps_web_src_pwa_registersw_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/main.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_main_tsx",
+      "target": "src_main_queryclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/setup.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_test_setup_ts",
+      "target": "apps_web_src_test_mocks_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/setup.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_test_setup_ts",
+      "target": "mocks_server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/mocks/handlers.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_test_mocks_handlers_ts",
+      "target": "mocks_handlers_handlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/mocks/server.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_test_mocks_server_ts",
+      "target": "apps_web_src_test_mocks_handlers_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/mocks/server.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_test_mocks_server_ts",
+      "target": "mocks_handlers_handlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/test/mocks/server.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_test_mocks_server_ts",
+      "target": "mocks_server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "apps_web_src_test_mocks_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "mocks_server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "apps_web_src_components_sidebar_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "components_sidebar_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "components_sidebar_test_wrapper",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "components_sidebar_test_makeperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "components_sidebar_test_persons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.test.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_test_tsx",
+      "target": "components_sidebar_test_onselectperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_ui_card_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_card_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_card_cardheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_card_cardtitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_card_cardcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_card_cardfooter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_ui_badge_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_badge_badge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_ui_dialog_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_dialog_dialogcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_dialog_dialogheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "ui_dialog_dialogtitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_personform_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "components_personform_personform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_components_relationshipform_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "components_relationshipform_relationshipform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_hooks_usepersons_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "hooks_usepersons_useupdateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "hooks_usepersons_usedeleteperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "apps_web_src_hooks_userelationships_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "hooks_userelationships_userelationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "hooks_userelationships_usecreaterelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "hooks_userelationships_usedeleterelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "components_personcard_personcardprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personcard_tsx",
+      "target": "components_personcard_personcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "apps_web_src_components_personcard_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "components_personcard_personcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "components_personcard_personcard",
+      "target": "hooks_usepersons_useupdateperson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "components_personcard_personcard",
+      "target": "hooks_usepersons_usedeleteperson"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "components_personcard_personcard",
+      "target": "hooks_userelationships_userelationships"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "components_personcard_personcard",
+      "target": "hooks_userelationships_usecreaterelationship"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/PersonCard.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "components_personcard_personcard",
+      "target": "hooks_userelationships_usedeleterelationship"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "apps_web_src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "apps_web_src_components_ui_label_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "ui_label_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "apps_web_src_components_ui_select_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "ui_select_selectcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "ui_select_selectitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "ui_select_selecttrigger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "components_relationshipform_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "components_relationshipform_relationshipformvalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "components_relationshipform_relationshipformprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipForm.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshipform_tsx",
+      "target": "components_relationshipform_relationshipform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "apps_web_src_components_personform_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_personform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_test_noop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_test_user",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_test_onsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_test_oncancel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.test.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_test_tsx",
+      "target": "components_personform_test_initial",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "apps_web_src_components_personmarker_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "components_personmarker_personmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "apps_web_src_components_relationshiplines_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "components_relationshiplines_relationshiplines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "components_mapview_mapviewprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/MapView.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "apps_web_src_components_mapview_tsx",
+      "target": "components_mapview_mapview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "apps_web_src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "apps_web_src_components_ui_input_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "ui_input_input",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "apps_web_src_components_ui_label_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "ui_label_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "apps_web_src_components_ui_textarea_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "ui_textarea_textarea",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "components_personform_tonum",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "components_personform_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "components_personform_formvalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "components_personform_personformprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonForm.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personform_tsx",
+      "target": "components_personform_personform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "apps_web_src_components_personform_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "components_personform_personform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshiplines_tsx",
+      "target": "components_relationshiplines_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshiplines_tsx",
+      "target": "components_relationshiplines_relationshiplinesprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/RelationshipLines.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "apps_web_src_components_relationshiplines_tsx",
+      "target": "components_relationshiplines_relationshiplines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "apps_web_src_components_ui_button_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "apps_web_src_components_ui_dialog_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "ui_dialog_dialogcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "ui_dialog_dialogheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "ui_dialog_dialogtitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "apps_web_src_hooks_usepersons_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "hooks_usepersons_usecreateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "components_sidebar_sidebarprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "apps_web_src_components_sidebar_tsx",
+      "target": "components_sidebar_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/Sidebar.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "components_sidebar_sidebar",
+      "target": "hooks_usepersons_usecreateperson"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personmarker_tsx",
+      "target": "components_personmarker_selectedicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personmarker_tsx",
+      "target": "components_personmarker_personmarkerprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/PersonMarker.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_components_personmarker_tsx",
+      "target": "components_personmarker_personmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "ui_card_card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "ui_card_cardheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "ui_card_cardtitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "ui_card_cardcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/card.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_card_tsx",
+      "target": "ui_card_cardfooter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/label.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_label_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/label.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_label_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/label.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_label_tsx",
+      "target": "ui_label_label",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "ui_dialog_dialogoverlay",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "ui_dialog_dialogcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "ui_dialog_dialogheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_dialog_tsx",
+      "target": "ui_dialog_dialogtitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/ui/dialog.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "ui_dialog_dialogheader",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_badge_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_badge_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_badge_tsx",
+      "target": "ui_badge_badgevariants",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_badge_tsx",
+      "target": "ui_badge_badgeprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_badge_tsx",
+      "target": "ui_badge_badge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "ui_badge_badge",
+      "target": "ui_badge_badgevariants",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/components/ui/badge.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "ui_badge_badge",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_buttonvariants",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_buttonprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/button.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_select_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_select_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_select_tsx",
+      "target": "ui_select_selecttrigger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_select_tsx",
+      "target": "ui_select_selectcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/select.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_select_tsx",
+      "target": "ui_select_selectitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_textarea_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_textarea_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_textarea_tsx",
+      "target": "ui_textarea_textareaprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/textarea.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_textarea_tsx",
+      "target": "ui_textarea_textarea",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_input_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_input_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_input_tsx",
+      "target": "ui_input_inputprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/input.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_input_tsx",
+      "target": "ui_input_input",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "apps_web_src_api_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "api_client_api",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "hooks_usepersons_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "hooks_usepersons_usepersons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "hooks_usepersons_usecreateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "hooks_usepersons_useupdateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_ts",
+      "target": "hooks_usepersons_usedeleteperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "apps_web_src_hooks_usepersons_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_usepersons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_usecreateperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_test_makewrapper",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_test_persons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_test_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/usePersons.test.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_usepersons_test_ts",
+      "target": "hooks_usepersons_test_created",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "apps_web_src_api_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "api_client_api",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "hooks_userelationships_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "hooks_userelationships_userelationships",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "hooks_userelationships_usecreaterelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/hooks/useRelationships.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "apps_web_src_hooks_userelationships_ts",
+      "target": "hooks_userelationships_usedeleterelationship",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_utils_ts",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_api_client_ts",
+      "target": "api_client_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/api/client.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "apps_web_src_api_client_ts",
+      "target": "api_client_api",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/jest.config.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_jest_config_ts",
+      "target": "api_jest_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_main_ts",
+      "target": "apps_api_src_app_module_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_main_ts",
+      "target": "src_app_module_appmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_main_ts",
+      "target": "apps_api_src_common_filters_http_exception_filter_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_main_ts",
+      "target": "filters_http_exception_filter_httpexceptionfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/main.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_api_src_main_ts",
+      "target": "src_main_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "apps_api_src_persons_persons_module_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "persons_persons_module_personsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "apps_api_src_relationships_relationships_module_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "relationships_relationships_module_relationshipsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "apps_api_src_health_controller_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "src_health_controller_healthcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/app.module.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_api_src_app_module_ts",
+      "target": "src_app_module_appmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/health.controller.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_health_controller_ts",
+      "target": "src_health_controller_healthcontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/health.controller.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_health_controller_healthcontroller",
+      "target": "src_health_controller_healthcontroller_check",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/common/filters/http-exception.filter.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_common_filters_http_exception_filter_ts",
+      "target": "filters_http_exception_filter_httpexceptionfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_spec_ts",
+      "target": "apps_api_src_common_filters_http_exception_filter_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "target": "apps_api_src_common_filters_http_exception_filter_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/common/filters/http-exception.filter.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "filters_http_exception_filter_httpexceptionfilter",
+      "target": "filters_http_exception_filter_httpexceptionfilter_catch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_spec_ts",
+      "target": "filters_http_exception_filter_httpexceptionfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "target": "filters_http_exception_filter_httpexceptionfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "apps_api_src_persons_persons_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "persons_persons_service_personsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "apps_api_src_persons_dto_create_person_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "dto_create_person_dto_createpersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "apps_api_src_persons_dto_update_person_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "dto_update_person_dto_updatepersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_ts",
+      "target": "persons_persons_controller_personscontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_module_ts",
+      "target": "apps_api_src_persons_persons_controller_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_findall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_findone",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "persons_persons_controller_personscontroller",
+      "target": "persons_persons_controller_personscontroller_remove",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_module_ts",
+      "target": "persons_persons_controller_personscontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_spec_ts",
+      "target": "apps_api_src_persons_persons_module_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_spec_ts",
+      "target": "persons_persons_module_personsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.controller.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_controller_spec_ts",
+      "target": "persons_persons_controller_spec_mockperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "apps_api_src_persons_dto_create_person_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "dto_create_person_dto_createpersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "apps_api_src_persons_dto_update_person_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "dto_update_person_dto_updatepersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_ts",
+      "target": "persons_persons_service_personsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_spec_ts",
+      "target": "apps_api_src_persons_persons_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_module_ts",
+      "target": "apps_api_src_persons_persons_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice",
+      "target": "persons_persons_service_personsservice_findall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice",
+      "target": "persons_persons_service_personsservice_findone",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice",
+      "target": "persons_persons_service_personsservice_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice",
+      "target": "persons_persons_service_personsservice_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "persons_persons_service_personsservice",
+      "target": "persons_persons_service_personsservice_remove",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_spec_ts",
+      "target": "persons_persons_service_personsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_module_ts",
+      "target": "persons_persons_service_personsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_spec_ts",
+      "target": "persons_persons_service_spec_mockperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_spec_ts",
+      "target": "persons_persons_service_spec_dto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.service.spec.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_service_spec_ts",
+      "target": "persons_persons_service_spec_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/persons.module.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_persons_module_ts",
+      "target": "persons_persons_module_personsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/dto/update-person.dto.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_dto_update_person_dto_ts",
+      "target": "dto_update_person_dto_updatepersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/persons/dto/create-person.dto.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_persons_dto_create_person_dto_ts",
+      "target": "dto_create_person_dto_createpersondto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_ts",
+      "target": "apps_api_src_relationships_relationships_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_ts",
+      "target": "relationships_relationships_service_relationshipsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_ts",
+      "target": "apps_api_src_relationships_dto_create_relationship_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_ts",
+      "target": "dto_create_relationship_dto_createrelationshipdto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_ts",
+      "target": "relationships_relationships_controller_relationshipscontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_module_ts",
+      "target": "apps_api_src_relationships_relationships_controller_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "relationships_relationships_controller_relationshipscontroller",
+      "target": "relationships_relationships_controller_relationshipscontroller_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "relationships_relationships_controller_relationshipscontroller",
+      "target": "relationships_relationships_controller_relationshipscontroller_findall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "relationships_relationships_controller_relationshipscontroller",
+      "target": "relationships_relationships_controller_relationshipscontroller_findbyperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "relationships_relationships_controller_relationshipscontroller",
+      "target": "relationships_relationships_controller_relationshipscontroller_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "relationships_relationships_controller_relationshipscontroller",
+      "target": "relationships_relationships_controller_relationshipscontroller_remove",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_module_ts",
+      "target": "relationships_relationships_controller_relationshipscontroller",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_module_ts",
+      "target": "apps_api_src_relationships_relationships_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_module_ts",
+      "target": "relationships_relationships_service_relationshipsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.module.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_module_ts",
+      "target": "relationships_relationships_module_relationshipsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "target": "apps_api_src_relationships_relationships_module_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "target": "relationships_relationships_module_relationshipsmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_ts",
+      "target": "apps_api_src_relationships_dto_create_relationship_dto_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_ts",
+      "target": "dto_create_relationship_dto_createrelationshipdto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_ts",
+      "target": "relationships_relationships_service_relationshipsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_spec_ts",
+      "target": "apps_api_src_relationships_relationships_service_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice",
+      "target": "relationships_relationships_service_relationshipsservice_findall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice",
+      "target": "relationships_relationships_service_relationshipsservice_findbyperson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice",
+      "target": "relationships_relationships_service_relationshipsservice_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "relationships_relationships_service_relationshipsservice",
+      "target": "relationships_relationships_service_relationshipsservice_remove",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_spec_ts",
+      "target": "relationships_relationships_service_relationshipsservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_spec_ts",
+      "target": "relationships_relationships_service_spec_mockrel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_spec_ts",
+      "target": "relationships_relationships_service_spec_dto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.service.spec.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_service_spec_ts",
+      "target": "relationships_relationships_service_spec_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/relationships.controller.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_relationships_controller_spec_ts",
+      "target": "relationships_relationships_controller_spec_mockrel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/api/src/relationships/dto/create-relationship.dto.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_api_src_relationships_dto_create_relationship_dto_ts",
+      "target": "dto_create_relationship_dto_createrelationshipdto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/global-setup.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_e2e_global_setup_ts",
+      "target": "e2e_global_setup_test_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/global-setup.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_e2e_global_setup_ts",
+      "target": "e2e_global_setup_globalsetup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/playwright.config.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_e2e_playwright_config_ts",
+      "target": "e2e_playwright_config_test_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/tests/helpers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_e2e_tests_helpers_ts",
+      "target": "tests_helpers_cleardatabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/tests/relationships.spec.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_e2e_tests_relationships_spec_ts",
+      "target": "apps_e2e_tests_helpers_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/tests/persons.spec.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_e2e_tests_persons_spec_ts",
+      "target": "apps_e2e_tests_helpers_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/tests/relationships.spec.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_e2e_tests_relationships_spec_ts",
+      "target": "tests_helpers_cleardatabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/e2e/tests/persons.spec.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_e2e_tests_persons_spec_ts",
+      "target": "tests_helpers_cleardatabase",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "69e6c55f6c904bdb9f82521a7d0dfb8897a5fa50"
+}

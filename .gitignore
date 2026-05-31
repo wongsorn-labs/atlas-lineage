@@ -25,3 +25,10 @@ Thumbs.db
 
 # Drizzle
 packages/db/drizzle/meta/
+
+# Graphify cache
+graphify-out/manifest.json
+graphify-out/cost.json
+graphify-out/cache/
+graphify-out/.graphify_*.json
+graphify-out/.graphify_python

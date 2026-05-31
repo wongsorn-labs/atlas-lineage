@@ -1,0 +1,5 @@
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: ./node_modules/.bin/commitlint --edit
+      stage: commit
