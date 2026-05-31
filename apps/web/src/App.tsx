@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { MapView } from './components/MapView';
@@ -17,6 +17,14 @@ export default function App() {
   const relationships = relationshipsQuery.data ?? [];
   const isLoading = personsQuery.isLoading || relationshipsQuery.isLoading;
   const hasError = personsQuery.isError || relationshipsQuery.isError;
+
+  useEffect(() => {
+    if (!selectedPerson) return;
+    const nextSelected = persons.find((person) => person.id === selectedPerson.id) ?? null;
+    if (nextSelected !== selectedPerson) {
+      setSelectedPerson(nextSelected);
+    }
+  }, [persons, selectedPerson]);
 
   if (isLoading) {
     return (

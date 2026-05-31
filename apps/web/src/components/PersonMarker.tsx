@@ -2,6 +2,16 @@ import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 
+const defaultIcon = new L.Icon({
+  iconRetinaUrl: new URL('leaflet/dist/images/marker-icon-2x.png', import.meta.url).href,
+  iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).href,
+  shadowUrl: new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).href,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const selectedIcon = new L.Icon({
   iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).href,
   shadowUrl: new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).href,
@@ -21,7 +31,7 @@ export function PersonMarker({ person, isSelected, onSelect }: PersonMarkerProps
   return (
     <Marker
       position={[person.birthLat!, person.birthLng!]}
-      icon={isSelected ? selectedIcon : undefined}
+      icon={isSelected ? selectedIcon : defaultIcon}
       eventHandlers={{ click: () => onSelect(person) }}
     >
       <Popup>
