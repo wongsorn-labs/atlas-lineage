@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 import { db } from '../client';
 import { relationships } from '../schema';
 import type { Relationship, CreateRelationshipInput } from '@wongsorn-labs/atlas-lineage-shared';
@@ -21,7 +21,10 @@ export function findRelationshipsByPerson(personId: number): Relationship[] {
   return db
     .select()
     .from(relationships)
-    .where(eq(relationships.personId, personId))
+    .where(or(
+      eq(relationships.personId, personId),
+      eq(relationships.relatedPersonId, personId),
+    ))
     .all()
     .map(mapRelationship);
 }

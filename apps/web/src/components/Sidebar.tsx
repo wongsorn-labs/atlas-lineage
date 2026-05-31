@@ -76,7 +76,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
                       {[p.birthYear, p.birthPlace].filter(Boolean).join(' · ')}
                     </div>
                   )}
-                  {!p.birthLat && (
+                  {(p.birthLat == null || p.birthLng == null) && (
                     <div className="text-xs text-amber-500 mt-0.5">{t('sidebar.noCoordinates')}</div>
                   )}
                 </button>

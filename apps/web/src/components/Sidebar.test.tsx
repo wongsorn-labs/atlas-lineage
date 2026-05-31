@@ -12,10 +12,10 @@ function wrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-const makePerson = (id: number, name: string): Person => ({
+const makePerson = (id: number, name: string, overrides: Partial<Person> = {}): Person => ({
   id, name, birthYear: null, deathYear: null,
   birthLat: null, birthLng: null, birthPlace: null, notes: null,
-  createdAt: '', updatedAt: '',
+  createdAt: '', updatedAt: '', ...overrides,
 });
 
 describe('Sidebar', () => {
@@ -37,6 +37,18 @@ describe('Sidebar', () => {
     render(<Sidebar persons={persons} selectedPerson={null} onSelectPerson={onSelectPerson} />, { wrapper });
     await userEvent.click(screen.getByTestId('person-item-1'));
     expect(onSelectPerson).toHaveBeenCalledWith(persons[0]);
+  });
+
+  it('does not mark zero latitude or longitude as missing coordinates', () => {
+    const persons = [makePerson(1, 'Equator Person', { birthLat: 0, birthLng: 100 })];
+    render(<Sidebar persons={persons} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
+    expect(screen.queryByText('No coordinates')).not.toBeInTheDocument();
+  });
+
+  it('marks a person as missing coordinates when either coordinate is null', () => {
+    const persons = [makePerson(1, 'Prime Meridian Person', { birthLat: 0, birthLng: null })];
+    render(<Sidebar persons={persons} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
+    expect(screen.getByText('No coordinates')).toBeInTheDocument();
   });
 
   it('Add button opens dialog', async () => {

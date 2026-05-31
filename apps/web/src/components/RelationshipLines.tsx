@@ -22,13 +22,20 @@ export function RelationshipLines({ persons, relationships }: RelationshipLinesP
       {relationships.map((rel) => {
         const a = index.get(rel.personId);
         const b = index.get(rel.relatedPersonId);
-        if (!a?.birthLat || !b?.birthLat) return null;
+        if (
+          a?.birthLat == null ||
+          a.birthLng == null ||
+          b?.birthLat == null ||
+          b.birthLng == null
+        ) {
+          return null;
+        }
         return (
           <Polyline
             key={rel.id}
             positions={[
-              [a.birthLat, a.birthLng!],
-              [b.birthLat, b.birthLng!],
+              [a.birthLat, a.birthLng],
+              [b.birthLat, b.birthLng],
             ]}
             color={COLORS[rel.type]}
             weight={2}
