@@ -79,7 +79,7 @@ export function PersonCard({ person, allPersons, onDeselect }: PersonCardProps) 
               {myRels.map((rel) => (
                 <div key={rel.id} className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    <Badge variant={rel.type as RelationshipType}>{t(`relationship.types.${rel.type}`)}</Badge>
+                    <Badge data-testid="relationship-badge" variant={rel.type as RelationshipType}>{t(`relationship.types.${rel.type}`)}</Badge>
                     <span className="text-sm">{getRelatedName(rel)}</span>
                   </div>
                   <Button

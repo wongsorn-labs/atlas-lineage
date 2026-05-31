@@ -21,7 +21,7 @@ test('add relationship — badge visible', async ({ page, request }) => {
   await page.getByRole('option', { name: 'Spouse' }).click();
   await page.getByRole('button', { name: /add relationship/i }).click();
 
-  await expect(page.getByText('spouse')).toBeVisible();
+  await expect(page.getByTestId('relationship-badge').filter({ hasText: /spouse/i })).toBeVisible();
 
   void ada; // suppress unused warning
 });
@@ -35,10 +35,10 @@ test('delete relationship — badge gone', async ({ page, request }) => {
 
   await page.goto('/');
   await page.getByText('Ada').click();
-  await expect(page.getByText('spouse')).toBeVisible();
+  await expect(page.getByTestId('relationship-badge').filter({ hasText: /spouse/i })).toBeVisible();
 
   await page.locator('[data-testid="add-relationship-button"]').isVisible();
   // Delete the relationship via the trash icon in the relationships list
   await page.locator('.text-red-400').first().click();
-  await expect(page.getByText('spouse')).not.toBeVisible();
+  await expect(page.getByTestId('relationship-badge').filter({ hasText: /spouse/i })).not.toBeVisible();
 });

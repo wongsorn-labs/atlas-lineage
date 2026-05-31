@@ -23,8 +23,6 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Drizzle
-packages/db/drizzle/meta/
 
 # Graphify cache
 graphify-out/manifest.json
@@ -32,3 +30,8 @@ graphify-out/cost.json
 graphify-out/cache/
 graphify-out/.graphify_*.json
 graphify-out/.graphify_python
+
+# Playwright artifacts
+apps/e2e/playwright-report/
+apps/e2e/test-results/
+apps/e2e/manual-main-flow/
