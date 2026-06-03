@@ -30,7 +30,7 @@ pnpm dev
 # Build web for production
 pnpm build
 
-# Run all unit/integration tests
+# Run all unit/integration tests (db → api → web order)
 pnpm test
 
 # Run a single package's tests
@@ -43,6 +43,9 @@ cd apps/api && pnpm exec jest src/persons/persons.service.spec.ts
 
 # Run with coverage
 pnpm test:cov
+
+# Run all tests including e2e
+pnpm test:all
 
 # End-to-end tests (starts both servers automatically)
 pnpm test:e2e
@@ -74,9 +77,47 @@ packages/shared  ──►  packages/db  ──►  apps/api  ──►  apps/we
 ```
 
 - **`packages/shared`** is the single source of truth for TypeScript types (`Person`, `Relationship`, `RelationshipType`) and Zod validation schemas. Both the API DTOs and the web forms derive from this package.
-- **`packages/db`** exports plain functions (`findAllPersons`, `createPerson`, etc.) used directly by NestJS services. The Drizzle client is a singleton created in `src/client.ts`; it reads `DATABASE_PATH` at import time.
-- **`apps/api`** uses NestJS modules (`PersonsModule`, `RelationshipsModule`). Services call `packages/db` functions; controllers handle HTTP. All routes are prefixed `/api`. Validation is done with `class-validator` DTOs and a global `ValidationPipe`.
+- **`packages/db`** exports plain functions (`findAllPersons`, `createPerson`, etc.) used directly by NestJS services. The Drizzle client is a singleton in `src/client.ts`; it reads `DATABASE_PATH` at import time and opens the SQLite file at that path.
+- **`apps/api`** uses NestJS modules (`PersonsModule`, `RelationshipsModule`). Services call `packages/db` functions; controllers handle HTTP. All routes are prefixed `/api`. Validation uses `class-validator` DTOs and a global `ValidationPipe`. CORS is hardcoded to `http://localhost:5173` in development.
 - **`apps/web`** fetches all data through `src/api/client.ts` (a thin `fetch` wrapper). TanStack Query hooks in `src/hooks/` own cache invalidation. The Sidebar and MapView receive data from the root `App.tsx` component which calls `usePersons` and `useRelationships`.
+
+### Module structure
+
+**`packages/shared/src/`**
+- `types.ts` — `Person`, `Relationship`, `RelationshipType`, `CreatePersonInput`, `UpdatePersonInput`, `CreateRelationshipInput`
+- `schemas.ts` — Zod schemas: `CreatePersonSchema`, `UpdatePersonSchema`, `CreateRelationshipSchema`, `RelationshipTypeSchema`
+
+**`packages/db/src/`**
+- `schema.ts` — Drizzle table definitions (`persons`, `relationships` with FK cascade-delete)
+- `client.ts` — Drizzle singleton using `better-sqlite3`; reads `DATABASE_PATH` env var
+- `crypto.ts` — AES-256-GCM encrypt/decrypt; stores as `IV:authTag:ciphertext` (hex)
+- `queries/persons.ts` — `findAllPersons`, `findPersonById`, `createPerson`, `updatePerson`, `deletePerson`
+- `queries/relationships.ts` — `findAllRelationships`, `findRelationshipsByPerson`, `createRelationship`, `deleteRelationship`
+
+**`apps/api/src/`**
+- `main.ts` — bootstrap: global prefix `/api`, `ValidationPipe`, `HttpExceptionFilter`, CORS, port
+- `app.module.ts` — root module importing `PersonsModule` and `RelationshipsModule`
+- `health.controller.ts` — `GET /api/health`
+- `persons/` — controller (`GET /`, `GET /:id`, `POST /`, `PATCH /:id`, `DELETE /:id`), service, DTOs
+- `relationships/` — controller (`GET /`, `GET /person/:personId`, `POST /`, `DELETE /:id`), service, DTO
+- `common/filters/http-exception.filter.ts` — global error handler returning `{statusCode, message}`
+
+**`apps/web/src/`**
+- `App.tsx` — root component; calls `usePersons` + `useRelationships`; owns `selectedPerson` state; renders `<Sidebar>` + `<MapView>`
+- `api/client.ts` — typed fetch wrapper; namespaces `api.persons` and `api.relationships`
+- `hooks/usePersons.ts` — TanStack Query CRUD hooks with automatic cache invalidation
+- `hooks/useRelationships.ts` — TanStack Query CRUD hooks
+- `components/MapView.tsx` — `react-leaflet` map; renders `PersonMarker` + `RelationshipLines`
+- `components/PersonMarker.tsx` — individual Leaflet marker with click handler
+- `components/RelationshipLines.tsx` — Leaflet `Polyline` between coordinate-bearing persons
+- `components/Sidebar.tsx` — person list, language toggle, add-person dialog
+- `components/PersonCard.tsx` — selected person detail, edit/delete, relationships list
+- `components/PersonForm.tsx` — React Hook Form + Zod for create/edit
+- `components/RelationshipForm.tsx` — dropdowns to pick related person and type
+- `components/ui/` — Shadcn-style primitives (button, card, dialog, badge, input, label, select, textarea)
+- `i18n/` — `react-i18next` config; locales for `en` and `th`
+- `pwa/registerSW.ts` — service worker registration via `vite-plugin-pwa`
+- `test/mocks/` — MSW handlers and server for unit tests
 
 ### Field encryption
 
@@ -90,15 +131,37 @@ packages/shared  ──►  packages/db  ──►  apps/api  ──►  apps/we
 
 The app supports English (`en`) and Thai (`th`) via `react-i18next`. Locale files live in `apps/web/src/i18n/locales/`. The active language is persisted to `localStorage` under the key `lang`.
 
+### PWA
+
+The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `src/pwa/registerSW.ts`. The manifest is defined in `apps/web/vite.config.ts` with app name "Atlas Lineage", theme color `#1e40af`, and 192×512 icons.
+
 ### Testing conventions
 
 - **API & DB**: Jest + ts-jest. Test files use the `.spec.ts` suffix. NestJS services are tested with `@nestjs/testing`; the db module is mocked with `jest.mock`.
 - **Web**: Vitest + React Testing Library + jsdom. MSW (`src/test/mocks/`) intercepts fetch calls.
-- **E2E**: Playwright. Tests live in `apps/e2e/tests/`. The config spins up both the API and web dev servers.
+- **E2E**: Playwright. Tests live in `apps/e2e/tests/`. The config spins up both the API and web dev servers. `global-setup.ts` runs `pnpm db:migrate` against `atlas-lineage.test.db` before any test runs. `workers: 1` enforces serial execution.
 
-### PWA
+### TypeScript configuration
 
-The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `src/pwa/registerSW.ts`.
+- `tsconfig.base.json` at root — `ES2022`, `strict`, `CommonJS`, source + declaration maps
+- `apps/api/tsconfig.json` — extends base; adds `experimentalDecorators` + `emitDecoratorMetadata` (required by NestJS)
+- `apps/web/tsconfig.json` — `ESNext` modules, `react-jsx`, alias `@/*` → `./src/*`
+- Path aliases in API and web tsconfigs map `@wongsorn-labs/atlas-lineage-shared` and `@wongsorn-labs/atlas-lineage-db` to their local source
+
+## Git Branching Workflow
+
+- **`develop`** is the integration branch. All feature branches must be created from `develop` and merged back into `develop` via PR.
+- **`main`** is the production branch. Only merge from `develop` when cutting a release.
+- **Never** branch directly from `main` for new features or fixes.
+
+```bash
+# Correct workflow for a new branch
+git fetch origin develop
+git checkout -b feat/my-feature origin/develop
+# ... commit work ...
+git push -u origin feat/my-feature
+# Open PR targeting develop
+```
 
 ## Commit Conventions
 
@@ -116,7 +179,7 @@ This repo enforces [Conventional Commits](https://www.conventionalcommits.org/) 
 
 **Type** (required): `feat`, `fix`, `test`, `refactor`, `docs`, `perf`, `chore`, `ci`, `style`
 
-**Scope** (required): `api`, `web`, `db`, `e2e`, or the package/area affected
+**Scope** (required): `api`, `web`, `db`, `e2e`, `shared`, or the package/area affected
 
 **Subject** (required): Imperative, lowercase, no period, ≤50 chars
 
@@ -126,13 +189,14 @@ feat(api): add person search endpoint
 fix(web): correct map marker positioning on mobile
 test(db): add encryption edge cases
 refactor(shared): simplify Zod schema validation
+docs(web): update i18n locale keys
 ci: update GitHub Actions workflow
 ```
 
-**Enforcement:** Commits not matching the pattern are rejected. Use `git commit -m "type(scope): message"` or let your editor show the validation error to fix it.
+**Enforcement:** Commits not matching the pattern are rejected by the `commit-msg` lefthook. Use `git commit -m "type(scope): message"`.
 
 ## Agent-Specific Guidance
 
 - **Claude Code** (claude.ai/code): See this file (CLAUDE.md)
-- **VS Code Copilot**: See copilot-instructions.md  
+- **VS Code Copilot**: See copilot-instructions.md
 - **Other AI Agents**: See AGENTS.md (shared guidelines)
