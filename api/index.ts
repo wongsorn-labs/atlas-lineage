@@ -31,6 +31,12 @@ async function bootstrap(): Promise<ExpressHandler> {
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
-  const expressApp = await bootstrap();
-  expressApp(req, res);
+  try {
+    const expressApp = await bootstrap();
+    expressApp(req, res);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.stack ?? err.message : String(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: msg }));
+  }
 }
