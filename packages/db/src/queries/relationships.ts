@@ -9,40 +9,39 @@ function mapRelationship(row: typeof relationships.$inferSelect): Relationship {
     personId: row.personId,
     relatedPersonId: row.relatedPersonId,
     type: row.type as Relationship['type'],
-    createdAt: row.createdAt ?? '',
+    createdAt: row.createdAt?.toISOString() ?? '',
   };
 }
 
-export function findAllRelationships(): Relationship[] {
-  return db.select().from(relationships).all().map(mapRelationship);
+export async function findAllRelationships(): Promise<Relationship[]> {
+  const rows = await db.select().from(relationships);
+  return rows.map(mapRelationship);
 }
 
-export function findRelationshipsByPerson(personId: number): Relationship[] {
-  return db
+export async function findRelationshipsByPerson(personId: number): Promise<Relationship[]> {
+  const rows = await db
     .select()
     .from(relationships)
     .where(or(
       eq(relationships.personId, personId),
       eq(relationships.relatedPersonId, personId),
-    ))
-    .all()
-    .map(mapRelationship);
+    ));
+  return rows.map(mapRelationship);
 }
 
-export function createRelationship(input: CreateRelationshipInput): Relationship {
-  const row = db
+export async function createRelationship(input: CreateRelationshipInput): Promise<Relationship> {
+  const [row] = await db
     .insert(relationships)
     .values({
       personId: input.personId,
       relatedPersonId: input.relatedPersonId,
       type: input.type,
     })
-    .returning()
-    .get();
+    .returning();
   return mapRelationship(row);
 }
 
-export function deleteRelationship(id: number): boolean {
-  const row = db.delete(relationships).where(eq(relationships.id, id)).returning().get();
+export async function deleteRelationship(id: number): Promise<boolean> {
+  const [row] = await db.delete(relationships).where(eq(relationships.id, id)).returning();
   return !!row;
 }

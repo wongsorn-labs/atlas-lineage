@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["node"],
+    "paths": {
+      "@wongsorn-labs/atlas-lineage-shared": ["../packages/shared/src/index.ts"],
+      "@wongsorn-labs/atlas-lineage-db": ["../packages/db/src/index.ts"]
+    }
+  }
+}
