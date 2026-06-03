@@ -2,11 +2,9 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'http';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { join } from 'path';
 import { AppModule } from '../apps/api/src/app.module';
 import { HttpExceptionFilter } from '../apps/api/src/common/filters/http-exception.filter';
-import { db } from '@wongsorn-labs/atlas-lineage-db';
+import { runMigrations } from '@wongsorn-labs/atlas-lineage-db';
 
 type ExpressHandler = (req: IncomingMessage, res: ServerResponse) => void;
 
@@ -15,9 +13,7 @@ let cachedHandler: ExpressHandler | null = null;
 async function bootstrap(): Promise<ExpressHandler> {
   if (cachedHandler) return cachedHandler;
 
-  await migrate(db, {
-    migrationsFolder: join(process.cwd(), 'packages', 'db', 'drizzle'),
-  });
+  await runMigrations();
 
   const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
   app.setGlobalPrefix('api');

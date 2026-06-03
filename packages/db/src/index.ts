@@ -3,3 +3,4 @@ export * from './client';
 export * from './crypto';
 export * from './queries/persons';
 export * from './queries/relationships';
+export { runMigrations } from './migrate';
