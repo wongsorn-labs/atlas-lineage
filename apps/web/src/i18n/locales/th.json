@@ -1,5 +1,12 @@
 {
-  "app": { "title": "Atlas Lineage" },
+  "app": {
+    "title": "Atlas Lineage",
+    "loading": "กำลังโหลดข้อมูลครอบครัว…",
+    "errorTitle": "ไม่สามารถโหลดข้อมูลครอบครัวได้",
+    "errorBody": "ตรวจสอบการเชื่อมต่อ API แล้วลองอีกครั้ง",
+    "retryPeople": "โหลดบุคคลใหม่",
+    "retryRelationships": "โหลดความสัมพันธ์ใหม่"
+  },
   "sidebar": {
     "add": "เพิ่ม",
     "allPeople": "← บุคคลทั้งหมด",

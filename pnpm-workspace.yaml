@@ -1,3 +1,9 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+allowBuilds:
+  '@nestjs/core': true
+  better-sqlite3: true
+  esbuild: true
+  lefthook: true
+  msw: true

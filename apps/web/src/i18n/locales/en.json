@@ -1,5 +1,12 @@
 {
-  "app": { "title": "Atlas Lineage" },
+  "app": {
+    "title": "Atlas Lineage",
+    "loading": "Loading family data…",
+    "errorTitle": "Could not load family data",
+    "errorBody": "Check the API connection and try again.",
+    "retryPeople": "Retry people",
+    "retryRelationships": "Retry relationships"
+  },
   "sidebar": {
     "add": "Add",
     "allPeople": "← All people",
