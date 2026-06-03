@@ -23,11 +23,16 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
+    "@types/node": "^20.19.40",
     "concurrently": "^8.2.2",
     "lefthook": "^2.1.9",
     "typescript": "^5.5.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@nestjs/core", "esbuild", "msw"]
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "esbuild",
+      "msw"
+    ]
   }
 }
