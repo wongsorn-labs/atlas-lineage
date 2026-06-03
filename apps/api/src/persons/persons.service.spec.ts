@@ -27,35 +27,34 @@ describe('PersonsService', () => {
     expect(service.findAll()).toEqual([mockPerson]);
   });
 
-  it('findOne returns person when found', () => {
-    expect(service.findOne(1)).toEqual(mockPerson);
+  it('findOne returns person when found', async () => {
+    await expect(service.findOne(1)).resolves.toEqual(mockPerson);
   });
 
-  it('findOne throws NotFoundException when not found', () => {
-    expect(() => service.findOne(99)).toThrow(NotFoundException);
+  it('findOne throws NotFoundException when not found', async () => {
+    await expect(service.findOne(99)).rejects.toThrow(NotFoundException);
   });
 
-  it('create calls createPerson with dto', () => {
+  it('create calls createPerson with dto', async () => {
     const dto = { name: 'Grace Hopper' };
-    const result = service.create(dto as never);
+    const result = await service.create(dto as never);
     expect(result.name).toBe('Grace Hopper');
   });
 
-  it('update returns updated person', () => {
+  it('update returns updated person', async () => {
     const dto = { name: 'Ada Updated' };
-    const result = service.update(1, dto as never);
-    expect(result).toMatchObject({ id: 1, name: 'Ada Updated' });
+    await expect(service.update(1, dto as never)).resolves.toMatchObject({ id: 1, name: 'Ada Updated' });
   });
 
-  it('update throws NotFoundException when not found', () => {
-    expect(() => service.update(99, { name: 'X' } as never)).toThrow(NotFoundException);
+  it('update throws NotFoundException when not found', async () => {
+    await expect(service.update(99, { name: 'X' } as never)).rejects.toThrow(NotFoundException);
   });
 
-  it('remove returns deleted:true', () => {
-    expect(service.remove(1)).toEqual({ deleted: true });
+  it('remove returns deleted:true', async () => {
+    await expect(service.remove(1)).resolves.toEqual({ deleted: true });
   });
 
-  it('remove throws NotFoundException when not found', () => {
-    expect(() => service.remove(99)).toThrow(NotFoundException);
+  it('remove throws NotFoundException when not found', async () => {
+    await expect(service.remove(99)).rejects.toThrow(NotFoundException);
   });
 });

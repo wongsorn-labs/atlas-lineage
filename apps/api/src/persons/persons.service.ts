@@ -15,8 +15,8 @@ export class PersonsService {
     return findAllPersons();
   }
 
-  findOne(id: number) {
-    const person = findPersonById(id);
+  async findOne(id: number) {
+    const person = await findPersonById(id);
     if (!person) throw new NotFoundException(`Person #${id} not found`);
     return person;
   }
@@ -25,14 +25,14 @@ export class PersonsService {
     return createPerson(dto);
   }
 
-  update(id: number, dto: UpdatePersonDto) {
-    const person = updatePerson(id, dto);
+  async update(id: number, dto: UpdatePersonDto) {
+    const person = await updatePerson(id, dto);
     if (!person) throw new NotFoundException(`Person #${id} not found`);
     return person;
   }
 
-  remove(id: number) {
-    const deleted = deletePerson(id);
+  async remove(id: number) {
+    const deleted = await deletePerson(id);
     if (!deleted) throw new NotFoundException(`Person #${id} not found`);
     return { deleted: true };
   }

@@ -26,8 +26,8 @@ export class RelationshipsService {
     });
   }
 
-  remove(id: number) {
-    const deleted = deleteRelationship(id);
+  async remove(id: number) {
+    const deleted = await deleteRelationship(id);
     if (!deleted) throw new NotFoundException(`Relationship #${id} not found`);
     return { deleted: true };
   }
