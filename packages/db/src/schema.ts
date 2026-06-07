@@ -1,7 +1,37 @@
-import { pgTable, serial, integer, doublePrecision, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  pgTable, serial, integer, doublePrecision, text, timestamp, pgEnum
+} from 'drizzle-orm/pg-core';
+
+export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
+
+export const profiles = pgTable('profiles', {
+  id: text('id').primaryKey(),
+  email: text('email').notNull(),
+  displayName: text('display_name'),
+  avatarUrl: text('avatar_url'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const familyTrees = pgTable('family_trees', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  description: text('description'),
+  ownerId: text('owner_id').references(() => profiles.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+export const treeMembers = pgTable('tree_members', {
+  id: serial('id').primaryKey(),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull().references(() => profiles.id, { onDelete: 'cascade' }),
+  role: treeRoleEnum('role').notNull().default('viewer'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
 
 export const persons = pgTable('persons', {
   id: serial('id').primaryKey(),
+  treeId: integer('tree_id').references(() => familyTrees.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   birthYear: integer('birth_year'),
   deathYear: integer('death_year'),
