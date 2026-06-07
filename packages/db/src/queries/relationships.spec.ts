@@ -2,21 +2,17 @@ import { eq, or } from 'drizzle-orm';
 import { relationships } from '../schema';
 import { findRelationshipsByPerson } from './relationships';
 
-jest.mock('../client', () => ({
-  __mocks: {
-    all: jest.fn(),
-    where: jest.fn(),
-    from: jest.fn(),
-    select: jest.fn(),
-  },
-  get db() {
-    const mocks = jest.requireMock('../client').__mocks;
-    mocks.where.mockImplementation(() => ({ all: mocks.all }));
-    mocks.from.mockImplementation(() => ({ where: mocks.where }));
-    mocks.select.mockImplementation(() => ({ from: mocks.from }));
-    return { select: mocks.select };
-  },
-}));
+const mockRows = [
+  { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: new Date('2024-01-01') },
+  { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: new Date('2024-01-01') },
+];
+
+jest.mock('../client', () => {
+  const where = jest.fn();
+  const from = jest.fn().mockReturnValue({ where });
+  const select = jest.fn().mockReturnValue({ from });
+  return { db: { select }, __where: where, __from: from, __select: select };
+});
 
 jest.mock('drizzle-orm', () => {
   const actual = jest.requireActual('drizzle-orm');
@@ -28,23 +24,22 @@ jest.mock('drizzle-orm', () => {
 });
 
 describe('relationship queries', () => {
-  const dbMocks = jest.requireMock('../client').__mocks as {
-    all: jest.Mock;
-    where: jest.Mock;
-    from: jest.Mock;
-    select: jest.Mock;
+  const clientMock = jest.requireMock('../client') as {
+    db: { select: jest.Mock };
+    __where: jest.Mock;
+    __from: jest.Mock;
+    __select: jest.Mock;
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    dbMocks.all.mockReturnValue([
-      { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: 'now' },
-      { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: 'now' },
-    ]);
+    clientMock.__where.mockResolvedValue(mockRows);
+    clientMock.__from.mockReturnValue({ where: clientMock.__where });
+    clientMock.__select.mockReturnValue({ from: clientMock.__from });
   });
 
-  it('finds relationships where the person is on either side', () => {
-    const result = findRelationshipsByPerson(1);
+  it('finds relationships where the person is on either side', async () => {
+    const result = await findRelationshipsByPerson(1);
 
     expect(eq).toHaveBeenCalledWith(relationships.personId, 1);
     expect(eq).toHaveBeenCalledWith(relationships.relatedPersonId, 1);
@@ -53,8 +48,8 @@ describe('relationship queries', () => {
       { column: relationships.relatedPersonId, value: 1 },
     );
     expect(result).toEqual([
-      { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: 'now' },
-      { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: 'now' },
+      { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: '2024-01-01T00:00:00.000Z' },
+      { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: '2024-01-01T00:00:00.000Z' },
     ]);
   });
 });

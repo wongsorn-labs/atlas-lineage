@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { RelationshipsModule } from './relationships.module';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
 const mockRel = { id: 1, personId: 1, relatedPersonId: 2, type: 'spouse', createdAt: '2024-01-01' };
 
@@ -20,7 +21,10 @@ describe('RelationshipsController (integration)', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [RelationshipsModule],
-    }).compile();
+    })
+      .overrideGuard(SupabaseAuthGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
 
     app = module.createNestApplication();
     app.setGlobalPrefix('api');

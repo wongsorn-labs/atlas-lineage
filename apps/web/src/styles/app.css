@@ -1,45 +1,203 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Dark base palette */
+  --color-bg-base: #0a0b0f;
+  --color-bg-surface: #12141a;
+  --color-bg-elevated: #1a1d26;
+  --color-bg-glass: rgba(18, 20, 26, 0.7);
+
+  /* Gold accent */
+  --color-gold: #EAB308;
+  --color-gold-muted: rgba(234, 179, 8, 0.15);
+  --color-gold-glow: rgba(234, 179, 8, 0.45);
+
+  /* Text */
+  --color-text-primary: #f1f2f4;
+  --color-text-secondary: #9ca3b0;
+  --color-text-muted: #6b7280;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-gold: rgba(234, 179, 8, 0.3);
+
+  /* Status */
+  --color-error: #f87171;
+  --color-success: #4ade80;
+}
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --bg-base: var(--color-bg-base);
+    --bg-surface: var(--color-bg-surface);
+    --bg-elevated: var(--color-bg-elevated);
+    --bg-glass: var(--color-bg-glass);
+    --gold: var(--color-gold);
+    --gold-muted: var(--color-gold-muted);
+    --gold-glow: var(--color-gold-glow);
+    --text-primary: var(--color-text-primary);
+    --text-secondary: var(--color-text-secondary);
+    --text-muted: var(--color-text-muted);
+    --border: var(--color-border);
+    --border-gold: var(--color-border-gold);
+    --radius: 0.75rem;
   }
 
   * {
-    border-color: hsl(var(--border));
+    border-color: var(--border);
     box-sizing: border-box;
   }
 
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    font-synthesis: none;
+  html {
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-synthesis: none;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .glass-card-gold {
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #0a0b0f;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 150ms ease, box-shadow 150ms ease;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 16px 2px var(--gold-glow);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-gold);
+    background: var(--bg-glass);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+  }
+
+  .btn-ghost:hover {
+    color: var(--text-primary);
+    background: var(--gold-muted);
+  }
+
+  .input-glass {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 150ms ease;
+  }
+
+  .input-glass::placeholder {
+    color: var(--text-muted);
+  }
+
+  .input-glass:focus {
+    border-color: var(--border-gold);
+    box-shadow: 0 0 0 2px var(--gold-muted);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .pill-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    background: var(--gold-muted);
+    color: var(--gold);
+    border: 1px solid var(--border-gold);
+  }
+
+  .atlas-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .atlas-marker-dot {
+    width: 14px;
+    height: 14px;
+    background: #EAB308;
+    border-radius: 50%;
+    border: 2px solid rgba(234, 179, 8, 0.6);
+    box-shadow: 0 0 10px 3px rgba(234, 179, 8, 0.45), 0 0 20px 6px rgba(234, 179, 8, 0.2);
+    transition: box-shadow 150ms ease, transform 150ms ease;
+  }
+
+  .atlas-marker-dot:hover,
+  .atlas-marker-selected .atlas-marker-dot {
+    box-shadow: 0 0 16px 5px rgba(234, 179, 8, 0.65), 0 0 30px 10px rgba(234, 179, 8, 0.3);
+    transform: scale(1.3);
   }
 }
 
 /* Leaflet: prevent Tailwind reset from breaking map tiles */
 .leaflet-container {
   box-sizing: content-box !important;
+  background: var(--bg-base);
 }
 
 .leaflet-container * {

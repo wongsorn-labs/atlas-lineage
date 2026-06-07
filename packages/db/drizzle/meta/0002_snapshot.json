@@ -1,6 +1,6 @@
 {
-  "id": "a03db088-6c73-471a-ba7c-9743f6703ef9",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "67193f32-d863-4544-8e7a-5b1585b2dbb8",
+  "prevId": "a03db088-6c73-471a-ba7c-9743f6703ef9",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -305,7 +305,29 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "tree_members_tree_user_uidx": {
+          "name": "tree_members_tree_user_uidx",
+          "columns": [
+            {
+              "expression": "tree_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "tree_members_tree_id_family_trees_id_fk": {
           "name": "tree_members_tree_id_family_trees_id_fk",

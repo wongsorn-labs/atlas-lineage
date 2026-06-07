@@ -38,3 +38,40 @@ export interface CreateRelationshipInput {
   relatedPersonId: number;
   type: RelationshipType;
 }
+
+export type TreeRole = 'owner' | 'editor' | 'viewer';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  displayName: string | null;
+  avatarUrl: string | null;
+  createdAt: string;
+}
+
+export interface FamilyTree {
+  id: number;
+  name: string;
+  description: string | null;
+  ownerId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TreeMember {
+  id: number;
+  treeId: number;
+  userId: string;
+  role: TreeRole;
+  createdAt: string;
+}
+
+export interface CreateTreeInput {
+  name: string;
+  description?: string | null;
+}
+
+export interface AddTreeMemberInput {
+  userId: string;
+  role: TreeRole;
+}

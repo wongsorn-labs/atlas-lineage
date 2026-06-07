@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { PersonsModule } from './persons.module';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
 const mockPerson = { id: 1, name: 'Ada Lovelace', birthYear: null, deathYear: null, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '2024-01-01', updatedAt: '2024-01-01' };
 
@@ -21,7 +22,10 @@ describe('PersonsController (integration)', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PersonsModule],
-    }).compile();
+    })
+      .overrideGuard(SupabaseAuthGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
 
     app = module.createNestApplication();
     app.setGlobalPrefix('api');
