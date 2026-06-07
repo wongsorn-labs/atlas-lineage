@@ -38,3 +38,6 @@ apps/e2e/manual-main-flow/
 
 # Vercel
 .vercel
+
+# Visual brainstorming sessions
+.superpowers/
