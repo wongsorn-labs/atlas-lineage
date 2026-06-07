@@ -19,3 +19,15 @@ export const CreateRelationshipSchema = z.object({
   relatedPersonId: z.number().int().positive(),
   type: RelationshipTypeSchema,
 });
+
+export const treeRoleSchema = z.enum(['owner', 'editor', 'viewer']);
+
+export const createTreeSchema = z.object({
+  name: z.string().min(1).max(100),
+  description: z.string().max(500).optional().nullable(),
+});
+
+export const addTreeMemberSchema = z.object({
+  userId: z.string().uuid(),
+  role: treeRoleSchema,
+});

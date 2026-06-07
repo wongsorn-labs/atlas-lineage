@@ -10,12 +10,15 @@ import {
   HttpCode,
   HttpStatus,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
 @Controller('persons')
+@UseGuards(SupabaseAuthGuard)
 export class PersonsController {
   constructor(@Inject(PersonsService) private readonly personsService: PersonsService) {}
 

@@ -9,11 +9,14 @@ import {
   HttpCode,
   HttpStatus,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
 import { RelationshipsService } from './relationships.service';
 import { CreateRelationshipDto } from './dto/create-relationship.dto';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 
 @Controller('relationships')
+@UseGuards(SupabaseAuthGuard)
 export class RelationshipsController {
   constructor(@Inject(RelationshipsService) private readonly relationshipsService: RelationshipsService) {}
 
