@@ -33,6 +33,9 @@
       "@nestjs/core",
       "esbuild",
       "msw"
-    ]
+    ],
+    "overrides": {
+      "express": "4.19.2"
+    }
   }
 }
