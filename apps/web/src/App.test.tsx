@@ -7,6 +7,10 @@ import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 vi.mock('./hooks/usePersons');
 vi.mock('./hooks/useRelationships');
+vi.mock('./contexts/AuthContext', () => ({
+  useAuth: () => ({ user: { id: '1', email: 'test@test.com' }, isLoading: false, signIn: vi.fn(), signOut: vi.fn(), signInWithGoogle: vi.fn() }),
+  AuthProvider: ({ children }: { children: import('react').ReactNode }) => <>{children}</>,
+}));
 vi.mock('./components/Sidebar', () => ({
   Sidebar: ({ persons }: { persons: Person[] }) => (
     <div data-testid="sidebar" data-person-count={persons.length} />
