@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm';
+import { eq, and, isNull } from 'drizzle-orm';
 import { db } from '../client';
 import { familyTrees, treeMembers, profiles } from '../schema';
 import type { FamilyTree, TreeMember, TreeRole, CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
@@ -60,6 +60,10 @@ export async function addTreeMember(treeId: number, input: AddTreeMemberInput): 
   const [row] = await db
     .insert(treeMembers)
     .values({ treeId, userId: input.userId, role: input.role })
+    .onConflictDoUpdate({
+      target: [treeMembers.treeId, treeMembers.userId],
+      set: { role: input.role },
+    })
     .returning();
   return mapMember(row);
 }
@@ -75,16 +79,12 @@ export async function upsertProfile(id: string, email: string, displayName?: str
 }
 
 export async function claimDefaultTree(userId: string): Promise<void> {
-  const [defaultTree] = await db
-    .select()
-    .from(familyTrees)
-    .where(eq(familyTrees.id, 1))
-    .limit(1);
-  if (defaultTree && defaultTree.ownerId === null) {
-    await db.update(familyTrees).set({ ownerId: userId }).where(eq(familyTrees.id, 1));
-    await db
-      .insert(treeMembers)
-      .values({ treeId: 1, userId, role: 'owner' })
-      .onConflictDoNothing();
-  }
+  await db
+    .update(familyTrees)
+    .set({ ownerId: userId })
+    .where(and(eq(familyTrees.id, 1), isNull(familyTrees.ownerId)));
+  await db
+    .insert(treeMembers)
+    .values({ treeId: 1, userId, role: 'owner' })
+    .onConflictDoNothing();
 }

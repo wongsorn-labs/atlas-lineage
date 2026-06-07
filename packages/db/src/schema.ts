@@ -1,5 +1,5 @@
 import {
-  pgTable, serial, integer, doublePrecision, text, timestamp, pgEnum
+  pgTable, serial, integer, doublePrecision, text, timestamp, pgEnum, uniqueIndex
 } from 'drizzle-orm/pg-core';
 
 export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
@@ -27,7 +27,9 @@ export const treeMembers = pgTable('tree_members', {
   userId: text('user_id').notNull().references(() => profiles.id, { onDelete: 'cascade' }),
   role: treeRoleEnum('role').notNull().default('viewer'),
   createdAt: timestamp('created_at').defaultNow(),
-});
+}, (table) => ({
+  treeMembersTreeUserUidx: uniqueIndex('tree_members_tree_user_uidx').on(table.treeId, table.userId),
+}));
 
 export const persons = pgTable('persons', {
   id: serial('id').primaryKey(),

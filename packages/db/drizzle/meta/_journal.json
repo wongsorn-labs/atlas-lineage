@@ -15,6 +15,13 @@
       "when": 1780844480608,
       "tag": "0001_backfill_default_tree",
       "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780845515599,
+      "tag": "0002_cooing_madame_masque",
+      "breakpoints": true
     }
   ]
 }

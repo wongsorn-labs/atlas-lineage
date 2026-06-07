@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "tree_members_tree_user_uidx" ON "tree_members" USING btree ("tree_id","user_id");
