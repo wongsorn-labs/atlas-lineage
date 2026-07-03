@@ -139,7 +139,16 @@ The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `s
 
 The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `src/pwa/registerSW.ts`. Icons at 192×192 and 512×512, theme colour `#1e40af`.
 
-## Deployment
+## Spec-Driven Development (OpenSpec)
+
+This repo uses [OpenSpec](https://github.com/Fission-AI/OpenSpec) for spec-driven development. Capability specs describing current system behavior live in `openspec/specs/<capability>/spec.md` (authentication, family-tree-management, field-encryption, localization, map-visualization, person-management, pwa-support, relationship-management). These specs are the baseline source of truth for behavior — treat `CLAUDE.md`'s architecture prose as a secondary summary, and the specs as canonical when they disagree.
+
+Workflow for new work:
+1. `/opsx:propose "<idea>"` (or `openspec new change <name>`) to start a change — writes `openspec/changes/<name>/proposal.md` plus delta specs under `specs/**/*.md` using `## ADDED/MODIFIED/REMOVED/RENAMED Requirements`.
+2. Implement against `design.md`/`tasks.md` if generated.
+3. `openspec archive <name>` folds the delta specs into `openspec/specs/` and moves the change to `openspec/changes/archive/`.
+
+Run `openspec validate --all` after editing any spec (requirements need SHALL/MUST language and at least one `#### Scenario:` block each). Slash commands live under `.claude/commands/opsx/`; skills under `.claude/skills/`.
 
 The app is deployed on **Vercel** (`vercel.json`):
 
