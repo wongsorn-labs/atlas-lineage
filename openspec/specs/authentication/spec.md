@@ -48,7 +48,7 @@ The system SHALL transparently refresh an expired access token and retry the ori
 
 #### Scenario: Refresh fails
 - **WHEN** the refresh request itself fails or the refresh token is invalid
-- **THEN** the web app redirects the browser to `/login`
+- **THEN** the original request rejects without retrying; the app has no dedicated `/login` route, so it relies on `user` being cleared (e.g. by the initial `/auth/me` check on boot, which goes through this same refresh path) to fall back to rendering `LoginPage` rather than forcing a hard navigation
 
 #### Scenario: Concurrent 401s share a single refresh
 - **WHEN** multiple requests receive `401` while a refresh is already in flight

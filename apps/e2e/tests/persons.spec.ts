@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { clearDatabase } from './helpers';
+import { clearDatabase, loginTestUser } from './helpers';
+import { API_URL } from '../e2e.config';
 
-const API = 'http://localhost:3001/api';
-
-test.beforeEach(async ({ request }) => {
-  await clearDatabase(request);
+test.beforeEach(async ({ context }) => {
+  await loginTestUser(context.request);
+  await clearDatabase(context.request);
 });
 
 test('add person — visible in sidebar', async ({ page }) => {
@@ -17,8 +17,8 @@ test('add person — visible in sidebar', async ({ page }) => {
   await expect(page.getByText('Ada Lovelace')).toBeVisible();
 });
 
-test('edit person — new name visible', async ({ page, request }) => {
-  await request.post(`${API}/persons`, { data: { name: 'Ada Lovelace' } });
+test('edit person — new name visible', async ({ page, context }) => {
+  await context.request.post(`${API_URL}/persons`, { data: { name: 'Ada Lovelace' } });
   await page.goto('/');
   await page.getByText('Ada Lovelace').click();
   await page.getByTestId('edit-person-button').click();
@@ -27,8 +27,8 @@ test('edit person — new name visible', async ({ page, request }) => {
   await expect(page.getByText('Ada Byron')).toBeVisible();
 });
 
-test('delete person — name disappears', async ({ page, request }) => {
-  await request.post(`${API}/persons`, { data: { name: 'Grace Hopper' } });
+test('delete person — name disappears', async ({ page, context }) => {
+  await context.request.post(`${API_URL}/persons`, { data: { name: 'Grace Hopper' } });
   await page.goto('/');
   await page.getByText('Grace Hopper').click();
   page.once('dialog', (dialog) => dialog.accept());

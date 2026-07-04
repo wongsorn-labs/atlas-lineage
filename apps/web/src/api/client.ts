@@ -11,8 +11,19 @@ import type {
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
-let isRefreshing = false;
-let refreshQueue: Array<() => void> = [];
+let refreshPromise: Promise<boolean> | null = null;
+
+function refreshSession(): Promise<boolean> {
+  if (!refreshPromise) {
+    refreshPromise = fetch(`${BASE}/auth/refresh`, { method: 'POST', credentials: 'include' })
+      .then((res) => res.ok)
+      .catch(() => false)
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+}
 
 async function request<T>(url: string, options?: RequestInit, retry = true): Promise<T> {
   const res = await fetch(`${BASE}${url}`, {
@@ -22,28 +33,14 @@ async function request<T>(url: string, options?: RequestInit, retry = true): Pro
   });
 
   if (res.status === 401 && retry) {
-    if (isRefreshing) {
-      return new Promise<T>((resolve) => {
-        refreshQueue.push(() => resolve(request<T>(url, options, false)));
-      });
-    }
-    isRefreshing = true;
-    try {
-      const refreshRes = await fetch(`${BASE}/auth/refresh`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      if (!refreshRes.ok) throw new Error('Refresh failed');
-      refreshQueue.forEach((fn) => fn());
-      refreshQueue = [];
-      return request<T>(url, options, false);
-    } catch {
-      refreshQueue = [];
-      window.location.href = '/login';
-      throw new Error('Session expired');
-    } finally {
-      isRefreshing = false;
-    }
+    // Concurrent 401s share the same in-flight refresh instead of each
+    // issuing their own; every caller (including the initial session check
+    // on app boot) just sees a rejected promise on failure and reacts to
+    // that — there's no dedicated /login route to force-navigate to, the
+    // app already renders LoginPage whenever `user` is null.
+    const refreshed = await refreshSession();
+    if (refreshed) return request<T>(url, options, false);
+    throw new Error('Session expired');
   }
 
   if (!res.ok) {
