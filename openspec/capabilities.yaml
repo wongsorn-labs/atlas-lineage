@@ -29,6 +29,14 @@ capabilities:
     spec: specs/map-visualization/spec.md
     requirements: 4
     status: implemented
+    notes: >-
+      react-leaflet@4.2.1 doesn't officially support React 19 and crashes
+      MapContainer under React StrictMode's dev-mode double-invoke ("Map
+      container is already initialized"). Worked around by dropping
+      StrictMode app-wide in main.tsx; the proper fix is upgrading
+      react-leaflet to a React 19-compatible release and re-enabling it.
+    issues:
+      - https://github.com/wongsorn-labs/atlas-lineage/issues/12
 
   - name: authentication
     spec: specs/authentication/spec.md
