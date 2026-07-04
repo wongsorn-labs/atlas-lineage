@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { clearDatabase, loginTestUser } from './helpers';
-import { API_URL } from '../e2e.config';
+import { API_URL, DEFAULT_TREE_ID } from '../e2e.config';
 
 test.beforeEach(async ({ context }) => {
   await loginTestUser(context.request);
@@ -8,8 +8,10 @@ test.beforeEach(async ({ context }) => {
 });
 
 test('add relationship — badge visible', async ({ page, context }) => {
-  const ada = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Ada' } })).json();
-  await context.request.post(`${API_URL}/persons`, { data: { name: 'Charles' } });
+  const ada = await (
+    await context.request.post(`${API_URL}/persons`, { data: { treeId: DEFAULT_TREE_ID, name: 'Ada' } })
+  ).json();
+  await context.request.post(`${API_URL}/persons`, { data: { treeId: DEFAULT_TREE_ID, name: 'Charles' } });
 
   await page.goto('/');
   await page.getByText('Ada').click();
@@ -27,10 +29,14 @@ test('add relationship — badge visible', async ({ page, context }) => {
 });
 
 test('delete relationship — badge gone', async ({ page, context }) => {
-  const ada = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Ada' } })).json();
-  const charles = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Charles' } })).json();
+  const ada = await (
+    await context.request.post(`${API_URL}/persons`, { data: { treeId: DEFAULT_TREE_ID, name: 'Ada' } })
+  ).json();
+  const charles = await (
+    await context.request.post(`${API_URL}/persons`, { data: { treeId: DEFAULT_TREE_ID, name: 'Charles' } })
+  ).json();
   await context.request.post(`${API_URL}/relationships`, {
-    data: { personId: ada.id, relatedPersonId: charles.id, type: 'spouse' },
+    data: { treeId: DEFAULT_TREE_ID, personId: ada.id, relatedPersonId: charles.id, type: 'spouse' },
   });
 
   await page.goto('/');

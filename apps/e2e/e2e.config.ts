@@ -1,6 +1,11 @@
 export const API_URL = 'http://localhost:3001/api';
 export const MOCK_SUPABASE_PORT = 54331;
 
+// Every user auto-claims membership of this pre-seeded tree on first sign-in
+// (see claimDefaultTree in packages/db/src/queries/trees.ts); the web app
+// scopes all its requests to it too, since there's no tree-selection UI yet.
+export const DEFAULT_TREE_ID = 1;
+
 export const E2E_TEST_EMAIL = process.env.E2E_TEST_EMAIL ?? 'e2e@atlaslineage.test';
 export const E2E_TEST_PASSWORD = process.env.E2E_TEST_PASSWORD ?? 'Test-Password-123!';
 
