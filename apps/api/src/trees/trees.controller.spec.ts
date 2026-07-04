@@ -36,4 +36,12 @@ describe('TreesController', () => {
     expect(mockTreesService.getTreesForUser).toHaveBeenCalledWith('user-1');
     expect(result).toEqual([]);
   });
+
+  it('addMember delegates to the service', async () => {
+    const body = { userId: 'user-2', role: 'editor' } as any;
+    mockTreesService.addMember.mockResolvedValue({ id: 1, treeId: 5, userId: 'user-2', role: 'editor' });
+    const result = await controller.addMember(5, body);
+    expect(mockTreesService.addMember).toHaveBeenCalledWith(5, body);
+    expect(result).toMatchObject({ userId: 'user-2', role: 'editor' });
+  });
 });

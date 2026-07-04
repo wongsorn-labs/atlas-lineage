@@ -2,6 +2,7 @@ export type RelationshipType = 'parent' | 'child' | 'sibling' | 'spouse' | 'part
 
 export interface Person {
   id: number;
+  treeId: number;
   name: string;
   birthYear: number | null;
   deathYear: number | null;
@@ -15,6 +16,7 @@ export interface Person {
 
 export interface Relationship {
   id: number;
+  treeId: number;
   personId: number;
   relatedPersonId: number;
   type: RelationshipType;
@@ -22,6 +24,7 @@ export interface Relationship {
 }
 
 export interface CreatePersonInput {
+  treeId: number;
   name: string;
   birthYear?: number | null;
   deathYear?: number | null;
@@ -31,9 +34,10 @@ export interface CreatePersonInput {
   notes?: string | null;
 }
 
-export type UpdatePersonInput = Partial<CreatePersonInput>;
+export type UpdatePersonInput = Partial<Omit<CreatePersonInput, 'treeId'>>;
 
 export interface CreateRelationshipInput {
+  treeId: number;
   personId: number;
   relatedPersonId: number;
   type: RelationshipType;

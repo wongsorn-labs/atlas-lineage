@@ -1,7 +1,7 @@
 # family-tree-management Specification
 
 ## Purpose
-Model family trees and per-tree membership roles (owner/editor/viewer), including the default-tree auto-claim flow and the current gap where those roles are not yet enforced on person/relationship data.
+Model family trees and per-tree membership roles (owner/editor/viewer), including the default-tree auto-claim flow, and enforce those roles on the endpoints that hold person/relationship data.
 ## Requirements
 ### Requirement: Create Family Tree
 The system SHALL allow an authenticated user to create a family tree, automatically making the creator its owner.
@@ -39,14 +39,26 @@ The system SHALL let the first user who signs in claim ownership of the pre-seed
 - **WHEN** a user signs in and the default tree already has an owner
 - **THEN** the system does not change the tree's `ownerId`, and only ensures the signing-in user has an `owner` membership row (idempotent no-op if the tree ownership condition isn't met)
 
-### Requirement: Role Hierarchy Is Defined But Not Enforced On Data Endpoints
-The system SHALL define an `owner > editor > viewer` role hierarchy via `TreeMemberGuard` and a `RequireRoles` decorator; however, as implemented today, no controller route MUST be considered role-protected unless it explicitly applies that guard — and currently none do.
+### Requirement: Role Hierarchy Is Enforced On Data Endpoints
+The system SHALL define an `owner > editor > viewer` role hierarchy via `TreeMemberGuard` and a `RequireRoles` decorator, and SHALL apply that guard to every route that reads or writes person/relationship data, scoping every query by `treeId`.
 
-#### Scenario: Guard exists but is unused
-- **WHEN** examining `TreesController`, `PersonsController`, and `RelationshipsController`
-- **THEN** none of them apply `@UseGuards(TreeMemberGuard)` or `@RequireRoles(...)` — only `SupabaseAuthGuard` (authentication, not authorization) guards these routes
+#### Scenario: Persons and relationships endpoints require tree membership
+- **WHEN** examining `PersonsController` and `RelationshipsController`
+- **THEN** both apply `@UseGuards(SupabaseAuthGuard, TreeMemberGuard)`, requiring a `treeId` (route param, query param, or body field, depending on the route) and denying requests from users without a `tree_members` row for that tree
 
-#### Scenario: Persons and relationships are not tree-scoped
-- **WHEN** any authenticated user (regardless of tree membership or role) calls the persons or relationships endpoints
-- **THEN** the request succeeds against the entire dataset, because `packages/db/src/queries/persons.ts` and `relationships.ts` do not filter by `treeId` and no route enforces tree membership
+#### Scenario: Reads require viewer role or higher, writes require editor role or higher
+- **WHEN** a user with only `viewer` role on a tree calls a write endpoint (`POST`/`PATCH`/`DELETE` on persons or relationships)
+- **THEN** the system returns 403 Forbidden; the same user calling a read endpoint (`GET`) on that tree succeeds
+
+#### Scenario: Data queries are scoped by treeId
+- **WHEN** any persons or relationships query runs (`findAllPersons`, `findPersonById`, `updatePerson`, `deletePerson`, `findAllRelationships`, `findRelationshipsByPerson`, `deleteRelationship`)
+- **THEN** the query filters by `tree_id`, so rows belonging to a different tree are never returned or mutated, even if the caller supplies a valid id for a row in another tree
+
+#### Scenario: Relationships cannot link persons across trees
+- **WHEN** a client POSTs `/api/relationships` with a `treeId` and a `personId`/`relatedPersonId` where either person does not belong to that tree
+- **THEN** the system returns 404 Not Found and does not create the relationship
+
+#### Scenario: Adding a tree member requires the owner role
+- **WHEN** a client POSTs `/api/trees/:treeId/members`
+- **THEN** the system applies `@UseGuards(TreeMemberGuard)` with `@RequireRoles('owner')`, rejecting the request with 403 Forbidden unless the caller is an `owner` of that tree
 

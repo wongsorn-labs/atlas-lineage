@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../api/client';
-import type { CreatePersonInput, UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
+import { api, type CreatePersonRequest } from '../api/client';
+import type { UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 const KEY = ['persons'] as const;
 
@@ -11,7 +11,7 @@ export function usePersons() {
 export function useCreatePerson() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreatePersonInput) => api.persons.create(data),
+    mutationFn: (data: CreatePersonRequest) => api.persons.create(data),
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }

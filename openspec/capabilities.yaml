@@ -56,11 +56,12 @@ capabilities:
   - name: family-tree-management
     spec: specs/family-tree-management/spec.md
     requirements: 5
-    status: gap
+    status: implemented
     notes: >-
-      Role hierarchy (owner/editor/viewer via TreeMemberGuard) is defined but
-      not enforced on the persons/relationships endpoints; those queries are
-      not scoped by treeId. See the "Role Hierarchy Is Defined But Not
-      Enforced On Data Endpoints" requirement in the spec.
-    issues:
-      - https://github.com/wongsorn-labs/atlas-lineage/issues/9
+      TreeMemberGuard + @RequireRoles(...) are now applied to
+      PersonsController, RelationshipsController, and the
+      POST /trees/:treeId/members endpoint. persons/relationships queries are
+      scoped by treeId (see the "Role Hierarchy Is Enforced On Data
+      Endpoints" requirement). The web frontend does not yet send a treeId
+      on these requests (no tree-selection UI exists), so it needs a
+      follow-up before it works against this API again.

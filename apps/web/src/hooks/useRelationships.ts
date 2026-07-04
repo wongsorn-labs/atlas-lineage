@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../api/client';
-import type { CreateRelationshipInput } from '@wongsorn-labs/atlas-lineage-shared';
+import { api, type CreateRelationshipRequest } from '../api/client';
 
 const KEY = ['relationships'] as const;
 
@@ -11,7 +10,7 @@ export function useRelationships() {
 export function useCreateRelationship() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateRelationshipInput) => api.relationships.create(data),
+    mutationFn: (data: CreateRelationshipRequest) => api.relationships.create(data),
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }
