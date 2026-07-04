@@ -1,0 +1,58 @@
+# Capability status tracker for Atlas Lineage.
+#
+# Mirrors openspec/specs/<capability>/spec.md but adds an implementation
+# status that OpenSpec itself doesn't track. Update this file as part of
+# `openspec archive` whenever a capability is added or its status changes
+# (see the "Spec-Driven Development (OpenSpec)" section in CLAUDE.md).
+#
+# status values: implemented | gap | in-progress | planned
+
+updated: 2026-07-04
+
+capabilities:
+  - name: person-management
+    spec: specs/person-management/spec.md
+    requirements: 5
+    status: implemented
+
+  - name: relationship-management
+    spec: specs/relationship-management/spec.md
+    requirements: 4
+    status: implemented
+
+  - name: field-encryption
+    spec: specs/field-encryption/spec.md
+    requirements: 4
+    status: implemented
+
+  - name: map-visualization
+    spec: specs/map-visualization/spec.md
+    requirements: 4
+    status: implemented
+
+  - name: authentication
+    spec: specs/authentication/spec.md
+    requirements: 7
+    status: implemented
+
+  - name: localization
+    spec: specs/localization/spec.md
+    requirements: 2
+    status: implemented
+
+  - name: pwa-support
+    spec: specs/pwa-support/spec.md
+    requirements: 3
+    status: implemented
+
+  - name: family-tree-management
+    spec: specs/family-tree-management/spec.md
+    requirements: 5
+    status: gap
+    notes: >-
+      Role hierarchy (owner/editor/viewer via TreeMemberGuard) is defined but
+      not enforced on the persons/relationships endpoints; those queries are
+      not scoped by treeId. See the "Role Hierarchy Is Defined But Not
+      Enforced On Data Endpoints" requirement in the spec.
+    issues:
+      - https://github.com/wongsorn-labs/atlas-lineage/issues/9
