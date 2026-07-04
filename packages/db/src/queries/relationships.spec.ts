@@ -1,10 +1,10 @@
-import { eq, or } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { relationships } from '../schema';
 import { findRelationshipsByPerson } from './relationships';
 
 const mockRows = [
-  { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: new Date('2024-01-01') },
-  { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: new Date('2024-01-01') },
+  { id: 1, treeId: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: new Date('2024-01-01') },
+  { id: 2, treeId: 1, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: new Date('2024-01-01') },
 ];
 
 jest.mock('../client', () => {
@@ -19,7 +19,8 @@ jest.mock('drizzle-orm', () => {
   return {
     ...actual,
     eq: jest.fn((column, value) => ({ column, value })),
-    or: jest.fn((...conditions) => ({ conditions })),
+    or: jest.fn((...conditions) => ({ type: 'or', conditions })),
+    and: jest.fn((...conditions) => ({ type: 'and', conditions })),
   };
 });
 
@@ -38,18 +39,23 @@ describe('relationship queries', () => {
     clientMock.__select.mockReturnValue({ from: clientMock.__from });
   });
 
-  it('finds relationships where the person is on either side', async () => {
-    const result = await findRelationshipsByPerson(1);
+  it('finds relationships where the person is on either side, scoped to the tree', async () => {
+    const result = await findRelationshipsByPerson(1, 5);
 
+    expect(eq).toHaveBeenCalledWith(relationships.treeId, 5);
     expect(eq).toHaveBeenCalledWith(relationships.personId, 1);
     expect(eq).toHaveBeenCalledWith(relationships.relatedPersonId, 1);
     expect(or).toHaveBeenCalledWith(
       { column: relationships.personId, value: 1 },
       { column: relationships.relatedPersonId, value: 1 },
     );
+    expect(and).toHaveBeenCalledWith(
+      { column: relationships.treeId, value: 5 },
+      { type: 'or', conditions: [{ column: relationships.personId, value: 1 }, { column: relationships.relatedPersonId, value: 1 }] },
+    );
     expect(result).toEqual([
-      { id: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: '2024-01-01T00:00:00.000Z' },
-      { id: 2, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: '2024-01-01T00:00:00.000Z' },
+      { id: 1, treeId: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: '2024-01-01T00:00:00.000Z' },
+      { id: 2, treeId: 1, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: '2024-01-01T00:00:00.000Z' },
     ]);
   });
 });
