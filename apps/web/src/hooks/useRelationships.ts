@@ -11,7 +11,7 @@ export function useRelationships() {
 export function useCreateRelationship() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateRelationshipInput) => api.relationships.create(data),
+    mutationFn: (data: Omit<CreateRelationshipInput, 'treeId'>) => api.relationships.create(data),
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }

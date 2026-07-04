@@ -11,7 +11,7 @@ export function usePersons() {
 export function useCreatePerson() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreatePersonInput) => api.persons.create(data),
+    mutationFn: (data: Omit<CreatePersonInput, 'treeId'>) => api.persons.create(data),
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }
