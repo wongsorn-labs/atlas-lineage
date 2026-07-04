@@ -1,5 +1,5 @@
 import type { APIRequestContext } from '@playwright/test';
-import { API_URL, E2E_TEST_EMAIL, E2E_TEST_PASSWORD } from '../e2e.config';
+import { API_URL, DEFAULT_TREE_ID, E2E_TEST_EMAIL, E2E_TEST_PASSWORD } from '../e2e.config';
 
 export async function loginTestUser(request: APIRequestContext) {
   const res = await request.post(`${API_URL}/auth/login`, {
@@ -11,12 +11,12 @@ export async function loginTestUser(request: APIRequestContext) {
 }
 
 export async function clearDatabase(request: APIRequestContext) {
-  const rels = await (await request.get(`${API_URL}/relationships`)).json();
+  const rels = await (await request.get(`${API_URL}/relationships?treeId=${DEFAULT_TREE_ID}`)).json();
   for (const r of rels) {
-    await request.delete(`${API_URL}/relationships/${r.id}`);
+    await request.delete(`${API_URL}/relationships/${r.id}?treeId=${DEFAULT_TREE_ID}`);
   }
-  const persons = await (await request.get(`${API_URL}/persons`)).json();
+  const persons = await (await request.get(`${API_URL}/persons?treeId=${DEFAULT_TREE_ID}`)).json();
   for (const p of persons) {
-    await request.delete(`${API_URL}/persons/${p.id}`);
+    await request.delete(`${API_URL}/persons/${p.id}?treeId=${DEFAULT_TREE_ID}`);
   }
 }
