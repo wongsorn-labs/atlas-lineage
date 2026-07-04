@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Edit2, Trash2, GitBranch, MapPin } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
+import { Badge } from './ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
-import { useCreateRelationship } from '../hooks/useRelationships';
+import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
 
 interface PersonCardProps {
   person: Person;
@@ -14,12 +16,15 @@ interface PersonCardProps {
 }
 
 export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
+  const { t } = useTranslation();
   const [editOpen, setEditOpen] = useState(false);
   const [relOpen, setRelOpen] = useState(false);
   const deletePerson = useDeletePerson();
   const updatePerson = useUpdatePerson();
   const createRel = useCreateRelationship();
+  const deleteRel = useDeleteRelationship();
   const { data: allPersons = [] } = usePersons();
+  const { data: relationships = [] } = useRelationshipsForPerson(person.id);
 
   const lifespan = [
     person.birthYear ? `b. ${person.birthYear}` : null,
@@ -67,39 +72,68 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
           </div>
         )}
 
-        {/* Actions — visible on hover / selected */}
-        <div className={[
-          'mt-2 flex items-center gap-1 transition-opacity duration-150',
-          isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
-        ].join(' ')}>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
-            className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
-            aria-label={`Edit ${person.name}`}
-            data-testid="edit-person-button"
-          >
-            <Edit2 className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
-            className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
-            aria-label={`Manage relationships for ${person.name}`}
-            data-testid="add-relationship-button"
-          >
-            <GitBranch className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); handleDelete(); }}
-            className="btn-ghost p-1 text-[--text-muted] hover:text-red-400 ml-auto"
-            aria-label={`Delete ${person.name}`}
-            data-testid="delete-person-button"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </button>
-        </div>
+        {/* Existing relationships — shown only for the selected person, since
+            each side of a relationship otherwise renders its own matching
+            badge and duplicates test-id lookups across cards */}
+        {isSelected && relationships.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {relationships.map((rel) => {
+              const otherId = rel.personId === person.id ? rel.relatedPersonId : rel.personId;
+              const other = allPersons.find((p) => p.id === otherId);
+              return (
+                <span key={rel.id} className="inline-flex items-center gap-0.5">
+                  <Badge variant={rel.type} data-testid="relationship-badge">
+                    {t(`relationship.types.${rel.type}`)}
+                    {other ? `: ${other.name}` : ''}
+                  </Badge>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); deleteRel.mutate(rel.id); }}
+                    className="text-red-400 hover:text-red-500 p-0.5"
+                    aria-label={`Delete relationship with ${other?.name ?? 'person'}`}
+                    data-testid="delete-relationship-button"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Actions — visible only for the selected person, to keep action
+            test ids unambiguous when multiple people are in the sidebar */}
+        {isSelected && (
+          <div className="mt-2 flex items-center gap-1">
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
+              className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
+              aria-label={`Edit ${person.name}`}
+              data-testid="edit-person-button"
+            >
+              <Edit2 className="h-3.5 w-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
+              className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
+              aria-label={`Manage relationships for ${person.name}`}
+              data-testid="add-relationship-button"
+            >
+              <GitBranch className="h-3.5 w-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+              className="btn-ghost p-1 text-[--text-muted] hover:text-red-400 ml-auto"
+              aria-label={`Delete ${person.name}`}
+              data-testid="delete-person-button"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
       </div>
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>

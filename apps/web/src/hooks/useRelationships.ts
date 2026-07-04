@@ -7,6 +7,13 @@ export function useRelationships() {
   return useQuery({ queryKey: KEY, queryFn: api.relationships.list });
 }
 
+export function useRelationshipsForPerson(personId: number) {
+  return useQuery({
+    queryKey: [...KEY, 'person', personId],
+    queryFn: () => api.relationships.byPerson(personId),
+  });
+}
+
 export function useCreateRelationship() {
   const qc = useQueryClient();
   return useMutation({
