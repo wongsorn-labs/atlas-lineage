@@ -143,12 +143,19 @@ The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `s
 
 This repo uses [OpenSpec](https://github.com/Fission-AI/OpenSpec) for spec-driven development. Capability specs describing current system behavior live in `openspec/specs/<capability>/spec.md` (authentication, family-tree-management, field-encryption, localization, map-visualization, person-management, pwa-support, relationship-management). These specs are the baseline source of truth for behavior — treat `CLAUDE.md`'s architecture prose as a secondary summary, and the specs as canonical when they disagree.
 
+`openspec/capabilities.yaml` is a status tracker layered on top of the specs (implementation status, linked GitHub issues) that OpenSpec itself doesn't capture — see "Capability status" below.
+
 Workflow for new work:
 1. `/opsx:propose "<idea>"` (or `openspec new change <name>`) to start a change — writes `openspec/changes/<name>/proposal.md` plus delta specs under `specs/**/*.md` using `## ADDED/MODIFIED/REMOVED/RENAMED Requirements`.
 2. Implement against `design.md`/`tasks.md` if generated.
 3. `openspec archive <name>` folds the delta specs into `openspec/specs/` and moves the change to `openspec/changes/archive/`.
+4. Update `openspec/capabilities.yaml`: add new capabilities, bump `requirements` counts, and flip `status` (`implemented`/`gap`/`in-progress`/`planned`) to match what was just archived. This step is manual — the OpenSpec CLI has no hook to do it automatically.
 
 Run `openspec validate --all` after editing any spec (requirements need SHALL/MUST language and at least one `#### Scenario:` block each). Slash commands live under `.claude/commands/opsx/`; skills under `.claude/skills/`.
+
+### Capability status
+
+`openspec/capabilities.yaml` tracks, per capability: requirement count, `status`, and any linked GitHub issues/notes for known gaps. As of the last update, 7 of 8 capabilities are `implemented`; `family-tree-management` is `gap` (role enforcement defined but not wired into the persons/relationships endpoints — tracked in issue #9).
 
 The app is deployed on **Vercel** (`vercel.json`):
 
