@@ -17,6 +17,9 @@ const BASE = '/api';
 const DEFAULT_TREE_ID = 1;
 let refreshPromise: Promise<boolean> | null = null;
 
+export type CreatePersonRequest = Omit<CreatePersonInput, 'treeId'>;
+export type CreateRelationshipRequest = Omit<CreateRelationshipInput, 'treeId'>;
+
 function refreshSession(): Promise<boolean> {
   if (!refreshPromise) {
     refreshPromise = fetch(`${BASE}/auth/refresh`, { method: 'POST', credentials: 'include' })
@@ -75,7 +78,7 @@ export const api = {
   persons: {
     list: () => request<Person[]>(`/persons?treeId=${DEFAULT_TREE_ID}`),
     get: (id: number) => request<Person>(`/persons/${id}?treeId=${DEFAULT_TREE_ID}`),
-    create: (data: Omit<CreatePersonInput, 'treeId'>) =>
+    create: (data: CreatePersonRequest) =>
       request<Person>('/persons', {
         method: 'POST',
         body: JSON.stringify({ ...data, treeId: DEFAULT_TREE_ID }),
@@ -91,7 +94,7 @@ export const api = {
     list: () => request<Relationship[]>(`/relationships?treeId=${DEFAULT_TREE_ID}`),
     byPerson: (personId: number) =>
       request<Relationship[]>(`/relationships/person/${personId}?treeId=${DEFAULT_TREE_ID}`),
-    create: (data: Omit<CreateRelationshipInput, 'treeId'>) =>
+    create: (data: CreateRelationshipRequest) =>
       request<Relationship>('/relationships', {
         method: 'POST',
         body: JSON.stringify({ ...data, treeId: DEFAULT_TREE_ID }),
