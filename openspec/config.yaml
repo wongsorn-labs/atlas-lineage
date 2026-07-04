@@ -1,0 +1,27 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  Atlas Lineage: map-based genealogy app. Persons placed on a Leaflet world map by
+  birth coordinates; relationships drawn as lines between markers.
+
+  Tech stack: pnpm monorepo, NestJS REST API + PostgreSQL/Drizzle ORM (apps/api,
+  packages/db), React 19 + Vite SPA (apps/web), shared Zod schemas/types
+  (packages/shared), Playwright e2e (apps/e2e). Auth via Supabase (email/password +
+  Google OAuth) with httpOnly cookie sessions. Multi-tenant family trees with
+  owner/editor/viewer roles exist in the schema but are not yet enforced on the
+  persons/relationships endpoints (see family-tree-management spec).
+
+  Conventions: Conventional Commits enforced by commitlint + lefthook
+  (type(scope): subject; scopes: api/web/db/e2e/shared). TypeScript strict mode,
+  no `any`. birthPlace/notes are AES-256-GCM encrypted at rest.
+
+# Per-artifact rules (optional)
+rules:
+  specs:
+    - Describe requirements in terms of the actual API routes, DTOs, and DB
+      behavior in apps/api, packages/db, and apps/web — verify against code,
+      not just CLAUDE.md (it can drift out of date).
+    - Call out known gaps/tech debt explicitly as their own requirement rather
+      than silently describing intended-but-unimplemented behavior.
