@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
-import { clearDatabase } from './helpers';
+import { clearDatabase, loginTestUser } from './helpers';
+import { API_URL } from '../e2e.config';
 
-const API = 'http://localhost:3001/api';
-
-test.beforeEach(async ({ request }) => {
-  await clearDatabase(request);
+test.beforeEach(async ({ context }) => {
+  await loginTestUser(context.request);
+  await clearDatabase(context.request);
 });
 
-test('add relationship — badge visible', async ({ page, request }) => {
-  const ada = await (await request.post(`${API}/persons`, { data: { name: 'Ada' } })).json();
-  await request.post(`${API}/persons`, { data: { name: 'Charles' } });
+test('add relationship — badge visible', async ({ page, context }) => {
+  const ada = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Ada' } })).json();
+  await context.request.post(`${API_URL}/persons`, { data: { name: 'Charles' } });
 
   await page.goto('/');
   await page.getByText('Ada').click();
@@ -26,10 +26,10 @@ test('add relationship — badge visible', async ({ page, request }) => {
   void ada; // suppress unused warning
 });
 
-test('delete relationship — badge gone', async ({ page, request }) => {
-  const ada = await (await request.post(`${API}/persons`, { data: { name: 'Ada' } })).json();
-  const charles = await (await request.post(`${API}/persons`, { data: { name: 'Charles' } })).json();
-  await request.post(`${API}/relationships`, {
+test('delete relationship — badge gone', async ({ page, context }) => {
+  const ada = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Ada' } })).json();
+  const charles = await (await context.request.post(`${API_URL}/persons`, { data: { name: 'Charles' } })).json();
+  await context.request.post(`${API_URL}/relationships`, {
     data: { personId: ada.id, relatedPersonId: charles.id, type: 'spouse' },
   });
 
