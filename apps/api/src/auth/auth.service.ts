@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { upsertProfile, claimDefaultTree } from '@wongsorn-labs/atlas-lineage-db';
 
@@ -33,6 +33,18 @@ export class AuthService {
       accessToken: data.session.access_token,
       refreshToken: data.session.refresh_token,
       expiresIn: data.session.expires_in,
+    };
+  }
+
+  async exchangeOAuthSession(accessToken: string, refreshToken: string) {
+    const { data, error } = await this.supabase.auth.getUser(accessToken);
+    if (error || !data.user) throw new UnauthorizedException('Invalid or expired session');
+    await upsertProfile(data.user.id, data.user.email!);
+    await claimDefaultTree(data.user.id);
+    return {
+      accessToken,
+      refreshToken,
+      user: { id: data.user.id, email: data.user.email },
     };
   }
 

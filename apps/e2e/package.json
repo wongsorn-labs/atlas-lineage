@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "test:prod": "playwright test --config=playwright.prod.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.0",
+    "@wongsorn-labs/atlas-lineage-shared": "workspace:*",
     "dotenv": "^16.4.5",
     "typescript": "^5.5.0"
   }

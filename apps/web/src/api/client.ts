@@ -64,6 +64,11 @@ export const api = {
       }),
     logout: () => request<{ ok: boolean }>('/auth/logout', { method: 'POST' }),
     me: () => request<{ id: string; email: string }>('/auth/me'),
+    oauthSession: (accessToken: string, refreshToken: string) =>
+      request<{ user: { id: string; email: string } }>('/auth/oauth/session', {
+        method: 'POST',
+        body: JSON.stringify({ accessToken, refreshToken }),
+      }),
   },
   trees: {
     list: () => request<FamilyTreeMembership[]>('/trees'),

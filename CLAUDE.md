@@ -51,6 +51,14 @@ pnpm test:all
 # End-to-end tests only (starts both servers automatically)
 pnpm test:e2e
 
+# Prod smoke e2e: drives the deployed build at PROD_URL (default
+# https://atlas-lineage.vercel.app) over the real network. Auth and
+# GET /trees hit the real API — set E2E_TEST_EMAIL/E2E_TEST_PASSWORD to a
+# real account provisioned in prod. /api/persons and /api/relationships are
+# mocked per-test (apps/e2e/tests/prod/mock-data-api.ts), so no real
+# family-tree data is ever touched.
+pnpm test:e2e:prod
+
 # Database migrations
 pnpm db:generate   # generate SQL from schema changes
 pnpm db:migrate    # apply migrations
@@ -68,6 +76,8 @@ Create `apps/api/.env` (see `apps/api/.env.example` as a starting point — note
 | `CORS_ORIGIN`    | Comma-separated allowed origins for CORS. Defaults to `http://localhost:5173` when unset.                                           |
 
 > **Note:** `apps/api/.env.example` and `apps/e2e/playwright.config.ts` still reference the legacy `DATABASE_PATH` / SQLite variables — they have not been updated since the migration to PostgreSQL. Use `DATABASE_URL` as the authoritative variable name.
+
+> **Google OAuth prerequisite:** for `signInWithGoogle` to complete (see `apps/web/src/pages/AuthCallbackPage.tsx`), the Supabase project must have Google enabled under **Authentication → Providers**, and `${origin}/auth/callback` must be allowlisted per environment under **Authentication → URL Configuration** (e.g. `http://localhost:5173/auth/callback` for local dev, plus the Vercel preview/prod origins). This is dashboard configuration, not code.
 
 ## Architecture
 
@@ -134,6 +144,7 @@ The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `s
 - **API & DB**: Jest + ts-jest. Test files use the `.spec.ts` suffix. NestJS services are tested with `@nestjs/testing`; the db module is mocked with `jest.mock`.
 - **Web**: Vitest + React Testing Library + jsdom. MSW (`src/test/mocks/`) intercepts fetch calls. Setup file: `src/test/setup.ts`.
 - **E2E**: Playwright. Tests live in `apps/e2e/tests/`. The config spins up both the API and web dev servers. `global-setup.ts` runs migrations before the suite. Note: the e2e config currently passes the legacy `DATABASE_PATH` env var; update it to `DATABASE_URL` when running e2e against PostgreSQL.
+- **Prod smoke E2E**: `apps/e2e/playwright.prod.config.ts` runs `apps/e2e/tests/prod/*.spec.ts` against the deployed prod build (no webServer/globalSetup). Auth and `GET /trees` are real; `/api/persons` and `/api/relationships` are mocked in-memory per test via `tests/prod/mock-data-api.ts` (installed through the `mockDataStore`/`signedInPage` fixtures in `tests/prod/fixtures.ts`) so the suite never creates, edits, or deletes real production data. `tests/prod/` is excluded from the regular `playwright.config.ts` run via `testIgnore`.
 
 ### PWA
 
