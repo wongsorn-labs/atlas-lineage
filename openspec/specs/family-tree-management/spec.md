@@ -11,11 +11,11 @@ The system SHALL allow an authenticated user to create a family tree, automatica
 - **THEN** the system creates a `family_trees` row with that user as `ownerId`, inserts a corresponding `tree_members` row with `role = 'owner'`, and returns the created tree
 
 ### Requirement: List Trees for Current User
-The system SHALL allow an authenticated user to list only the family trees they are a member of.
+The system SHALL allow an authenticated user to list only the family trees they are a member of, including their role in each.
 
 #### Scenario: List own trees
 - **WHEN** an authenticated user GETs `/api/trees`
-- **THEN** the system returns every `family_trees` row for which the user has a `tree_members` row, regardless of role
+- **THEN** the system returns every `family_trees` row for which the user has a `tree_members` row, regardless of role, with each returned tree annotated with that user's `role` for it
 
 ### Requirement: Add Tree Member With Role
 The system SHALL allow adding a user to a tree with one of the roles `owner`, `editor`, or `viewer`, upserting the role if the membership already exists.

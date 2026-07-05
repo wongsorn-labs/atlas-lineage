@@ -62,6 +62,10 @@ export interface FamilyTree {
   updatedAt: string;
 }
 
+export interface FamilyTreeMembership extends FamilyTree {
+  role: TreeRole;
+}
+
 export interface TreeMember {
   id: number;
   treeId: number;

@@ -45,5 +45,28 @@
       "partner": "คู่รัก"
     }
   },
+  "tree": {
+    "selectLabel": "เลือกต้นไม้ครอบครัว",
+    "noTreeTitle": "ไม่ได้เลือกต้นไม้ครอบครัว",
+    "noTreeBody": "คุณยังไม่ได้เป็นสมาชิกของต้นไม้ครอบครัวใด ๆ",
+    "createTitle": "สร้างต้นไม้ครอบครัว",
+    "name": "ชื่อ",
+    "description": "คำอธิบาย",
+    "createButton": "สร้างต้นไม้",
+    "cancel": "ยกเลิก",
+    "inviteTitle": "เชิญสมาชิก",
+    "inviteUserId": "รหัสผู้ใช้",
+    "inviteUserIdHelp": "กรอกรหัสบัญชีของผู้ที่ต้องการเชิญ (ไม่ใช่อีเมล)",
+    "inviteUserIdInvalid": "กรอกรหัสผู้ใช้ที่ถูกต้อง",
+    "inviteButton": "ส่งคำเชิญ",
+    "inviteSuccess": "เพิ่มสมาชิกแล้ว",
+    "inviteError": "ไม่สามารถเพิ่มสมาชิกได้",
+    "role": "บทบาท",
+    "roles": {
+      "owner": "เจ้าของ",
+      "editor": "ผู้แก้ไข",
+      "viewer": "ผู้ดู"
+    }
+  },
   "saving": "กำลังบันทึก…"
 }

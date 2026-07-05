@@ -7,7 +7,7 @@
 #
 # status values: implemented | gap | in-progress | planned
 
-updated: 2026-07-04
+updated: 2026-07-05
 
 capabilities:
   - name: person-management
@@ -58,10 +58,16 @@ capabilities:
     requirements: 5
     status: implemented
     notes: >-
-      TreeMemberGuard + @RequireRoles(...) are now applied to
-      PersonsController, RelationshipsController, and the
-      POST /trees/:treeId/members endpoint. persons/relationships queries are
-      scoped by treeId (see the "Role Hierarchy Is Enforced On Data
-      Endpoints" requirement). The web frontend does not yet send a treeId
-      on these requests (no tree-selection UI exists), so it needs a
-      follow-up before it works against this API again.
+      TreeMemberGuard + @RequireRoles(...) are applied to PersonsController,
+      RelationshipsController, and the POST /trees/:treeId/members endpoint.
+      persons/relationships queries are scoped by treeId (see the "Role
+      Hierarchy Is Enforced On Data Endpoints" requirement). The web frontend
+      now has tree-selection UI (issue #17): a TreeProvider/useTree context
+      threads the selected treeId through every persons/relationships
+      request, and Sidebar exposes a tree switcher plus create-tree and
+      invite-member dialogs backed by the existing api.trees.* client
+      methods. GET /trees now also returns each tree annotated with the
+      caller's role, so the invite UI can gate itself to owners. Remaining
+      gaps: no GET /trees/:id/members (list) or remove-member endpoint yet,
+      and inviting a member requires their raw Supabase UUID since there is
+      no lookup-by-email endpoint.

@@ -6,6 +6,8 @@ import { PersonForm } from './PersonForm';
 import { useCreatePerson } from '@/hooks/usePersons';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
+import { useTree } from '../contexts/TreeContext';
+import { TreeSwitcher } from './TreeSwitcher';
 
 interface SidebarProps {
   persons: Person[];
@@ -19,7 +21,8 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
   const [yearTo, setYearTo] = useState('');
   const [addOpen, setAddOpen] = useState(false);
   const { signOut, user } = useAuth();
-  const createPerson = useCreatePerson();
+  const { currentTreeId } = useTree();
+  const createPerson = useCreatePerson(currentTreeId);
 
   const filtered = useMemo(() => {
     return persons.filter((p) => {
@@ -66,6 +69,11 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
             Sign out
           </button>
         </div>
+      </div>
+
+      {/* Tree switcher */}
+      <div className="border-b border-[--border] px-3 py-2">
+        <TreeSwitcher />
       </div>
 
       {/* Search */}
