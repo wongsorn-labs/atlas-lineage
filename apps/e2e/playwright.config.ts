@@ -12,6 +12,9 @@ const VITE_SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY ?? 'e2e-mock-a
 
 export default defineConfig({
   testDir: './tests',
+  // tests/prod/* targets the deployed prod build directly (playwright.prod.config.ts)
+  // and requires real prod credentials — keep it out of the local full-stack run.
+  testIgnore: '**/prod/**',
   use: {
     baseURL: 'http://localhost:5173',
     // Only set when a pinned Playwright browser build must be overridden
