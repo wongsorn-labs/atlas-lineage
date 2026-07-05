@@ -8,6 +8,7 @@ import { useRelationships } from './hooks/useRelationships';
 import { useAuth } from './contexts/AuthContext';
 import { useTree } from './contexts/TreeContext';
 import { LoginPage } from './pages/LoginPage';
+import { AuthCallbackPage } from './pages/AuthCallbackPage';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 
 export default function App() {
@@ -28,6 +29,10 @@ export default function App() {
     const nextSelected = persons.find((person) => person.id === selectedPerson.id) ?? null;
     if (nextSelected !== selectedPerson) setSelectedPerson(nextSelected);
   }, [persons, selectedPerson]);
+
+  if (window.location.pathname === '/auth/callback') {
+    return <AuthCallbackPage />;
+  }
 
   if (authLoading) {
     return (

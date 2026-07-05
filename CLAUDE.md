@@ -77,6 +77,8 @@ Create `apps/api/.env` (see `apps/api/.env.example` as a starting point — note
 
 > **Note:** `apps/api/.env.example` and `apps/e2e/playwright.config.ts` still reference the legacy `DATABASE_PATH` / SQLite variables — they have not been updated since the migration to PostgreSQL. Use `DATABASE_URL` as the authoritative variable name.
 
+> **Google OAuth prerequisite:** for `signInWithGoogle` to complete (see `apps/web/src/pages/AuthCallbackPage.tsx`), the Supabase project must have Google enabled under **Authentication → Providers**, and `${origin}/auth/callback` must be allowlisted per environment under **Authentication → URL Configuration** (e.g. `http://localhost:5173/auth/callback` for local dev, plus the Vercel preview/prod origins). This is dashboard configuration, not code.
+
 ## Architecture
 
 ### Data flow
