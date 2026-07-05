@@ -42,6 +42,20 @@ capabilities:
     spec: specs/authentication/spec.md
     requirements: 7
     status: implemented
+    notes: >-
+      Google OAuth sign-in previously dead-ended: the login page initiated
+      the redirect via signInWithOAuth, but no /auth/callback handler
+      existed to complete it, so api.auth.me() stayed 401 after a real
+      Google sign-in (issue #20). Fixed by adding a callback page
+      (AuthCallbackPage.tsx) that reads the client-side Supabase session
+      Supabase places post-redirect and hands its tokens to a new
+      POST /api/auth/oauth/session endpoint, which mints the same
+      httpOnly cookies the password login flow already produces — one
+      session model for every guarded endpoint, regardless of sign-in
+      method. See the "Google OAuth Sign-In" requirement's added
+      scenarios.
+    issues:
+      - https://github.com/wongsorn-labs/atlas-lineage/issues/20
 
   - name: localization
     spec: specs/localization/spec.md
