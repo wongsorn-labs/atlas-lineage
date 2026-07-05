@@ -205,6 +205,11 @@ ci: update GitHub Actions workflow
 
 **Enforcement:** Commits not matching the pattern are rejected by the `commit-msg` lefthook. Use `git commit -m "type(scope): message"`.
 
+## Agent Workflow Conventions
+
+- **UI changes**: Whenever a change touches `apps/web` UI (components, pages, styles), capture a before/after screenshot pair and send both to the user for comparison. Prefer driving the real app (dev servers + a browser, or a throwaway Playwright script) over describing the change in words only — seed the same test data for both captures so the comparison is apples-to-apples. Clean up any throwaway script/spec file afterward; don't commit it.
+- **Service/flow changes**: Whenever a change alters a service's control flow, request/data flow, or architecture (e.g. new API call sequence, changed auth flow, restructured data pipeline), produce a before/after diagram (e.g. Mermaid) illustrating the flow difference, in addition to the code diff.
+
 ## Agent-Specific Guidance
 
 - **Claude Code** (claude.ai/code): See this file (CLAUDE.md)
