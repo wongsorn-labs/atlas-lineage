@@ -8,6 +8,7 @@ import { PROD_URL } from './prod.e2e.config';
 // (see tests/prod/mock-data-api.ts) so the suite never touches real data.
 export default defineConfig({
   testDir: './tests/prod',
+  reporter: process.env.CI ? [['html', { open: 'never' }], ['github']] : 'list',
   use: {
     baseURL: PROD_URL,
     ...(process.env.PLAYWRIGHT_CHROMIUM_PATH
