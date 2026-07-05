@@ -1,7 +1,7 @@
 import { eq, and, isNull } from 'drizzle-orm';
 import { db } from '../client';
 import { familyTrees, treeMembers, profiles } from '../schema';
-import type { FamilyTree, TreeMember, TreeRole, CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
+import type { FamilyTree, FamilyTreeMembership, TreeMember, TreeRole, CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 function mapTree(row: typeof familyTrees.$inferSelect): FamilyTree {
   return {
@@ -24,13 +24,13 @@ function mapMember(row: typeof treeMembers.$inferSelect): TreeMember {
   };
 }
 
-export async function findTreesByUser(userId: string): Promise<FamilyTree[]> {
+export async function findTreesByUser(userId: string): Promise<FamilyTreeMembership[]> {
   const rows = await db
-    .select({ tree: familyTrees })
+    .select({ tree: familyTrees, role: treeMembers.role })
     .from(treeMembers)
     .innerJoin(familyTrees, eq(treeMembers.treeId, familyTrees.id))
     .where(eq(treeMembers.userId, userId));
-  return rows.map((r) => mapTree(r.tree));
+  return rows.map((r) => ({ ...mapTree(r.tree), role: r.role as TreeRole }));
 }
 
 export async function findTreeById(treeId: number): Promise<FamilyTree | null> {

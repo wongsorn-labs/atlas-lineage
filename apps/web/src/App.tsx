@@ -6,13 +6,15 @@ import { Sidebar } from './components/Sidebar';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
 import { useAuth } from './contexts/AuthContext';
+import { useTree } from './contexts/TreeContext';
 import { LoginPage } from './pages/LoginPage';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 
 export default function App() {
   const { user, isLoading: authLoading } = useAuth();
-  const personsQuery = usePersons();
-  const relationshipsQuery = useRelationships();
+  const { currentTreeId, isLoading: treesLoading } = useTree();
+  const personsQuery = usePersons(currentTreeId);
+  const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const { t } = useTranslation();
 
@@ -39,6 +41,29 @@ export default function App() {
   }
 
   if (!user) return <LoginPage />;
+
+  if (treesLoading) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[--bg-base] text-[--text-muted]">
+        <div className="flex items-center gap-2 text-sm" role="status">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          {t('app.loading')}
+        </div>
+      </div>
+    );
+  }
+
+  if (currentTreeId == null) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[--bg-base] px-6">
+        <div className="glass-card flex max-w-sm flex-col items-center gap-3 p-8 text-center">
+          <AlertCircle className="h-8 w-8 text-[--color-error]" />
+          <h1 className="font-display text-lg font-semibold text-[--text-primary]">{t('tree.noTreeTitle')}</h1>
+          <p className="text-sm text-[--text-secondary]">{t('tree.noTreeBody')}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

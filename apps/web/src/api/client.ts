@@ -5,16 +5,13 @@ import type {
   UpdatePersonInput,
   CreateRelationshipInput,
   FamilyTree,
+  FamilyTreeMembership,
   CreateTreeInput,
   AddTreeMemberInput,
   TreeMember,
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
-// The web app has no tree-selection UI yet; every request is scoped to the
-// single tree every user auto-claims membership of on first sign-in (see
-// claimDefaultTree in packages/db/src/queries/trees.ts).
-const DEFAULT_TREE_ID = 1;
 let refreshPromise: Promise<boolean> | null = null;
 
 export type CreatePersonRequest = Omit<CreatePersonInput, 'treeId'>;
@@ -69,36 +66,36 @@ export const api = {
     me: () => request<{ id: string; email: string }>('/auth/me'),
   },
   trees: {
-    list: () => request<FamilyTree[]>('/trees'),
+    list: () => request<FamilyTreeMembership[]>('/trees'),
     create: (data: CreateTreeInput) =>
       request<FamilyTree>('/trees', { method: 'POST', body: JSON.stringify(data) }),
     addMember: (treeId: number, data: AddTreeMemberInput) =>
       request<TreeMember>(`/trees/${treeId}/members`, { method: 'POST', body: JSON.stringify(data) }),
   },
   persons: {
-    list: () => request<Person[]>(`/persons?treeId=${DEFAULT_TREE_ID}`),
-    get: (id: number) => request<Person>(`/persons/${id}?treeId=${DEFAULT_TREE_ID}`),
-    create: (data: CreatePersonRequest) =>
+    list: (treeId: number) => request<Person[]>(`/persons?treeId=${treeId}`),
+    get: (id: number, treeId: number) => request<Person>(`/persons/${id}?treeId=${treeId}`),
+    create: (data: CreatePersonRequest, treeId: number) =>
       request<Person>('/persons', {
         method: 'POST',
-        body: JSON.stringify({ ...data, treeId: DEFAULT_TREE_ID }),
+        body: JSON.stringify({ ...data, treeId }),
       }),
-    update: (id: number, data: UpdatePersonInput) =>
-      request<Person>(`/persons/${id}?treeId=${DEFAULT_TREE_ID}`, {
+    update: (id: number, data: UpdatePersonInput, treeId: number) =>
+      request<Person>(`/persons/${id}?treeId=${treeId}`, {
         method: 'PATCH',
         body: JSON.stringify(data),
       }),
-    delete: (id: number) => request<void>(`/persons/${id}?treeId=${DEFAULT_TREE_ID}`, { method: 'DELETE' }),
+    delete: (id: number, treeId: number) => request<void>(`/persons/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
   relationships: {
-    list: () => request<Relationship[]>(`/relationships?treeId=${DEFAULT_TREE_ID}`),
-    byPerson: (personId: number) =>
-      request<Relationship[]>(`/relationships/person/${personId}?treeId=${DEFAULT_TREE_ID}`),
-    create: (data: CreateRelationshipRequest) =>
+    list: (treeId: number) => request<Relationship[]>(`/relationships?treeId=${treeId}`),
+    byPerson: (personId: number, treeId: number) =>
+      request<Relationship[]>(`/relationships/person/${personId}?treeId=${treeId}`),
+    create: (data: CreateRelationshipRequest, treeId: number) =>
       request<Relationship>('/relationships', {
         method: 'POST',
-        body: JSON.stringify({ ...data, treeId: DEFAULT_TREE_ID }),
+        body: JSON.stringify({ ...data, treeId }),
       }),
-    delete: (id: number) => request<void>(`/relationships/${id}?treeId=${DEFAULT_TREE_ID}`, { method: 'DELETE' }),
+    delete: (id: number, treeId: number) => request<void>(`/relationships/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
 };

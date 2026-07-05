@@ -8,6 +8,7 @@ import { Badge } from './ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
+import { useTree } from '../contexts/TreeContext';
 
 interface PersonCardProps {
   person: Person;
@@ -19,12 +20,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const { t } = useTranslation();
   const [editOpen, setEditOpen] = useState(false);
   const [relOpen, setRelOpen] = useState(false);
-  const deletePerson = useDeletePerson();
-  const updatePerson = useUpdatePerson();
-  const createRel = useCreateRelationship();
-  const deleteRel = useDeleteRelationship();
-  const { data: allPersons = [] } = usePersons();
-  const { data: relationships = [] } = useRelationshipsForPerson(person.id);
+  const { currentTreeId } = useTree();
+  const deletePerson = useDeletePerson(currentTreeId);
+  const updatePerson = useUpdatePerson(currentTreeId);
+  const createRel = useCreateRelationship(currentTreeId);
+  const deleteRel = useDeleteRelationship(currentTreeId);
+  const { data: allPersons = [] } = usePersons(currentTreeId);
+  const { data: relationships = [] } = useRelationshipsForPerson(person.id, currentTreeId);
 
   const lifespan = [
     person.birthYear ? `b. ${person.birthYear}` : null,

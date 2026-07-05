@@ -37,6 +37,17 @@ describe('TreesController', () => {
     expect(result).toEqual([]);
   });
 
+  it('listTrees returns each tree with the caller\'s role included', async () => {
+    const tree = {
+      id: 1, name: 'Default Tree', description: null, ownerId: 'user-1',
+      createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-01T00:00:00.000Z', role: 'owner',
+    };
+    mockTreesService.getTreesForUser.mockResolvedValue([tree]);
+    const mockReq = { user: { id: 'user-1' } } as any;
+    const result = await controller.listTrees(mockReq);
+    expect(result).toEqual([tree]);
+  });
+
   it('addMember delegates to the service', async () => {
     const body = { userId: 'user-2', role: 'editor' } as any;
     mockTreesService.addMember.mockResolvedValue({ id: 1, treeId: 5, userId: 'user-2', role: 'editor' });

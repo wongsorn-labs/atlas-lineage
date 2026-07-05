@@ -5,6 +5,7 @@ import './i18n';
 import './styles/app.css';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
+import { TreeProvider } from './contexts/TreeContext';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000 } },
@@ -13,7 +14,9 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <App />
+      <TreeProvider>
+        <App />
+      </TreeProvider>
     </AuthProvider>
   </QueryClientProvider>,
 );

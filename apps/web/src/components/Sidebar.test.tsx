@@ -8,6 +8,14 @@ vi.mock('../contexts/AuthContext', () => ({
   useAuth: () => ({ signOut: vi.fn(), user: { email: 'test@test.com' } }),
 }));
 
+vi.mock('../contexts/TreeContext', () => ({
+  useTree: () => ({ currentTreeId: 1 }),
+}));
+
+vi.mock('./TreeSwitcher', () => ({
+  TreeSwitcher: () => <div data-testid="tree-switcher" />,
+}));
+
 vi.mock('./PersonCard', () => ({
   PersonCard: ({ person }: { person: Person }) => (
     <div data-testid={`person-item-${person.id}`}>{person.name}</div>
