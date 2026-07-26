@@ -14,7 +14,7 @@ export class SupabaseAuthGuard implements CanActivate {
 
     const supabase = createClient(
       process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      process.env.SUPABASE_SECRET_KEY!,
     );
     const { data, error } = await supabase.auth.getUser(token);
     if (error || !data.user) throw new UnauthorizedException('Invalid or expired token');
