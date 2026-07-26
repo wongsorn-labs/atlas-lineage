@@ -1,7 +1,7 @@
 # map-visualization Specification
 
 ## Purpose
-Render persons and their relationships on a Leaflet world map, plotting markers by birth coordinates and connecting related persons with typed, colored lines.
+Render persons and their relationships on a Leaflet world map, plotting markers by birth coordinates and connecting related persons with typed, colored lines. The initial view (center/zoom, tile style) is user-configurable — see the "appearance" capability for the default-country and theme-toggle requirements that drive it.
 ## Requirements
 ### Requirement: Render Person Markers on a World Map
 The system SHALL render a marker for every person who has both a non-null `birthLat` and `birthLng`, and SHALL omit persons missing either coordinate.
