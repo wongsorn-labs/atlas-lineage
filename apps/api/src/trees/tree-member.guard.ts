@@ -1,5 +1,5 @@
 import {
-  CanActivate, ExecutionContext, Injectable, ForbiddenException, NotFoundException,
+  CanActivate, ExecutionContext, Injectable, BadRequestException, ForbiddenException, NotFoundException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { TreesService } from './trees.service';
@@ -24,7 +24,7 @@ export class TreeMemberGuard implements CanActivate {
     if (!userId) throw new ForbiddenException('No authenticated user');
 
     const treeId = Number(req.params.treeId ?? req.body?.treeId ?? req.query.treeId);
-    if (!treeId || isNaN(treeId)) return true;
+    if (!treeId || isNaN(treeId)) throw new BadRequestException('treeId is required');
 
     const role = await this.treesService.getMemberRole(treeId, userId);
     if (!role) throw new NotFoundException('Tree not found or no access');

@@ -1,7 +1,12 @@
-import { IsString, IsNumber, IsOptional, Min, Max, IsInt, MinLength } from 'class-validator';
+import { IsString, IsNumber, IsOptional, Min, Max, IsInt, IsPositive, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreatePersonDto {
+  @IsInt()
+  @IsPositive()
+  @Type(() => Number)
+  treeId: number;
+
   @IsString()
   @MinLength(1)
   name: string;

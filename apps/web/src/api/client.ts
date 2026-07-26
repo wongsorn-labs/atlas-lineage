@@ -5,14 +5,29 @@ import type {
   UpdatePersonInput,
   CreateRelationshipInput,
   FamilyTree,
+  FamilyTreeMembership,
   CreateTreeInput,
   AddTreeMemberInput,
   TreeMember,
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
-let isRefreshing = false;
-let refreshQueue: Array<() => void> = [];
+let refreshPromise: Promise<boolean> | null = null;
+
+export type CreatePersonRequest = Omit<CreatePersonInput, 'treeId'>;
+export type CreateRelationshipRequest = Omit<CreateRelationshipInput, 'treeId'>;
+
+function refreshSession(): Promise<boolean> {
+  if (!refreshPromise) {
+    refreshPromise = fetch(`${BASE}/auth/refresh`, { method: 'POST', credentials: 'include' })
+      .then((res) => res.ok)
+      .catch(() => false)
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+}
 
 async function request<T>(url: string, options?: RequestInit, retry = true): Promise<T> {
   const res = await fetch(`${BASE}${url}`, {
@@ -22,28 +37,14 @@ async function request<T>(url: string, options?: RequestInit, retry = true): Pro
   });
 
   if (res.status === 401 && retry) {
-    if (isRefreshing) {
-      return new Promise<T>((resolve) => {
-        refreshQueue.push(() => resolve(request<T>(url, options, false)));
-      });
-    }
-    isRefreshing = true;
-    try {
-      const refreshRes = await fetch(`${BASE}/auth/refresh`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      if (!refreshRes.ok) throw new Error('Refresh failed');
-      refreshQueue.forEach((fn) => fn());
-      refreshQueue = [];
-      return request<T>(url, options, false);
-    } catch {
-      refreshQueue = [];
-      window.location.href = '/login';
-      throw new Error('Session expired');
-    } finally {
-      isRefreshing = false;
-    }
+    // Concurrent 401s share the same in-flight refresh instead of each
+    // issuing their own; every caller (including the initial session check
+    // on app boot) just sees a rejected promise on failure and reacts to
+    // that — there's no dedicated /login route to force-navigate to, the
+    // app already renders LoginPage whenever `user` is null.
+    const refreshed = await refreshSession();
+    if (refreshed) return request<T>(url, options, false);
+    throw new Error('Session expired');
   }
 
   if (!res.ok) {
@@ -63,29 +64,43 @@ export const api = {
       }),
     logout: () => request<{ ok: boolean }>('/auth/logout', { method: 'POST' }),
     me: () => request<{ id: string; email: string }>('/auth/me'),
+    oauthSession: (accessToken: string, refreshToken: string) =>
+      request<{ user: { id: string; email: string } }>('/auth/oauth/session', {
+        method: 'POST',
+        body: JSON.stringify({ accessToken, refreshToken }),
+      }),
   },
   trees: {
-    list: () => request<FamilyTree[]>('/trees'),
+    list: () => request<FamilyTreeMembership[]>('/trees'),
     create: (data: CreateTreeInput) =>
       request<FamilyTree>('/trees', { method: 'POST', body: JSON.stringify(data) }),
     addMember: (treeId: number, data: AddTreeMemberInput) =>
       request<TreeMember>(`/trees/${treeId}/members`, { method: 'POST', body: JSON.stringify(data) }),
   },
   persons: {
-    list: () => request<Person[]>('/persons'),
-    get: (id: number) => request<Person>(`/persons/${id}`),
-    create: (data: CreatePersonInput) =>
-      request<Person>('/persons', { method: 'POST', body: JSON.stringify(data) }),
-    update: (id: number, data: UpdatePersonInput) =>
-      request<Person>(`/persons/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
-    delete: (id: number) => request<void>(`/persons/${id}`, { method: 'DELETE' }),
+    list: (treeId: number) => request<Person[]>(`/persons?treeId=${treeId}`),
+    get: (id: number, treeId: number) => request<Person>(`/persons/${id}?treeId=${treeId}`),
+    create: (data: CreatePersonRequest, treeId: number) =>
+      request<Person>('/persons', {
+        method: 'POST',
+        body: JSON.stringify({ ...data, treeId }),
+      }),
+    update: (id: number, data: UpdatePersonInput, treeId: number) =>
+      request<Person>(`/persons/${id}?treeId=${treeId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: number, treeId: number) => request<void>(`/persons/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
   relationships: {
-    list: () => request<Relationship[]>('/relationships'),
-    byPerson: (personId: number) =>
-      request<Relationship[]>(`/relationships/person/${personId}`),
-    create: (data: CreateRelationshipInput) =>
-      request<Relationship>('/relationships', { method: 'POST', body: JSON.stringify(data) }),
-    delete: (id: number) => request<void>(`/relationships/${id}`, { method: 'DELETE' }),
+    list: (treeId: number) => request<Relationship[]>(`/relationships?treeId=${treeId}`),
+    byPerson: (personId: number, treeId: number) =>
+      request<Relationship[]>(`/relationships/person/${personId}?treeId=${treeId}`),
+    create: (data: CreateRelationshipRequest, treeId: number) =>
+      request<Relationship>('/relationships', {
+        method: 'POST',
+        body: JSON.stringify({ ...data, treeId }),
+      }),
+    delete: (id: number, treeId: number) => request<void>(`/relationships/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
 };

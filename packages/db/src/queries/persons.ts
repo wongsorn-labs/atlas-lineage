@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '../client';
 import { persons } from '../schema';
 import { encryptField, decryptField } from '../crypto';
@@ -14,6 +14,7 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
   const key = getKey();
   return {
     id: row.id,
+    treeId: row.treeId,
     name: row.name,
     birthYear: row.birthYear ?? null,
     deathYear: row.deathYear ?? null,
@@ -26,13 +27,17 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
   };
 }
 
-export async function findAllPersons(): Promise<Person[]> {
-  const rows = await db.select().from(persons);
+export async function findAllPersons(treeId: number): Promise<Person[]> {
+  const rows = await db.select().from(persons).where(eq(persons.treeId, treeId));
   return rows.map(mapPerson);
 }
 
-export async function findPersonById(id: number): Promise<Person | null> {
-  const [row] = await db.select().from(persons).where(eq(persons.id, id)).limit(1);
+export async function findPersonById(id: number, treeId: number): Promise<Person | null> {
+  const [row] = await db
+    .select()
+    .from(persons)
+    .where(and(eq(persons.id, id), eq(persons.treeId, treeId)))
+    .limit(1);
   return row ? mapPerson(row) : null;
 }
 
@@ -41,6 +46,7 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
   const [row] = await db
     .insert(persons)
     .values({
+      treeId: input.treeId,
       name: input.name,
       birthYear: input.birthYear ?? null,
       deathYear: input.deathYear ?? null,
@@ -53,7 +59,7 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
   return mapPerson(row);
 }
 
-export async function updatePerson(id: number, input: UpdatePersonInput): Promise<Person | null> {
+export async function updatePerson(id: number, treeId: number, input: UpdatePersonInput): Promise<Person | null> {
   const key = getKey();
   const updates: Partial<typeof persons.$inferInsert> = {};
   if (input.name !== undefined) updates.name = input.name;
@@ -67,12 +73,15 @@ export async function updatePerson(id: number, input: UpdatePersonInput): Promis
   const [row] = await db
     .update(persons)
     .set({ ...updates, updatedAt: new Date() })
-    .where(eq(persons.id, id))
+    .where(and(eq(persons.id, id), eq(persons.treeId, treeId)))
     .returning();
   return row ? mapPerson(row) : null;
 }
 
-export async function deletePerson(id: number): Promise<boolean> {
-  const [row] = await db.delete(persons).where(eq(persons.id, id)).returning();
+export async function deletePerson(id: number, treeId: number): Promise<boolean> {
+  const [row] = await db
+    .delete(persons)
+    .where(and(eq(persons.id, id), eq(persons.treeId, treeId)))
+    .returning();
   return !!row;
 }

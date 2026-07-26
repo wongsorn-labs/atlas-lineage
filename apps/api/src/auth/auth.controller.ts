@@ -3,6 +3,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { OAuthSessionDto } from './dto/oauth-session.dto';
 
 function setCookies(res: Response, accessToken: string, refreshToken: string) {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -38,6 +39,17 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const result = await this.authService.signIn(body.email, body.password);
+    setCookies(res, result.accessToken, result.refreshToken);
+    return { user: result.user };
+  }
+
+  @Post('oauth/session')
+  @HttpCode(200)
+  async oauthSession(
+    @Body() body: OAuthSessionDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const result = await this.authService.exchangeOAuthSession(body.accessToken, body.refreshToken);
     setCookies(res, result.accessToken, result.refreshToken);
     return { user: result.user };
   }

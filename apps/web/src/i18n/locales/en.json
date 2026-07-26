@@ -45,5 +45,28 @@
       "partner": "Partner"
     }
   },
+  "tree": {
+    "selectLabel": "Select a tree",
+    "noTreeTitle": "No family tree selected",
+    "noTreeBody": "You don't belong to any family tree yet.",
+    "createTitle": "Create tree",
+    "name": "Name",
+    "description": "Description",
+    "createButton": "Create Tree",
+    "cancel": "Cancel",
+    "inviteTitle": "Invite member",
+    "inviteUserId": "User ID",
+    "inviteUserIdHelp": "Enter the invitee's account ID (not their email).",
+    "inviteUserIdInvalid": "Enter a valid user ID",
+    "inviteButton": "Send Invite",
+    "inviteSuccess": "Member added.",
+    "inviteError": "Could not add member.",
+    "role": "Role",
+    "roles": {
+      "owner": "Owner",
+      "editor": "Editor",
+      "viewer": "Viewer"
+    }
+  },
   "saving": "Saving…"
 }

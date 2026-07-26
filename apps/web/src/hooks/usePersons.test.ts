@@ -16,7 +16,7 @@ describe('usePersons', () => {
     const persons = [{ id: 1, name: 'Ada', birthYear: null, deathYear: null, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '', updatedAt: '' }];
     server.use(http.get('/api/persons', () => HttpResponse.json(persons)));
 
-    const { result } = renderHook(() => usePersons(), { wrapper: makeWrapper() });
+    const { result } = renderHook(() => usePersons(1), { wrapper: makeWrapper() });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.data).toEqual(persons);
   });
@@ -27,7 +27,7 @@ describe('useCreatePerson', () => {
     const created = { id: 2, name: 'Grace', birthYear: null, deathYear: null, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '', updatedAt: '' };
     server.use(http.post('/api/persons', () => HttpResponse.json(created, { status: 201 })));
 
-    const { result } = renderHook(() => useCreatePerson(), { wrapper: makeWrapper() });
+    const { result } = renderHook(() => useCreatePerson(1), { wrapper: makeWrapper() });
     const data = await result.current.mutateAsync({ name: 'Grace' });
     expect(data).toEqual(created);
   });

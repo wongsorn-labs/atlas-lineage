@@ -1,4 +1,4 @@
-import { eq, or } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { db } from '../client';
 import { relationships } from '../schema';
 import type { Relationship, CreateRelationshipInput } from '@wongsorn-labs/atlas-lineage-shared';
@@ -6,6 +6,7 @@ import type { Relationship, CreateRelationshipInput } from '@wongsorn-labs/atlas
 function mapRelationship(row: typeof relationships.$inferSelect): Relationship {
   return {
     id: row.id,
+    treeId: row.treeId,
     personId: row.personId,
     relatedPersonId: row.relatedPersonId,
     type: row.type as Relationship['type'],
@@ -13,18 +14,21 @@ function mapRelationship(row: typeof relationships.$inferSelect): Relationship {
   };
 }
 
-export async function findAllRelationships(): Promise<Relationship[]> {
-  const rows = await db.select().from(relationships);
+export async function findAllRelationships(treeId: number): Promise<Relationship[]> {
+  const rows = await db.select().from(relationships).where(eq(relationships.treeId, treeId));
   return rows.map(mapRelationship);
 }
 
-export async function findRelationshipsByPerson(personId: number): Promise<Relationship[]> {
+export async function findRelationshipsByPerson(personId: number, treeId: number): Promise<Relationship[]> {
   const rows = await db
     .select()
     .from(relationships)
-    .where(or(
-      eq(relationships.personId, personId),
-      eq(relationships.relatedPersonId, personId),
+    .where(and(
+      eq(relationships.treeId, treeId),
+      or(
+        eq(relationships.personId, personId),
+        eq(relationships.relatedPersonId, personId),
+      ),
     ));
   return rows.map(mapRelationship);
 }
@@ -33,6 +37,7 @@ export async function createRelationship(input: CreateRelationshipInput): Promis
   const [row] = await db
     .insert(relationships)
     .values({
+      treeId: input.treeId,
       personId: input.personId,
       relatedPersonId: input.relatedPersonId,
       type: input.type,
@@ -41,7 +46,10 @@ export async function createRelationship(input: CreateRelationshipInput): Promis
   return mapRelationship(row);
 }
 
-export async function deleteRelationship(id: number): Promise<boolean> {
-  const [row] = await db.delete(relationships).where(eq(relationships.id, id)).returning();
+export async function deleteRelationship(id: number, treeId: number): Promise<boolean> {
+  const [row] = await db
+    .delete(relationships)
+    .where(and(eq(relationships.id, id), eq(relationships.treeId, treeId)))
+    .returning();
   return !!row;
 }

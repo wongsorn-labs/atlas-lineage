@@ -5,17 +5,18 @@ import './i18n';
 import './styles/app.css';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
+import { TreeProvider } from './contexts/TreeContext';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000 } },
 });
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <TreeProvider>
         <App />
-      </AuthProvider>
-    </QueryClientProvider>
-  </StrictMode>,
+      </TreeProvider>
+    </AuthProvider>
+  </QueryClientProvider>,
 );

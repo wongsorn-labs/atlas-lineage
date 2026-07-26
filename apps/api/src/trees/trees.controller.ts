@@ -4,6 +4,7 @@ import {
 import type { Request } from 'express';
 import { TreesService } from './trees.service';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
+import { TreeMemberGuard, RequireRoles } from './tree-member.guard';
 import type { CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 @Controller('trees')
@@ -25,6 +26,8 @@ export class TreesController {
   }
 
   @Post(':treeId/members')
+  @UseGuards(TreeMemberGuard)
+  @RequireRoles('owner')
   addMember(
     @Param('treeId', ParseIntPipe) treeId: number,
     @Body() body: AddTreeMemberInput,

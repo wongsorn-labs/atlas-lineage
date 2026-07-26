@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const RelationshipTypeSchema = z.enum(['parent', 'child', 'sibling', 'spouse', 'partner']);
 
 export const CreatePersonSchema = z.object({
+  treeId: z.number().int().positive(),
   name: z.string().min(1, 'Name is required'),
   birthYear: z.number().int().nullable().optional(),
   deathYear: z.number().int().nullable().optional(),
@@ -12,9 +13,10 @@ export const CreatePersonSchema = z.object({
   notes: z.string().nullable().optional(),
 });
 
-export const UpdatePersonSchema = CreatePersonSchema.partial();
+export const UpdatePersonSchema = CreatePersonSchema.omit({ treeId: true }).partial();
 
 export const CreateRelationshipSchema = z.object({
+  treeId: z.number().int().positive(),
   personId: z.number().int().positive(),
   relatedPersonId: z.number().int().positive(),
   type: RelationshipTypeSchema,

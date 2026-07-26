@@ -51,6 +51,14 @@ pnpm test:all
 # End-to-end tests only (starts both servers automatically)
 pnpm test:e2e
 
+# Prod smoke e2e: drives the deployed build at PROD_URL (default
+# https://atlas-lineage.vercel.app) over the real network. Auth and
+# GET /trees hit the real API — set E2E_TEST_EMAIL/E2E_TEST_PASSWORD to a
+# real account provisioned in prod. /api/persons and /api/relationships are
+# mocked per-test (apps/e2e/tests/prod/mock-data-api.ts), so no real
+# family-tree data is ever touched.
+pnpm test:e2e:prod
+
 # Database migrations
 pnpm db:generate   # generate SQL from schema changes
 pnpm db:migrate    # apply migrations
@@ -68,6 +76,8 @@ Create `apps/api/.env` (see `apps/api/.env.example` as a starting point — note
 | `CORS_ORIGIN`    | Comma-separated allowed origins for CORS. Defaults to `http://localhost:5173` when unset.                                           |
 
 > **Note:** `apps/api/.env.example` and `apps/e2e/playwright.config.ts` still reference the legacy `DATABASE_PATH` / SQLite variables — they have not been updated since the migration to PostgreSQL. Use `DATABASE_URL` as the authoritative variable name.
+
+> **Google OAuth prerequisite:** for `signInWithGoogle` to complete (see `apps/web/src/pages/AuthCallbackPage.tsx`), the Supabase project must have Google enabled under **Authentication → Providers**, and `${origin}/auth/callback` must be allowlisted per environment under **Authentication → URL Configuration** (e.g. `http://localhost:5173/auth/callback` for local dev, plus the Vercel preview/prod origins). This is dashboard configuration, not code.
 
 ## Architecture
 
@@ -134,12 +144,29 @@ The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `s
 - **API & DB**: Jest + ts-jest. Test files use the `.spec.ts` suffix. NestJS services are tested with `@nestjs/testing`; the db module is mocked with `jest.mock`.
 - **Web**: Vitest + React Testing Library + jsdom. MSW (`src/test/mocks/`) intercepts fetch calls. Setup file: `src/test/setup.ts`.
 - **E2E**: Playwright. Tests live in `apps/e2e/tests/`. The config spins up both the API and web dev servers. `global-setup.ts` runs migrations before the suite. Note: the e2e config currently passes the legacy `DATABASE_PATH` env var; update it to `DATABASE_URL` when running e2e against PostgreSQL.
+- **Prod smoke E2E**: `apps/e2e/playwright.prod.config.ts` runs `apps/e2e/tests/prod/*.spec.ts` against the deployed prod build (no webServer/globalSetup). Auth and `GET /trees` are real; `/api/persons` and `/api/relationships` are mocked in-memory per test via `tests/prod/mock-data-api.ts` (installed through the `mockDataStore`/`signedInPage` fixtures in `tests/prod/fixtures.ts`) so the suite never creates, edits, or deletes real production data. `tests/prod/` is excluded from the regular `playwright.config.ts` run via `testIgnore`.
 
 ### PWA
 
 The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `src/pwa/registerSW.ts`. Icons at 192×192 and 512×512, theme colour `#1e40af`.
 
-## Deployment
+## Spec-Driven Development (OpenSpec)
+
+This repo uses [OpenSpec](https://github.com/Fission-AI/OpenSpec) for spec-driven development. Capability specs describing current system behavior live in `openspec/specs/<capability>/spec.md` (authentication, family-tree-management, field-encryption, localization, map-visualization, person-management, pwa-support, relationship-management). These specs are the baseline source of truth for behavior — treat `CLAUDE.md`'s architecture prose as a secondary summary, and the specs as canonical when they disagree.
+
+`openspec/capabilities.yaml` is a status tracker layered on top of the specs (implementation status, linked GitHub issues) that OpenSpec itself doesn't capture — see "Capability status" below.
+
+Workflow for new work:
+1. `/opsx:propose "<idea>"` (or `openspec new change <name>`) to start a change — writes `openspec/changes/<name>/proposal.md` plus delta specs under `specs/**/*.md` using `## ADDED/MODIFIED/REMOVED/RENAMED Requirements`.
+2. Implement against `design.md`/`tasks.md` if generated.
+3. `openspec archive <name>` folds the delta specs into `openspec/specs/` and moves the change to `openspec/changes/archive/`.
+4. Update `openspec/capabilities.yaml`: add new capabilities, bump `requirements` counts, and flip `status` (`implemented`/`gap`/`in-progress`/`planned`) to match what was just archived. This step is manual — the OpenSpec CLI has no hook to do it automatically.
+
+Run `openspec validate --all` after editing any spec (requirements need SHALL/MUST language and at least one `#### Scenario:` block each). Slash commands live under `.claude/commands/opsx/`; skills under `.claude/skills/`.
+
+### Capability status
+
+`openspec/capabilities.yaml` tracks, per capability: requirement count, `status`, and any linked GitHub issues/notes for known gaps. As of the last update, 7 of 8 capabilities are `implemented`; `family-tree-management` is `gap` (role enforcement defined but not wired into the persons/relationships endpoints — tracked in issue #9).
 
 The app is deployed on **Vercel** (`vercel.json`):
 
@@ -188,6 +215,11 @@ ci: update GitHub Actions workflow
 ```
 
 **Enforcement:** Commits not matching the pattern are rejected by the `commit-msg` lefthook. Use `git commit -m "type(scope): message"`.
+
+## Agent Workflow Conventions
+
+- **UI changes**: Whenever a change touches `apps/web` UI (components, pages, styles), capture a before/after screenshot pair and send both to the user for comparison. Prefer driving the real app (dev servers + a browser, or a throwaway Playwright script) over describing the change in words only — seed the same test data for both captures so the comparison is apples-to-apples. Clean up any throwaway script/spec file afterward; don't commit it.
+- **Service/flow changes**: Whenever a change alters a service's control flow, request/data flow, or architecture (e.g. new API call sequence, changed auth flow, restructured data pipeline), produce a before/after diagram (e.g. Mermaid) illustrating the flow difference, in addition to the code diff.
 
 ## Agent-Specific Guidance
 

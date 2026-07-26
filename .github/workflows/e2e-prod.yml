@@ -1,0 +1,50 @@
+name: Prod E2E Smoke
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # 06:00 UTC daily
+  workflow_dispatch:
+
+jobs:
+  e2e-prod:
+    name: Prod Smoke (mocked persons/relationships)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify prod test account secrets are configured
+        run: |
+          if [ -z "${{ secrets.E2E_TEST_EMAIL }}" ] || [ -z "${{ secrets.E2E_TEST_PASSWORD }}" ]; then
+            echo "::error::E2E_TEST_EMAIL and E2E_TEST_PASSWORD repo secrets are not set. Add a dedicated prod test account's credentials under Settings > Secrets and variables > Actions before this workflow can run."
+            exit 1
+          fi
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @wongsorn-labs/atlas-lineage-e2e exec playwright install --with-deps chromium
+
+      - name: Run prod smoke e2e
+        run: pnpm test:e2e:prod
+        env:
+          E2E_TEST_EMAIL: ${{ secrets.E2E_TEST_EMAIL }}
+          E2E_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-prod
+          path: apps/e2e/playwright-report/
+          retention-days: 14

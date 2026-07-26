@@ -1,0 +1,87 @@
+# Capability status tracker for Atlas Lineage.
+#
+# Mirrors openspec/specs/<capability>/spec.md but adds an implementation
+# status that OpenSpec itself doesn't track. Update this file as part of
+# `openspec archive` whenever a capability is added or its status changes
+# (see the "Spec-Driven Development (OpenSpec)" section in CLAUDE.md).
+#
+# status values: implemented | gap | in-progress | planned
+
+updated: 2026-07-05
+
+capabilities:
+  - name: person-management
+    spec: specs/person-management/spec.md
+    requirements: 5
+    status: implemented
+
+  - name: relationship-management
+    spec: specs/relationship-management/spec.md
+    requirements: 4
+    status: implemented
+
+  - name: field-encryption
+    spec: specs/field-encryption/spec.md
+    requirements: 4
+    status: implemented
+
+  - name: map-visualization
+    spec: specs/map-visualization/spec.md
+    requirements: 4
+    status: implemented
+    notes: >-
+      react-leaflet@4.2.1 doesn't officially support React 19 and crashes
+      MapContainer under React StrictMode's dev-mode double-invoke ("Map
+      container is already initialized"). Worked around by dropping
+      StrictMode app-wide in main.tsx; the proper fix is upgrading
+      react-leaflet to a React 19-compatible release and re-enabling it.
+    issues:
+      - https://github.com/wongsorn-labs/atlas-lineage/issues/12
+
+  - name: authentication
+    spec: specs/authentication/spec.md
+    requirements: 7
+    status: implemented
+    notes: >-
+      Google OAuth sign-in previously dead-ended: the login page initiated
+      the redirect via signInWithOAuth, but no /auth/callback handler
+      existed to complete it, so api.auth.me() stayed 401 after a real
+      Google sign-in (issue #20). Fixed by adding a callback page
+      (AuthCallbackPage.tsx) that reads the client-side Supabase session
+      Supabase places post-redirect and hands its tokens to a new
+      POST /api/auth/oauth/session endpoint, which mints the same
+      httpOnly cookies the password login flow already produces — one
+      session model for every guarded endpoint, regardless of sign-in
+      method. See the "Google OAuth Sign-In" requirement's added
+      scenarios.
+    issues:
+      - https://github.com/wongsorn-labs/atlas-lineage/issues/20
+
+  - name: localization
+    spec: specs/localization/spec.md
+    requirements: 2
+    status: implemented
+
+  - name: pwa-support
+    spec: specs/pwa-support/spec.md
+    requirements: 3
+    status: implemented
+
+  - name: family-tree-management
+    spec: specs/family-tree-management/spec.md
+    requirements: 5
+    status: implemented
+    notes: >-
+      TreeMemberGuard + @RequireRoles(...) are applied to PersonsController,
+      RelationshipsController, and the POST /trees/:treeId/members endpoint.
+      persons/relationships queries are scoped by treeId (see the "Role
+      Hierarchy Is Enforced On Data Endpoints" requirement). The web frontend
+      now has tree-selection UI (issue #17): a TreeProvider/useTree context
+      threads the selected treeId through every persons/relationships
+      request, and Sidebar exposes a tree switcher plus create-tree and
+      invite-member dialogs backed by the existing api.trees.* client
+      methods. GET /trees now also returns each tree annotated with the
+      caller's role, so the invite UI can gate itself to owners. Remaining
+      gaps: no GET /trees/:id/members (list) or remove-member endpoint yet,
+      and inviting a member requires their raw Supabase UUID since there is
+      no lookup-by-email endpoint.

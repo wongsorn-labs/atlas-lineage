@@ -5,6 +5,7 @@ import {
   Patch,
   Delete,
   Param,
+  Query,
   Body,
   ParseIntPipe,
   HttpCode,
@@ -16,35 +17,45 @@ import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
+import { TreeMemberGuard, RequireRoles } from '../trees/tree-member.guard';
 
 @Controller('persons')
-@UseGuards(SupabaseAuthGuard)
+@UseGuards(SupabaseAuthGuard, TreeMemberGuard)
 export class PersonsController {
   constructor(@Inject(PersonsService) private readonly personsService: PersonsService) {}
 
   @Get()
-  findAll() {
-    return this.personsService.findAll();
+  @RequireRoles('viewer')
+  findAll(@Query('treeId', ParseIntPipe) treeId: number) {
+    return this.personsService.findAll(treeId);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.personsService.findOne(id);
+  @RequireRoles('viewer')
+  findOne(@Param('id', ParseIntPipe) id: number, @Query('treeId', ParseIntPipe) treeId: number) {
+    return this.personsService.findOne(id, treeId);
   }
 
   @Post()
+  @RequireRoles('editor')
   create(@Body() dto: CreatePersonDto) {
     return this.personsService.create(dto);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdatePersonDto) {
-    return this.personsService.update(id, dto);
+  @RequireRoles('editor')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('treeId', ParseIntPipe) treeId: number,
+    @Body() dto: UpdatePersonDto,
+  ) {
+    return this.personsService.update(id, treeId, dto);
   }
 
   @Delete(':id')
+  @RequireRoles('editor')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.personsService.remove(id);
+  remove(@Param('id', ParseIntPipe) id: number, @Query('treeId', ParseIntPipe) treeId: number) {
+    return this.personsService.remove(id, treeId);
   }
 }

@@ -10,6 +10,7 @@
     "test": "pnpm --filter @wongsorn-labs/atlas-lineage-db test && pnpm --filter @wongsorn-labs/atlas-lineage-api test && pnpm --filter @wongsorn-labs/atlas-lineage-web test",
     "test:cov": "pnpm --filter @wongsorn-labs/atlas-lineage-db test:cov && pnpm --filter @wongsorn-labs/atlas-lineage-api test:cov && pnpm --filter @wongsorn-labs/atlas-lineage-web test:cov",
     "test:e2e": "pnpm --filter @wongsorn-labs/atlas-lineage-e2e test",
+    "test:e2e:prod": "pnpm --filter @wongsorn-labs/atlas-lineage-e2e test:prod",
     "test:all": "pnpm test && pnpm test:e2e"
   },
   "dependencies": {

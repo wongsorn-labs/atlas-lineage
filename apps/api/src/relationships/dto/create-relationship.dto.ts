@@ -5,6 +5,11 @@ export class CreateRelationshipDto {
   @IsInt()
   @IsPositive()
   @Type(() => Number)
+  treeId: number;
+
+  @IsInt()
+  @IsPositive()
+  @Type(() => Number)
   personId: number;
 
   @IsInt()

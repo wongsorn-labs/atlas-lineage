@@ -33,7 +33,7 @@ export const treeMembers = pgTable('tree_members', {
 
 export const persons = pgTable('persons', {
   id: serial('id').primaryKey(),
-  treeId: integer('tree_id').references(() => familyTrees.id, { onDelete: 'cascade' }),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   birthYear: integer('birth_year'),
   deathYear: integer('death_year'),
@@ -47,6 +47,7 @@ export const persons = pgTable('persons', {
 
 export const relationships = pgTable('relationships', {
   id: serial('id').primaryKey(),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
   personId: integer('person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
   relatedPersonId: integer('related_person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
   type: text('type').notNull(),

@@ -13,6 +13,7 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  completeOAuthCallback: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -46,8 +47,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error;
   };
 
+  // Runs on the /auth/callback landing page after Supabase redirects back from
+  // Google. The browser briefly holds a real Supabase session (placed by
+  // `detectSessionInUrl` in lib/supabase.ts) purely to hand its tokens to the
+  // API, which mints the same httpOnly cookie session the password login flow
+  // uses; the client-held session is then dropped so the cookie remains the
+  // only source of truth (see openspec design.md for why).
+  const completeOAuthCallback = async () => {
+    const { data, error } = await supabase.auth.getSession();
+    if (error || !data.session) throw new Error(error?.message ?? 'No session found');
+    const { access_token: accessToken, refresh_token: refreshToken } = data.session;
+    const result = await api.auth.oauthSession(accessToken, refreshToken);
+    await supabase.auth.signOut({ scope: 'local' });
+    setUser(result.user);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, signIn, signOut, signInWithGoogle }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, signIn, signOut, signInWithGoogle, completeOAuthCallback }}
+    >
       {children}
     </AuthContext.Provider>
   );

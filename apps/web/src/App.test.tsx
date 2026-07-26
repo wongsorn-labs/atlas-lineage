@@ -11,6 +11,16 @@ vi.mock('./contexts/AuthContext', () => ({
   useAuth: () => ({ user: { id: '1', email: 'test@test.com' }, isLoading: false, signIn: vi.fn(), signOut: vi.fn(), signInWithGoogle: vi.fn() }),
   AuthProvider: ({ children }: { children: import('react').ReactNode }) => <>{children}</>,
 }));
+vi.mock('./contexts/TreeContext', () => ({
+  useTree: () => ({
+    trees: [{ id: 1, name: 'Default Tree', description: null, ownerId: '1', createdAt: '', updatedAt: '', role: 'owner' }],
+    currentTree: { id: 1, name: 'Default Tree', description: null, ownerId: '1', createdAt: '', updatedAt: '', role: 'owner' },
+    currentTreeId: 1,
+    isLoading: false,
+    setCurrentTreeId: vi.fn(),
+  }),
+  TreeProvider: ({ children }: { children: import('react').ReactNode }) => <>{children}</>,
+}));
 vi.mock('./components/Sidebar', () => ({
   Sidebar: ({ persons }: { persons: Person[] }) => (
     <div data-testid="sidebar" data-person-count={persons.length} />
