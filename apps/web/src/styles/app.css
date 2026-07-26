@@ -77,6 +77,35 @@
     --shadow-teal-glow: 0 2px 14px 1px var(--teal-glow);
   }
 
+  /* Dark mode -- explicit toggle wins over OS preference */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-base: #0D1917;
+      --bg-surface: #132422;
+      --bg-elevated: #1B3330;
+      --bg-card: #1F3B37;
+      --text-primary: #EAF6F4;
+      --text-secondary: #9FC4C0;
+      --text-muted: #6E948F;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(255, 210, 63, 0.35);
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-base: #0D1917;
+    --bg-surface: #132422;
+    --bg-elevated: #1B3330;
+    --bg-card: #1F3B37;
+    --text-primary: #EAF6F4;
+    --text-secondary: #9FC4C0;
+    --text-muted: #6E948F;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-gold: rgba(255, 210, 63, 0.35);
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+  }
+
   * {
     border-color: var(--border);
     box-sizing: border-box;

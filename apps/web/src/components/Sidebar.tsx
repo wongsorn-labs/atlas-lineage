@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
+import { ThemeToggle } from './ThemeToggle';
 
 interface SidebarProps {
   persons: Person[];
@@ -60,6 +61,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
               />
             </DialogContent>
           </Dialog>
+          <ThemeToggle />
           <button
             type="button"
             className="btn-ghost p-1.5 text-xs"

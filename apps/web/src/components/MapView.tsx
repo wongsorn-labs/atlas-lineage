@@ -3,6 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { PersonMarker } from './PersonMarker';
 import { RelationshipLines } from './RelationshipLines';
+import { useTheme } from '../contexts/ThemeContext';
 import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 // Fix Leaflet default marker icon paths broken by Vite bundling
@@ -22,6 +23,8 @@ interface MapViewProps {
 
 export function MapView({ persons, relationships, selectedPerson, onSelectPerson }: MapViewProps) {
   const mappable = persons.filter((p) => p.birthLat != null && p.birthLng != null);
+  const { theme } = useTheme();
+  const tileStyle = theme === 'dark' ? 'dark_all' : 'light_all';
 
   return (
     <MapContainer
@@ -31,7 +34,8 @@ export function MapView({ persons, relationships, selectedPerson, onSelectPerson
       style={{ height: '100%', width: '100%' }}
     >
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        key={tileStyle}
+        url={`https://{s}.basemaps.cartocdn.com/${tileStyle}/{z}/{x}/{y}{r}.png`}
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         subdomains="abcd"
         maxZoom={19}

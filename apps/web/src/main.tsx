@@ -6,17 +6,20 @@ import './styles/app.css';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
 import { TreeProvider } from './contexts/TreeContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000 } },
 });
 
 createRoot(document.getElementById('root')!).render(
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TreeProvider>
-        <App />
-      </TreeProvider>
-    </AuthProvider>
-  </QueryClientProvider>,
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TreeProvider>
+          <App />
+        </TreeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </ThemeProvider>,
 );
