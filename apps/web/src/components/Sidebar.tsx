@@ -43,10 +43,10 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
         <h1 className="font-display text-lg font-semibold text-(--gold)">Atlas Lineage</h1>
         <div className="flex items-center gap-1">
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
-            <DialogTrigger asChild>
-              <button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button">
-                <UserPlus className="h-4 w-4" />
-              </button>
+            <DialogTrigger
+              render={<button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button" />}
+            >
+              <UserPlus className="h-4 w-4" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

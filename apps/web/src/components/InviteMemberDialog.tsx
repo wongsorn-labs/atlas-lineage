@@ -46,15 +46,10 @@ export function InviteMemberDialog({ tree }: InviteMemberDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={(next) => { setOpen(next); if (!next) setResult(null); }}>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className="btn-ghost p-1.5"
-          aria-label={t('tree.inviteTitle')}
-          data-testid="invite-member-button"
-        >
-          <UserPlus className="h-4 w-4" />
-        </button>
+      <DialogTrigger
+        render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.inviteTitle')} data-testid="invite-member-button" />}
+      >
+        <UserPlus className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -80,7 +75,9 @@ export function InviteMemberDialog({ tree }: InviteMemberDialogProps) {
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger data-testid="invite-role-select">
-                    <SelectValue />
+                    <SelectValue>
+                      {(value: TreeRole | null) => (value ? t(`tree.roles.${value}`) : '')}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {ROLES.map((role) => (

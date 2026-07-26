@@ -11,10 +11,10 @@ export function SettingsDialog() {
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleChange = async (value: string) => {
+  const handleChange = async (value: string | null) => {
     setIsSaving(true);
     try {
-      await updateDefaultCountry(value === '__world' ? null : value);
+      await updateDefaultCountry(value === '__world' || value === null ? null : value);
     } finally {
       setIsSaving(false);
     }
@@ -22,10 +22,10 @@ export function SettingsDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button type="button" className="btn-ghost p-1.5" aria-label="Settings" data-testid="settings-button">
-          <Settings className="h-4 w-4" />
-        </button>
+      <DialogTrigger
+        render={<button type="button" className="btn-ghost p-1.5" aria-label="Settings" data-testid="settings-button" />}
+      >
+        <Settings className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -39,7 +39,12 @@ export function SettingsDialog() {
             disabled={isSaving}
           >
             <SelectTrigger id="default-country" data-testid="default-country-select">
-              <SelectValue />
+              <SelectValue>
+                {(value: string | null) =>
+                  value === '__world' || !value
+                    ? 'World'
+                    : COUNTRY_MAP_DEFAULTS.find((c) => c.code === value)?.name ?? value}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="__world">World</SelectItem>

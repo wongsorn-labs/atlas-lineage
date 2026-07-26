@@ -33,15 +33,10 @@ export function CreateTreeDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className="btn-ghost p-1.5"
-          aria-label={t('tree.createTitle')}
-          data-testid="create-tree-button"
-        >
-          <Plus className="h-4 w-4" />
-        </button>
+      <DialogTrigger
+        render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.createTitle')} data-testid="create-tree-button" />}
+      >
+        <Plus className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
