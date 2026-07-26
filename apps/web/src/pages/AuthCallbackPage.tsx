@@ -21,11 +21,11 @@ export function AuthCallbackPage() {
 
   if (error) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-[--bg-base] px-6">
+      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) px-6">
         <div className="glass-card flex max-w-sm flex-col items-center gap-3 p-8 text-center">
-          <AlertCircle className="h-8 w-8 text-[--color-error]" />
-          <h1 className="font-display text-lg font-semibold text-[--text-primary]">Sign-in failed</h1>
-          <p className="text-sm text-[--text-secondary]">{error}</p>
+          <AlertCircle className="h-8 w-8 text-(--color-error)" />
+          <h1 className="font-display text-lg font-semibold text-(--text-primary)">Sign-in failed</h1>
+          <p className="text-sm text-(--text-secondary)">{error}</p>
           <a href="/" className="btn-primary">Back to login</a>
         </div>
       </div>
@@ -33,7 +33,7 @@ export function AuthCallbackPage() {
   }
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-[--bg-base] text-[--text-muted]">
+    <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
       <div className="flex items-center gap-2 text-sm" role="status">
         <Loader2 className="h-4 w-4 animate-spin" />
         Signing in…

@@ -69,7 +69,7 @@ export function InviteMemberDialog({ tree }: InviteMemberDialogProps) {
               {...register('userId')}
               placeholder="00000000-0000-0000-0000-000000000000"
             />
-            <p className="text-xs text-[--text-muted] mt-1">{t('tree.inviteUserIdHelp')}</p>
+            <p className="text-xs text-(--text-muted) mt-1">{t('tree.inviteUserIdHelp')}</p>
             {errors.userId && <p className="text-xs text-red-500 mt-1">{t('tree.inviteUserIdInvalid')}</p>}
           </div>
           <div>
