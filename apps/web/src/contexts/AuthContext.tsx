@@ -51,14 +51,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Google. The browser briefly holds a real Supabase session (placed by
   // `detectSessionInUrl` in lib/supabase.ts) purely to hand its tokens to the
   // API, which mints the same httpOnly cookie session the password login flow
-  // uses; the client-held session is then dropped so the cookie remains the
-  // only source of truth (see openspec design.md for why).
+  // uses. We must NOT call supabase.auth.signOut() here: even with
+  // `scope: 'local'` it calls GoTrue's /logout endpoint and revokes the
+  // session's refresh token server-side — the same token just handed to the
+  // API for the cookie session, killing it on arrival. persistSession is
+  // already false (lib/supabase.ts), so there is no local storage to clean up.
   const completeOAuthCallback = async () => {
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) throw new Error(error?.message ?? 'No session found');
     const { access_token: accessToken, refresh_token: refreshToken } = data.session;
     const result = await api.auth.oauthSession(accessToken, refreshToken);
-    await supabase.auth.signOut({ scope: 'local' });
     setUser(result.user);
   };
 
