@@ -1,11 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { api } from '../api/client';
-
-interface AuthUser {
-  id: string;
-  email: string;
-}
+import { api, type AuthUser } from '../api/client';
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -14,6 +9,7 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   completeOAuthCallback: () => Promise<void>;
+  updateDefaultCountry: (defaultCountry: string | null) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -64,9 +60,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(result.user);
   };
 
+  const updateDefaultCountry = async (defaultCountry: string | null) => {
+    await api.auth.updateProfile(defaultCountry);
+    setUser((u) => (u ? { ...u, defaultCountry } : u));
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, signIn, signOut, signInWithGoogle, completeOAuthCallback }}
+      value={{ user, isLoading, signIn, signOut, signInWithGoogle, completeOAuthCallback, updateDefaultCountry }}
     >
       {children}
     </AuthContext.Provider>

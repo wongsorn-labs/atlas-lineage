@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
 import { ThemeToggle } from './ThemeToggle';
+import { SettingsDialog } from './SettingsDialog';
 
 interface SidebarProps {
   persons: Person[];
@@ -136,8 +137,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       </div>
 
       {/* Footer */}
-      <div className="border-t border-(--border) px-4 py-2">
+      <div className="flex items-center justify-between border-t border-(--border) px-4 py-2">
         <p className="text-xs text-(--text-muted) truncate">{user?.email}</p>
+        <SettingsDialog />
       </div>
     </aside>
   );

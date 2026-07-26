@@ -1,9 +1,10 @@
 import {
-  Controller, Post, Get, Body, Req, Res, UnauthorizedException, HttpCode,
+  Controller, Post, Get, Patch, Body, Req, Res, UnauthorizedException, HttpCode,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { OAuthSessionDto } from './dto/oauth-session.dto';
+import { UpdateProfileSettingsDto } from './dto/update-profile-settings.dto';
 
 function setCookies(res: Response, accessToken: string, refreshToken: string) {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -91,5 +92,15 @@ export class AuthController {
     const user = await this.authService.getUser(token);
     if (!user) throw new UnauthorizedException();
     return user;
+  }
+
+  @Patch('profile')
+  async updateProfile(@Req() req: Request, @Body() body: UpdateProfileSettingsDto) {
+    const accessName = process.env.COOKIE_ACCESS_TOKEN_NAME ?? 'access_token';
+    const token = req.cookies?.[accessName];
+    if (!token) throw new UnauthorizedException();
+    const user = await this.authService.getUser(token);
+    if (!user) throw new UnauthorizedException();
+    return this.authService.updateProfileSettings(user.id, body.defaultCountry);
   }
 }

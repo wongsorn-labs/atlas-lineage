@@ -33,3 +33,7 @@ export const addTreeMemberSchema = z.object({
   userId: z.string().uuid(),
   role: treeRoleSchema,
 });
+
+export const updateProfileSettingsSchema = z.object({
+  defaultCountry: z.string().length(3).nullable(),
+});

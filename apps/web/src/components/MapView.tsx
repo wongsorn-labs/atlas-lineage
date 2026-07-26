@@ -4,6 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import { PersonMarker } from './PersonMarker';
 import { RelationshipLines } from './RelationshipLines';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../contexts/AuthContext';
+import { getCountryMapDefault } from '../lib/countries';
 import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 // Fix Leaflet default marker icon paths broken by Vite bundling
@@ -24,12 +26,15 @@ interface MapViewProps {
 export function MapView({ persons, relationships, selectedPerson, onSelectPerson }: MapViewProps) {
   const mappable = persons.filter((p) => p.birthLat != null && p.birthLng != null);
   const { theme } = useTheme();
+  const { user } = useAuth();
   const tileStyle = theme === 'dark' ? 'dark_all' : 'light_all';
+  const mapDefault = getCountryMapDefault(user?.defaultCountry);
 
   return (
     <MapContainer
-      center={[20, 0]}
-      zoom={2}
+      key={mapDefault.code}
+      center={mapDefault.center}
+      zoom={mapDefault.zoom}
       className="isolate h-full w-full"
       style={{ height: '100%', width: '100%' }}
     >
