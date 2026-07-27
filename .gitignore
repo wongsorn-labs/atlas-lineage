@@ -41,3 +41,4 @@ apps/e2e/manual-main-flow/
 
 # Visual brainstorming sessions
 .superpowers/
+.env*
