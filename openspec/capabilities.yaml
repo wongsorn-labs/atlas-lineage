@@ -7,9 +7,25 @@
 #
 # status values: implemented | gap | in-progress | planned
 
-updated: 2026-07-05
+updated: 2026-07-27
 
 capabilities:
+  - name: appearance
+    spec: specs/appearance/spec.md
+    requirements: 2
+    status: implemented
+    notes: >-
+      Light/dark theme toggle (ThemeContext, persisted to localStorage,
+      OS prefers-color-scheme fallback) and per-account default map
+      country (profiles.default_country, PATCH /api/auth/profile,
+      Settings dialog). Introduced alongside a Flip7-inspired retheme
+      of the whole web app (teal/coral/gold palette, apps/web/src/styles/
+      app.css) and a migration of the Dialog/Select UI primitives from
+      Radix UI to Base UI (@base-ui/react) -- Radix's outside-press
+      detection didn't recognize a Base UI portal as "inside" its own
+      dialog, so a Select nested in a Dialog needed both on the same
+      library.
+
   - name: person-management
     spec: specs/person-management/spec.md
     requirements: 5

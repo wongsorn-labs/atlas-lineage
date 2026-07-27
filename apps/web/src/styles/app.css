@@ -75,6 +75,49 @@
     --shadow-gold-glow: 0 2px 14px 1px var(--gold-glow);
     --shadow-coral-glow: 0 2px 14px 1px var(--coral-glow);
     --shadow-teal-glow: 0 2px 14px 1px var(--teal-glow);
+
+    /* Overlay stacking order -- single source of truth. Every portaled
+       component (dialog, select, dropdown-menu, tooltip, toast, ...) reads
+       its z-index from here by name instead of a hand-picked number, so
+       adding a new overlay type means adding one line here, not hunting
+       down and out-bidding whatever magic number was highest before. Each
+       tier leaves headroom for content within it (e.g. a dialog's own
+       overlay vs. panel) without colliding with the tier above. */
+    --z-dropdown: 1000;
+    --z-overlay: 1010;
+    --z-dialog: 1020;
+    --z-popover: 1030;
+    --z-tooltip: 1040;
+    --z-toast: 1050;
+  }
+
+  /* Dark mode -- explicit toggle wins over OS preference */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg-base: #0D1917;
+      --bg-surface: #132422;
+      --bg-elevated: #1B3330;
+      --bg-card: #1F3B37;
+      --text-primary: #EAF6F4;
+      --text-secondary: #9FC4C0;
+      --text-muted: #6E948F;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(255, 210, 63, 0.35);
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg-base: #0D1917;
+    --bg-surface: #132422;
+    --bg-elevated: #1B3330;
+    --bg-card: #1F3B37;
+    --text-primary: #EAF6F4;
+    --text-secondary: #9FC4C0;
+    --text-muted: #6E948F;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-gold: rgba(255, 210, 63, 0.35);
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
   }
 
   * {

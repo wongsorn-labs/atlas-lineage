@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
+import { ThemeToggle } from './ThemeToggle';
+import { SettingsDialog } from './SettingsDialog';
 
 interface SidebarProps {
   persons: Person[];
@@ -41,10 +43,10 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
         <h1 className="font-display text-lg font-semibold text-(--gold)">Atlas Lineage</h1>
         <div className="flex items-center gap-1">
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
-            <DialogTrigger asChild>
-              <button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button">
-                <UserPlus className="h-4 w-4" />
-              </button>
+            <DialogTrigger
+              render={<button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button" />}
+            >
+              <UserPlus className="h-4 w-4" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -60,6 +62,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
               />
             </DialogContent>
           </Dialog>
+          <ThemeToggle />
           <button
             type="button"
             className="btn-ghost p-1.5 text-xs"
@@ -134,8 +137,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       </div>
 
       {/* Footer */}
-      <div className="border-t border-(--border) px-4 py-2">
+      <div className="flex items-center justify-between border-t border-(--border) px-4 py-2">
         <p className="text-xs text-(--text-muted) truncate">{user?.email}</p>
+        <SettingsDialog />
       </div>
     </aside>
   );

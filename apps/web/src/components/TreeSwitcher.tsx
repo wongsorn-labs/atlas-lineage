@@ -15,7 +15,9 @@ export function TreeSwitcher() {
         onValueChange={(value) => setCurrentTreeId(Number(value))}
       >
         <SelectTrigger data-testid="tree-select" aria-label={t('tree.selectLabel')} className="h-8 text-xs">
-          <SelectValue placeholder={t('tree.selectLabel')} />
+          <SelectValue placeholder={t('tree.selectLabel')}>
+            {(value: string | null) => trees.find((tree) => String(tree.id) === value)?.name ?? t('tree.selectLabel')}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {trees.map((tree) => (

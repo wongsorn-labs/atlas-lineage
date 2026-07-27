@@ -98,11 +98,18 @@ packages/shared  ──►  packages/db  ──►  apps/api  ──►  apps/we
 Managed by Drizzle ORM against PostgreSQL (`drizzle-orm/node-postgres`).
 
 ```
-persons         – id (serial PK), name, birth_year, death_year, birth_lat, birth_lng,
-                  birth_place (encrypted), notes (encrypted), created_at, updated_at
-relationships   – id (serial PK), person_id (FK→persons cascade), related_person_id (FK→persons cascade),
-                  type, created_at
+profiles        – id (Supabase user id, PK), email, display_name, avatar_url,
+                  default_country (ISO 3166-1 alpha-3, nullable), created_at
+family_trees    – id (serial PK), name, description, owner_id (FK→profiles), created_at, updated_at
+tree_members    – id (serial PK), tree_id (FK→family_trees cascade), user_id (FK→profiles cascade),
+                  role (owner|editor|viewer), created_at
+persons         – id (serial PK), tree_id (FK→family_trees cascade), name, birth_year, death_year,
+                  birth_lat, birth_lng, birth_place (encrypted), notes (encrypted), created_at, updated_at
+relationships   – id (serial PK), tree_id (FK→family_trees cascade), person_id (FK→persons cascade),
+                  related_person_id (FK→persons cascade), type, created_at
 ```
+
+`profiles.default_country` drives `MapView`'s initial center/zoom (`apps/web/src/lib/countries.ts` maps the code to `{ center, zoom }`, falling back to a world view when unset) — set via the Settings dialog (gear icon, Sidebar footer), which calls `PATCH /api/auth/profile`.
 
 ### Field encryption
 
@@ -113,6 +120,8 @@ relationships   – id (serial PK), person_id (FK→persons cascade), related_pe
 | Method | Path                                  | Description                                  |
 | ------ | ------------------------------------- | -------------------------------------------- |
 | GET    | `/api/health`                         | Health check → `{ status: 'ok', timestamp }` |
+| GET    | `/api/auth/me`                        | Current session → `{ id, email, defaultCountry }` |
+| PATCH  | `/api/auth/profile`                   | Update `defaultCountry` (ISO 3166-1 alpha-3 or `null`) |
 | GET    | `/api/persons`                        | List all persons                             |
 | GET    | `/api/persons/:id`                    | Get person by id                             |
 | POST   | `/api/persons`                        | Create person                                |
@@ -129,7 +138,15 @@ relationships   – id (serial PK), person_id (FK→persons cascade), related_pe
 
 ### UI stack
 
-The web frontend uses **Tailwind CSS** for styling and **Radix UI** primitives (via a local shadcn/ui-style component library under `apps/web/src/components/ui/`). Forms use **React Hook Form** with Zod resolvers (from `packages/shared`). The `@` alias maps to `apps/web/src/` in both Vite and Vitest configs.
+The web frontend uses **Tailwind CSS v4** for styling and **Base UI** (`@base-ui/react`) primitives (via a local shadcn/ui-style component library under `apps/web/src/components/ui/`) — Dialog and Select/Combobox are built on `@floating-ui/react` under the hood, giving auto-flip/auto-size popup positioning for free. Forms use **React Hook Form** with Zod resolvers (from `packages/shared`). The `@` alias maps to `apps/web/src/` in both Vite and Vitest configs.
+
+**Not Radix UI.** The project used Radix UI (`@radix-ui/react-dialog`, `@radix-ui/react-select`) until it was replaced by Base UI. Radix's outside-press detection doesn't recognize a Base UI portal as "inside" its own dialog — nesting one library's Select inside the other's Dialog closes the dialog before a selection commits — so Dialog and Select/Combobox must stay on the same primitives library. If you're adding a new overlay-style component (dropdown menu, tooltip, popover, toast), build it on `@base-ui/react` to match.
+
+Tailwind v4 custom-property gotcha: `bg-[--foo]` (bracket syntax) silently generates an **empty rule** — it does not resolve to `var(--foo)`. Use the parens shorthand instead: `bg-(--foo)`. This applies to any arbitrary-value utility referencing a bare CSS custom property (`bg-`, `text-`, `border-`, `ring-`, `ring-offset-`, `shadow-`, `z-`, ...).
+
+**Design tokens** live in `apps/web/src/styles/app.css`: a Flip7-inspired retro-playful palette (teal/coral/gold on cream/white surfaces) exposed as semantic CSS custom properties (`--bg-card`, `--text-primary`, `--gold`, `--border`, ...) rather than hardcoded Tailwind colors, so components stay theme-agnostic. A parallel dark-mode block (`:root[data-theme="dark"]`, plus an OS-`prefers-color-scheme` fallback) redefines the same properties — components never need their own dark-mode variants. `ThemeContext` (`apps/web/src/contexts/ThemeContext.tsx`) owns the toggle, persists to `localStorage`, and sets `data-theme` on `<html>`; `index.html` sets it pre-hydration to avoid a flash of the wrong theme. `MapView`'s CARTO tile layer (`light_all`/`dark_all`) switches with the theme.
+
+**Overlay z-index** is a named scale in `app.css` (`--z-dropdown`, `--z-overlay`, `--z-dialog`, `--z-popover`, `--z-tooltip`, `--z-toast`) — components reference it by name (`z-(--z-dialog)`) instead of a hand-picked number. Add a new tier there rather than guessing a magic number when building a new overlay.
 
 ### i18n
 
@@ -152,7 +169,7 @@ The web app is a PWA via `vite-plugin-pwa`. Service worker registration is in `s
 
 ## Spec-Driven Development (OpenSpec)
 
-This repo uses [OpenSpec](https://github.com/Fission-AI/OpenSpec) for spec-driven development. Capability specs describing current system behavior live in `openspec/specs/<capability>/spec.md` (authentication, family-tree-management, field-encryption, localization, map-visualization, person-management, pwa-support, relationship-management). These specs are the baseline source of truth for behavior — treat `CLAUDE.md`'s architecture prose as a secondary summary, and the specs as canonical when they disagree.
+This repo uses [OpenSpec](https://github.com/Fission-AI/OpenSpec) for spec-driven development. Capability specs describing current system behavior live in `openspec/specs/<capability>/spec.md` (appearance, authentication, family-tree-management, field-encryption, localization, map-visualization, person-management, pwa-support, relationship-management). These specs are the baseline source of truth for behavior — treat `CLAUDE.md`'s architecture prose as a secondary summary, and the specs as canonical when they disagree.
 
 `openspec/capabilities.yaml` is a status tracker layered on top of the specs (implementation status, linked GitHub issues) that OpenSpec itself doesn't capture — see "Capability status" below.
 
@@ -166,7 +183,7 @@ Run `openspec validate --all` after editing any spec (requirements need SHALL/MU
 
 ### Capability status
 
-`openspec/capabilities.yaml` tracks, per capability: requirement count, `status`, and any linked GitHub issues/notes for known gaps. As of the last update, 7 of 8 capabilities are `implemented`; `family-tree-management` is `gap` (role enforcement defined but not wired into the persons/relationships endpoints — tracked in issue #9).
+`openspec/capabilities.yaml` tracks, per capability: requirement count, `status`, and any linked GitHub issues/notes for known gaps. As of the last update, 8 of 9 capabilities are `implemented`; `family-tree-management` is `gap` (role enforcement defined but not wired into the persons/relationships endpoints — tracked in issue #9).
 
 The app is deployed on **Vercel** (`vercel.json`):
 
