@@ -39,7 +39,10 @@ export class AuthService {
 
   async exchangeOAuthSession(accessToken: string, refreshToken: string) {
     const { data, error } = await this.supabase.auth.getUser(accessToken);
-    if (error || !data.user) throw new UnauthorizedException('Invalid or expired session');
+    if (error || !data.user) {
+      console.error('[oauth/session] getUser failed', { message: error?.message, status: error?.status, code: error?.code });
+      throw new UnauthorizedException('Invalid or expired session');
+    }
     await upsertProfile(data.user.id, data.user.email!);
     await claimDefaultTree(data.user.id);
     const profile = await getProfile(data.user.id);
