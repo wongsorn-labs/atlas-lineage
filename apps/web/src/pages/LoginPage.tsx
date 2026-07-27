@@ -22,16 +22,16 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-[--bg-base]">
+    <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base)">
       <div className="glass-card w-full max-w-sm p-8 space-y-6">
         <div className="text-center space-y-1">
-          <h1 className="font-display text-3xl font-semibold text-[--gold]">Atlas Lineage</h1>
-          <p className="text-sm text-[--text-muted]">Sign in to your family tree</p>
+          <h1 className="font-display text-3xl font-semibold text-(--gold)">Atlas Lineage</h1>
+          <p className="text-sm text-(--text-muted)">Sign in to your family tree</p>
         </div>
 
         <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
           <div className="space-y-1">
-            <label htmlFor="email" className="text-xs font-medium text-[--text-secondary] uppercase tracking-wider">
+            <label htmlFor="email" className="text-xs font-medium text-(--text-secondary) uppercase tracking-wider">
               Email
             </label>
             <input
@@ -47,7 +47,7 @@ export function LoginPage() {
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="password" className="text-xs font-medium text-[--text-secondary] uppercase tracking-wider">
+            <label htmlFor="password" className="text-xs font-medium text-(--text-secondary) uppercase tracking-wider">
               Password
             </label>
             <input
@@ -76,9 +76,9 @@ export function LoginPage() {
         </form>
 
         <div className="relative flex items-center gap-3">
-          <div className="flex-1 border-t border-white/10" />
-          <span className="text-xs text-[--text-muted]">or</span>
-          <div className="flex-1 border-t border-white/10" />
+          <div className="flex-1 border-t border-(--border)" />
+          <span className="text-xs text-(--text-muted)">or</span>
+          <div className="flex-1 border-t border-(--border)" />
         </div>
 
         <button
