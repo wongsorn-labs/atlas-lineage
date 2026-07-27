@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Search, UserPlus } from 'lucide-react';
+import { LogOut, Search, UserPlus, X } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonCard } from './PersonCard';
 import { PersonForm } from './PersonForm';
@@ -15,9 +15,11 @@ interface SidebarProps {
   persons: Person[];
   selectedPerson: Person | null;
   onSelectPerson: (person: Person | null) => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProps) {
+export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true, onClose }: SidebarProps) {
   const [search, setSearch] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
@@ -25,6 +27,11 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
   const { signOut, user } = useAuth();
   const { currentTreeId } = useTree();
   const createPerson = useCreatePerson(currentTreeId);
+
+  const selectPerson = (person: Person | null) => {
+    onSelectPerson(person);
+    onClose?.();
+  };
 
   const filtered = useMemo(() => {
     return persons.filter((p) => {
@@ -37,7 +44,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
   }, [persons, search, yearFrom, yearTo]);
 
   return (
-    <aside className="flex h-screen w-72 flex-shrink-0 flex-col glass-card rounded-none border-r border-(--border)">
+    <aside
+      className={`fixed inset-y-0 left-0 z-(--z-dialog) flex h-screen w-72 max-w-[85vw] flex-shrink-0 flex-col glass-card rounded-none border-r border-(--border) transition-transform duration-200 md:static md:z-auto md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">
         <h1 className="font-display text-lg font-semibold text-(--gold)">Atlas Lineage</h1>
@@ -65,11 +74,20 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
           <ThemeToggle />
           <button
             type="button"
-            className="btn-ghost p-1.5 text-xs"
+            className="btn-ghost flex items-center gap-1 p-1.5 text-xs"
             onClick={() => void signOut()}
             aria-label="Sign out"
           >
-            Sign out
+            <LogOut className="h-4 w-4 md:hidden" />
+            <span className="hidden md:inline">Sign out</span>
+          </button>
+          <button
+            type="button"
+            className="btn-ghost p-1.5 md:hidden"
+            onClick={onClose}
+            aria-label="Close menu"
+          >
+            <X className="h-4 w-4" />
           </button>
         </div>
       </div>
@@ -130,7 +148,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
               key={person.id}
               person={person}
               isSelected={selectedPerson?.id === person.id}
-              onSelect={onSelectPerson}
+              onSelect={selectPerson}
             />
           ))
         )}
