@@ -1,9 +1,16 @@
 {
   "name": "@wongsorn-labs/atlas-lineage-shared",
   "version": "0.0.1",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "node": "./dist/index.js",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
   },
   "dependencies": {
     "zod": "^3.23.8"
