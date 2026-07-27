@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Atlas Lineage',
         short_name: 'Atlas',
         description: 'Map-based genealogy application',
-        theme_color: '#1e40af',
-        background_color: '#ffffff',
+        theme_color: '#9C7526',
+        background_color: '#FBF3E7',
         display: 'standalone',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
