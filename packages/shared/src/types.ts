@@ -50,7 +50,12 @@ export interface UserProfile {
   email: string;
   displayName: string | null;
   avatarUrl: string | null;
+  defaultCountry: string | null;
   createdAt: string;
+}
+
+export interface UpdateProfileSettingsInput {
+  defaultCountry: string | null;
 }
 
 export interface FamilyTree {

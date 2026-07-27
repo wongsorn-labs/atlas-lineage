@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { upsertProfile, claimDefaultTree } from '@wongsorn-labs/atlas-lineage-db';
+import { upsertProfile, claimDefaultTree, getProfile, updateProfileSettings as updateProfileSettingsQuery } from '@wongsorn-labs/atlas-lineage-db';
 
 @Injectable()
 export class AuthService {
@@ -9,7 +9,7 @@ export class AuthService {
   constructor() {
     this.supabase = createClient(
       process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      process.env.SUPABASE_SECRET_KEY!,
     );
   }
 
@@ -18,11 +18,12 @@ export class AuthService {
     if (error || !data.session) throw new Error(error?.message ?? 'Sign-in failed');
     await upsertProfile(data.user.id, data.user.email!);
     await claimDefaultTree(data.user.id);
+    const profile = await getProfile(data.user.id);
     return {
       accessToken: data.session.access_token,
       refreshToken: data.session.refresh_token,
       expiresIn: data.session.expires_in,
-      user: { id: data.user.id, email: data.user.email },
+      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null },
     };
   }
 
@@ -41,10 +42,11 @@ export class AuthService {
     if (error || !data.user) throw new UnauthorizedException('Invalid or expired session');
     await upsertProfile(data.user.id, data.user.email!);
     await claimDefaultTree(data.user.id);
+    const profile = await getProfile(data.user.id);
     return {
       accessToken,
       refreshToken,
-      user: { id: data.user.id, email: data.user.email },
+      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null },
     };
   }
 
@@ -55,6 +57,15 @@ export class AuthService {
   async getUser(accessToken: string) {
     const { data, error } = await this.supabase.auth.getUser(accessToken);
     if (error || !data.user) return null;
-    return { id: data.user.id, email: data.user.email };
+    const profile = await getProfile(data.user.id);
+    return {
+      id: data.user.id,
+      email: data.user.email,
+      defaultCountry: profile?.defaultCountry ?? null,
+    };
+  }
+
+  async updateProfileSettings(userId: string, defaultCountry: string | null) {
+    return updateProfileSettingsQuery(userId, defaultCountry);
   }
 }

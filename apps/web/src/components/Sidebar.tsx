@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
+import { ThemeToggle } from './ThemeToggle';
+import { SettingsDialog } from './SettingsDialog';
 
 interface SidebarProps {
   persons: Person[];
@@ -35,16 +37,16 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
   }, [persons, search, yearFrom, yearTo]);
 
   return (
-    <aside className="flex h-screen w-72 flex-shrink-0 flex-col glass-card rounded-none border-r border-[--border]">
+    <aside className="flex h-screen w-72 flex-shrink-0 flex-col glass-card rounded-none border-r border-(--border)">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[--border] px-4 py-3">
-        <h1 className="font-display text-lg font-semibold text-[--gold]">Atlas Lineage</h1>
+      <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">
+        <h1 className="font-display text-lg font-semibold text-(--gold)">Atlas Lineage</h1>
         <div className="flex items-center gap-1">
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
-            <DialogTrigger asChild>
-              <button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button">
-                <UserPlus className="h-4 w-4" />
-              </button>
+            <DialogTrigger
+              render={<button type="button" className="btn-ghost p-1.5" aria-label="Add person" data-testid="add-person-button" />}
+            >
+              <UserPlus className="h-4 w-4" />
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -60,6 +62,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
               />
             </DialogContent>
           </Dialog>
+          <ThemeToggle />
           <button
             type="button"
             className="btn-ghost p-1.5 text-xs"
@@ -72,14 +75,14 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       </div>
 
       {/* Tree switcher */}
-      <div className="border-b border-[--border] px-3 py-2">
+      <div className="border-b border-(--border) px-3 py-2">
         <TreeSwitcher />
       </div>
 
       {/* Search */}
-      <div className="border-b border-[--border] px-3 py-3 space-y-2">
+      <div className="border-b border-(--border) px-3 py-3 space-y-2">
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[--text-muted]" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-(--text-muted)" />
           <input
             type="search"
             value={search}
@@ -110,7 +113,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       </div>
 
       {/* Person count */}
-      <div className="px-4 py-2 text-xs text-[--text-muted]">
+      <div className="px-4 py-2 text-xs text-(--text-muted)">
         {filtered.length} {filtered.length === 1 ? 'person' : 'people'}
         {search || yearFrom || yearTo ? ` (filtered from ${persons.length})` : ''}
       </div>
@@ -119,7 +122,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-1">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-12 text-center">
-            <p className="text-sm text-[--text-muted]">No people found</p>
+            <p className="text-sm text-(--text-muted)">No people found</p>
           </div>
         ) : (
           filtered.map((person) => (
@@ -134,8 +137,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson }: SidebarProp
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[--border] px-4 py-2">
-        <p className="text-xs text-[--text-muted] truncate">{user?.email}</p>
+      <div className="flex items-center justify-between border-t border-(--border) px-4 py-2">
+        <p className="text-xs text-(--text-muted) truncate">{user?.email}</p>
+        <SettingsDialog />
       </div>
     </aside>
   );

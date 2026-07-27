@@ -1,7 +1,18 @@
 import { eq, and, isNull } from 'drizzle-orm';
 import { db } from '../client';
 import { familyTrees, treeMembers, profiles } from '../schema';
-import type { FamilyTree, FamilyTreeMembership, TreeMember, TreeRole, CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
+import type { FamilyTree, FamilyTreeMembership, TreeMember, TreeRole, CreateTreeInput, AddTreeMemberInput, UserProfile } from '@wongsorn-labs/atlas-lineage-shared';
+
+function mapProfile(row: typeof profiles.$inferSelect): UserProfile {
+  return {
+    id: row.id,
+    email: row.email,
+    displayName: row.displayName ?? null,
+    avatarUrl: row.avatarUrl ?? null,
+    defaultCountry: row.defaultCountry ?? null,
+    createdAt: row.createdAt?.toISOString() ?? '',
+  };
+}
 
 function mapTree(row: typeof familyTrees.$inferSelect): FamilyTree {
   return {
@@ -76,6 +87,20 @@ export async function upsertProfile(id: string, email: string, displayName?: str
       target: profiles.id,
       set: { email, displayName: displayName ?? null, avatarUrl: avatarUrl ?? null },
     });
+}
+
+export async function getProfile(id: string): Promise<UserProfile | null> {
+  const [row] = await db.select().from(profiles).where(eq(profiles.id, id)).limit(1);
+  return row ? mapProfile(row) : null;
+}
+
+export async function updateProfileSettings(id: string, defaultCountry: string | null): Promise<UserProfile> {
+  const [row] = await db
+    .update(profiles)
+    .set({ defaultCountry })
+    .where(eq(profiles.id, id))
+    .returning();
+  return mapProfile(row);
 }
 
 export async function claimDefaultTree(userId: string): Promise<void> {

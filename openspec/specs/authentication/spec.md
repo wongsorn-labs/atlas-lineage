@@ -8,7 +8,7 @@ The system SHALL authenticate users against Supabase Auth using email and passwo
 
 #### Scenario: Successful login
 - **WHEN** a client POSTs `/api/auth/login` with a valid `email` and `password`
-- **THEN** the system verifies the credentials with Supabase, upserts a `profiles` row, claims the default family tree for the user if unclaimed, sets httpOnly `access_token` and `refresh_token` cookies, and returns the user's `id` and `email`
+- **THEN** the system verifies the credentials with Supabase, upserts a `profiles` row, claims the default family tree for the user if unclaimed, sets httpOnly `access_token` and `refresh_token` cookies, and returns the user's `id`, `email`, and `defaultCountry`
 
 #### Scenario: Invalid credentials
 - **WHEN** a client POSTs `/api/auth/login` with incorrect credentials
@@ -41,7 +41,7 @@ The system SHALL expose an endpoint to check the current session.
 
 #### Scenario: Valid session
 - **WHEN** a client GETs `/api/auth/me` with a valid `access_token` cookie
-- **THEN** the system returns the authenticated user's `id` and `email`
+- **THEN** the system returns the authenticated user's `id`, `email`, and `defaultCountry` (see the "appearance" capability for how `defaultCountry` is set)
 
 #### Scenario: No or invalid session
 - **WHEN** a client GETs `/api/auth/me` without a valid `access_token` cookie

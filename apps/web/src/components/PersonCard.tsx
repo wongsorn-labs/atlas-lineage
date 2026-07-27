@@ -52,24 +52,24 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         className={[
           'group glass-card cursor-pointer px-3 py-2.5 transition-all duration-150',
           isSelected
-            ? 'glass-card-gold ring-1 ring-[--border-gold]'
-            : 'hover:border-[--border-gold]',
+            ? 'glass-card-gold ring-1 ring-(--border-gold)'
+            : 'hover:border-(--border-gold)',
         ].join(' ')}
       >
         {/* Name */}
-        <p className="font-display text-sm font-semibold leading-snug text-[--text-primary] truncate">
+        <p className="font-display text-sm font-semibold leading-snug text-(--text-primary) truncate">
           {person.name}
         </p>
 
         {/* Lifespan */}
         {lifespan && (
-          <p className="mt-0.5 text-xs text-[--text-muted]">{lifespan}</p>
+          <p className="mt-0.5 text-xs text-(--text-muted)">{lifespan}</p>
         )}
 
         {/* Birth place */}
         {person.birthPlace && (
-          <div className="mt-1 flex items-center gap-1 text-xs text-[--text-secondary]">
-            <MapPin className="h-3 w-3 flex-shrink-0 text-[--gold]" aria-hidden="true" />
+          <div className="mt-1 flex items-center gap-1 text-xs text-(--text-secondary)">
+            <MapPin className="h-3 w-3 flex-shrink-0 text-(--gold)" aria-hidden="true" />
             <span className="truncate">{person.birthPlace}</span>
           </div>
         )}
@@ -110,7 +110,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
-              className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
+              className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
               aria-label={`Edit ${person.name}`}
               data-testid="edit-person-button"
             >
@@ -119,7 +119,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
-              className="btn-ghost p-1 text-[--text-muted] hover:text-[--gold]"
+              className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
               aria-label={`Manage relationships for ${person.name}`}
               data-testid="add-relationship-button"
             >
@@ -128,7 +128,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); handleDelete(); }}
-              className="btn-ghost p-1 text-[--text-muted] hover:text-red-400 ml-auto"
+              className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
               aria-label={`Delete ${person.name}`}
               data-testid="delete-person-button"
             >

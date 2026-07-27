@@ -43,7 +43,9 @@ export function RelationshipForm({
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger data-testid="related-person-select">
-                <SelectValue placeholder={t('relationship.selectPerson')} />
+                <SelectValue placeholder={t('relationship.selectPerson')}>
+                  {(value: string | null) => others.find((p) => String(p.id) === value)?.name ?? t('relationship.selectPerson')}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {others.map((p) => (
@@ -67,7 +69,9 @@ export function RelationshipForm({
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger data-testid="relationship-type-select">
-                <SelectValue placeholder={t('relationship.selectType')} />
+                <SelectValue placeholder={t('relationship.selectType')}>
+                  {(value: RelationshipType | null) => (value ? t(`relationship.types.${value}`) : t('relationship.selectType'))}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {TYPES.map((type) => (

@@ -55,19 +55,30 @@ async function request<T>(url: string, options?: RequestInit, retry = true): Pro
   return res.json() as Promise<T>;
 }
 
+export interface AuthUser {
+  id: string;
+  email: string;
+  defaultCountry: string | null;
+}
+
 export const api = {
   auth: {
     login: (email: string, password: string) =>
-      request<{ user: { id: string; email: string } }>('/auth/login', {
+      request<{ user: AuthUser }>('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       }),
     logout: () => request<{ ok: boolean }>('/auth/logout', { method: 'POST' }),
-    me: () => request<{ id: string; email: string }>('/auth/me'),
+    me: () => request<AuthUser>('/auth/me'),
     oauthSession: (accessToken: string, refreshToken: string) =>
-      request<{ user: { id: string; email: string } }>('/auth/oauth/session', {
+      request<{ user: AuthUser }>('/auth/oauth/session', {
         method: 'POST',
         body: JSON.stringify({ accessToken, refreshToken }),
+      }),
+    updateProfile: (defaultCountry: string | null) =>
+      request<{ defaultCountry: string | null }>('/auth/profile', {
+        method: 'PATCH',
+        body: JSON.stringify({ defaultCountry }),
       }),
   },
   trees: {

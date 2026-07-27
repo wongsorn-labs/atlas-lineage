@@ -28,15 +28,5 @@
     "concurrently": "^8.2.2",
     "lefthook": "^2.1.9",
     "typescript": "^5.5.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "esbuild",
-      "msw"
-    ],
-    "overrides": {
-      "express": "4.19.2"
-    }
   }
 }
