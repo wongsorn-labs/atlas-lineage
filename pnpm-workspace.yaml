@@ -1,6 +1,8 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+overrides:
+  express: 4.19.2
 allowBuilds:
   '@nestjs/core': true
   better-sqlite3: true
