@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
-import { LogOut, Search, UserPlus, X } from 'lucide-react';
+import { LogOut, Search, TreePine, UserPlus, X } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonCard } from './PersonCard';
 import { PersonForm } from './PersonForm';
 import { useCreatePerson } from '@/hooks/usePersons';
+import { Avatar } from './ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
@@ -49,7 +50,12 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">
-        <h1 className="font-display text-lg font-semibold text-(--gold)">Atlas Lineage</h1>
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-(--gold-muted) text-(--gold)">
+            <TreePine className="h-4 w-4" />
+          </div>
+          <h1 className="font-display text-lg font-semibold text-(--gold) truncate">Atlas Lineage</h1>
+        </div>
         <div className="flex items-center gap-1">
           <Dialog open={addOpen} onOpenChange={setAddOpen}>
             <DialogTrigger
@@ -74,12 +80,12 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
           <ThemeToggle />
           <button
             type="button"
-            className="btn-ghost flex items-center gap-1 p-1.5 text-xs"
+            className="btn-ghost p-1.5"
             onClick={() => void signOut()}
             aria-label="Sign out"
+            title="Sign out"
           >
-            <LogOut className="h-4 w-4 md:hidden" />
-            <span className="hidden md:inline">Sign out</span>
+            <LogOut className="h-4 w-4" />
           </button>
           <button
             type="button"
@@ -137,7 +143,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       </div>
 
       {/* Person list */}
-      <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-1">
+      <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-2">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-12 text-center">
             <p className="text-sm text-(--text-muted)">No people found</p>
@@ -155,8 +161,11 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-(--border) px-4 py-2">
-        <p className="text-xs text-(--text-muted) truncate">{user?.email}</p>
+      <div className="flex items-center justify-between gap-2 border-t border-(--border) px-4 py-2.5">
+        <div className="flex min-w-0 items-center gap-2">
+          {user?.email && <Avatar name={user.email} className="h-7 w-7 text-[10px]" />}
+          <p className="min-w-0 truncate text-xs text-(--text-muted)">{user?.email}</p>
+        </div>
         <SettingsDialog />
       </div>
     </aside>
