@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Inter, system-ui, sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Inter, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Noto Serif", serif;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
 
-  /* Flip7 palette -- retro-playful teal / coral / gold on cream */
-  --color-teal: #2BA8A2;
-  --color-teal-light: #3CC4BD;
-  --color-teal-dark: #1E8C86;
-  --color-teal-bg: #E8F6F5;
+  /* Heritage palette -- warm antique gold / sage green / terracotta on parchment */
+  --color-teal: #4A7C59;
+  --color-teal-light: #6B9C7A;
+  --color-teal-dark: #2F5A3D;
+  --color-teal-bg: #EAF1EA;
 
-  --color-gold: #FFD23F;
-  --color-gold-light: #FFE47A;
-  --color-gold-dark: #E6B800;
+  --color-gold: #C89B3C;
+  --color-gold-light: #DDB968;
+  --color-gold-dark: #9C7526;
 
-  --color-coral: #EF6C4A;
-  --color-coral-light: #FF8A6A;
-  --color-coral-dark: #D45233;
+  --color-coral: #B5502F;
+  --color-coral-light: #D06B45;
+  --color-coral-dark: #8C3D22;
 
-  --color-cream: #FFF8E7;
+  --color-cream: #FBF3E7;
   --color-sky: #5DADE2;
 
-  --color-bg-base: #EFF8F7;
-  --color-bg-surface: #E8F6F5;
-  --color-bg-elevated: #FFF8E7;
+  --color-bg-base: #F7EFE2;
+  --color-bg-surface: #FBF3E7;
+  --color-bg-elevated: #FFFDF8;
   --color-bg-card: #FFFFFF;
 
   /* Text */
-  --color-text-primary: #1E8C86;
-  --color-text-secondary: #4A6B69;
-  --color-text-muted: #7C9A98;
+  --color-text-primary: #4A2E1D;
+  --color-text-secondary: #6B5544;
+  --color-text-muted: #A08D7A;
 
   /* Borders */
-  --color-border: rgba(30, 140, 134, 0.14);
-  --color-border-gold: rgba(230, 184, 0, 0.35);
+  --color-border: rgba(74, 46, 29, 0.14);
+  --color-border-gold: rgba(156, 117, 38, 0.35);
 
   /* Status */
-  --color-error: #E74C3C;
-  --color-success: #27AE60;
+  --color-error: #C0392B;
+  --color-success: #2F5A3D;
 }
 
 @layer base {
@@ -49,12 +49,12 @@
     --bg-glass: var(--color-bg-elevated);
     --gold: var(--color-gold);
     --gold-dark: var(--color-gold-dark);
-    --gold-muted: rgba(255, 210, 63, 0.18);
-    --gold-glow: rgba(255, 210, 63, 0.4);
+    --gold-muted: rgba(200, 155, 60, 0.18);
+    --gold-glow: rgba(200, 155, 60, 0.4);
     --coral: var(--color-coral);
-    --coral-glow: rgba(239, 108, 74, 0.35);
+    --coral-glow: rgba(181, 80, 47, 0.35);
     --teal: var(--color-teal);
-    --teal-glow: rgba(43, 168, 162, 0.3);
+    --teal-glow: rgba(74, 124, 89, 0.3);
     --text-primary: var(--color-text-primary);
     --text-secondary: var(--color-text-secondary);
     --text-muted: var(--color-text-muted);
@@ -68,10 +68,10 @@
     --radius-xl: 1rem;
     --radius-pill: 999px;
 
-    --shadow-sm: 0 1px 4px rgba(30, 60, 58, 0.08);
-    --shadow-md: 0 2px 10px rgba(30, 60, 58, 0.12);
-    --shadow-lg: 0 4px 20px rgba(30, 60, 58, 0.16);
-    --shadow-card: 0 2px 12px rgba(43, 168, 162, 0.12);
+    --shadow-sm: 0 1px 4px rgba(74, 46, 29, 0.08);
+    --shadow-md: 0 2px 10px rgba(74, 46, 29, 0.12);
+    --shadow-lg: 0 4px 20px rgba(74, 46, 29, 0.16);
+    --shadow-card: 0 2px 12px rgba(74, 124, 89, 0.12);
     --shadow-gold-glow: 0 2px 14px 1px var(--gold-glow);
     --shadow-coral-glow: 0 2px 14px 1px var(--coral-glow);
     --shadow-teal-glow: 0 2px 14px 1px var(--teal-glow);
@@ -94,29 +94,29 @@
   /* Dark mode -- explicit toggle wins over OS preference */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg-base: #0D1917;
-      --bg-surface: #132422;
-      --bg-elevated: #1B3330;
-      --bg-card: #1F3B37;
-      --text-primary: #EAF6F4;
-      --text-secondary: #9FC4C0;
-      --text-muted: #6E948F;
+      --bg-base: #1A140F;
+      --bg-surface: #241C15;
+      --bg-elevated: #2E2319;
+      --bg-card: #34281C;
+      --text-primary: #F3E6D4;
+      --text-secondary: #C9B8A3;
+      --text-muted: #8F7C68;
       --border: rgba(255, 255, 255, 0.08);
-      --border-gold: rgba(255, 210, 63, 0.35);
+      --border-gold: rgba(200, 155, 60, 0.35);
       --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
     }
   }
 
   :root[data-theme="dark"] {
-    --bg-base: #0D1917;
-    --bg-surface: #132422;
-    --bg-elevated: #1B3330;
-    --bg-card: #1F3B37;
-    --text-primary: #EAF6F4;
-    --text-secondary: #9FC4C0;
-    --text-muted: #6E948F;
+    --bg-base: #1A140F;
+    --bg-surface: #241C15;
+    --bg-elevated: #2E2319;
+    --bg-card: #34281C;
+    --text-primary: #F3E6D4;
+    --text-secondary: #C9B8A3;
+    --text-muted: #8F7C68;
     --border: rgba(255, 255, 255, 0.08);
-    --border-gold: rgba(255, 210, 63, 0.35);
+    --border-gold: rgba(200, 155, 60, 0.35);
     --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
   }
 
@@ -267,16 +267,16 @@
   .atlas-marker-dot {
     width: 14px;
     height: 14px;
-    background: #FFD23F;
+    background: var(--gold);
     border-radius: 50%;
-    border: 2px solid rgba(230, 184, 0, 0.6);
-    box-shadow: 0 0 10px 3px rgba(255, 210, 63, 0.45), 0 0 20px 6px rgba(255, 210, 63, 0.2);
+    border: 2px solid var(--gold-dark);
+    box-shadow: 0 0 10px 3px var(--gold-glow), 0 0 20px 6px rgba(200, 155, 60, 0.2);
     transition: box-shadow 150ms ease, transform 150ms ease;
   }
 
   .atlas-marker-dot:hover,
   .atlas-marker-selected .atlas-marker-dot {
-    box-shadow: 0 0 16px 5px rgba(255, 210, 63, 0.65), 0 0 30px 10px rgba(255, 210, 63, 0.3);
+    box-shadow: 0 0 16px 5px rgba(200, 155, 60, 0.65), 0 0 30px 10px rgba(200, 155, 60, 0.3);
     transform: scale(1.3);
   }
 }

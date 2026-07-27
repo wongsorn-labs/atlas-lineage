@@ -4,6 +4,7 @@ import { Edit2, Trash2, GitBranch, MapPin } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
+import { Avatar } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
@@ -50,35 +51,48 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         onClick={() => onSelect(isSelected ? null : person)}
         onKeyDown={(e) => e.key === 'Enter' && onSelect(isSelected ? null : person)}
         className={[
-          'group glass-card cursor-pointer px-3 py-2.5 transition-all duration-150',
+          'group relative glass-card cursor-pointer rounded-xl px-3 py-2.5 pl-4 transition-all duration-150',
           isSelected
             ? 'glass-card-gold ring-1 ring-(--border-gold)'
             : 'hover:border-(--border-gold)',
         ].join(' ')}
       >
-        {/* Name */}
-        <p className="font-display text-sm font-semibold leading-snug text-(--text-primary) truncate">
-          {person.name}
-        </p>
-
-        {/* Lifespan */}
-        {lifespan && (
-          <p className="mt-0.5 text-xs text-(--text-muted)">{lifespan}</p>
+        {isSelected && (
+          <span
+            className="absolute inset-y-2 left-0 w-1 rounded-full bg-(--gold)"
+            aria-hidden="true"
+          />
         )}
 
-        {/* Birth place */}
-        {person.birthPlace && (
-          <div className="mt-1 flex items-center gap-1 text-xs text-(--text-secondary)">
-            <MapPin className="h-3 w-3 flex-shrink-0 text-(--gold)" aria-hidden="true" />
-            <span className="truncate">{person.birthPlace}</span>
+        <div className="flex items-start gap-3">
+          <Avatar name={person.name} />
+
+          <div className="min-w-0 flex-1">
+            {/* Name */}
+            <p className="font-display text-sm font-semibold leading-snug text-(--text-primary) truncate">
+              {person.name}
+            </p>
+
+            {/* Lifespan */}
+            {lifespan && (
+              <p className="mt-0.5 text-xs text-(--text-muted)">{lifespan}</p>
+            )}
+
+            {/* Birth place */}
+            {person.birthPlace && (
+              <div className="mt-1 flex items-center gap-1 text-xs text-(--text-secondary)">
+                <MapPin className="h-3 w-3 flex-shrink-0 text-(--gold)" aria-hidden="true" />
+                <span className="truncate">{person.birthPlace}</span>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Existing relationships — shown only for the selected person, since
             each side of a relationship otherwise renders its own matching
             badge and duplicates test-id lookups across cards */}
         {isSelected && relationships.length > 0 && (
-          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 pl-12">
             {relationships.map((rel) => {
               const otherId = rel.personId === person.id ? rel.relatedPersonId : rel.personId;
               const other = allPersons.find((p) => p.id === otherId);
@@ -106,7 +120,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         {/* Actions — visible only for the selected person, to keep action
             test ids unambiguous when multiple people are in the sidebar */}
         {isSelected && (
-          <div className="mt-2 flex items-center gap-1">
+          <div className="mt-2 flex items-center gap-1 pl-12">
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}

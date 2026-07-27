@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2, Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { MapView } from './components/MapView';
 import { Sidebar } from './components/Sidebar';
@@ -17,6 +17,7 @@ export default function App() {
   const personsQuery = usePersons(currentTreeId);
   const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { t } = useTranslation();
 
   const persons = personsQuery.data ?? [];
@@ -111,8 +112,25 @@ export default function App() {
         persons={persons}
         selectedPerson={selectedPerson}
         onSelectPerson={setSelectedPerson}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-(--z-overlay) bg-black/40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
+      )}
       <main className="flex-1 relative">
+        <button
+          type="button"
+          className="absolute top-3 right-3 z-(--z-dropdown) glass-card p-2 md:hidden"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Open menu"
+        >
+          <Menu className="h-5 w-5 text-(--text-primary)" />
+        </button>
         <MapView
           persons={persons}
           relationships={relationships}
