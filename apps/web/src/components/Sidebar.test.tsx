@@ -12,6 +12,10 @@ vi.mock('../contexts/TreeContext', () => ({
   useTree: () => ({ currentTreeId: 1 }),
 }));
 
+vi.mock('../contexts/ThemeContext', () => ({
+  useTheme: () => ({ theme: 'light', toggleTheme: vi.fn() }),
+}));
+
 vi.mock('./TreeSwitcher', () => ({
   TreeSwitcher: () => <div data-testid="tree-switcher" />,
 }));
