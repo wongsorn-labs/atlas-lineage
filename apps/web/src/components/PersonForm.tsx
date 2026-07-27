@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,7 +33,8 @@ interface PersonFormProps {
 
 export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFormProps) {
   const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  const [hasDeathYear, setHasDeathYear] = useState(initial?.deathYear != null);
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: initial
       ? {
@@ -60,8 +63,29 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
           <Input id="birthYear" data-testid="birth-year-input" type="number" {...register('birthYear')} placeholder="1900" />
         </div>
         <div>
-          <Label htmlFor="deathYear">{t('person.deathYear')}</Label>
-          <Input id="deathYear" data-testid="death-year-input" type="number" {...register('deathYear')} placeholder="1980" />
+          <div className="flex h-5 items-center gap-2">
+            <Checkbox
+              id="hasDeathYear"
+              data-testid="has-death-year-checkbox"
+              checked={hasDeathYear}
+              onCheckedChange={(checked) => {
+                const isChecked = checked === true;
+                setHasDeathYear(isChecked);
+                if (!isChecked) setValue('deathYear', undefined);
+              }}
+            />
+            <Label htmlFor="hasDeathYear" className="cursor-pointer">{t('person.deathYear')}</Label>
+          </div>
+          {hasDeathYear && (
+            <Input
+              id="deathYear"
+              data-testid="death-year-input"
+              type="number"
+              {...register('deathYear')}
+              placeholder="1980"
+              className="mt-1"
+            />
+          )}
         </div>
       </div>
 

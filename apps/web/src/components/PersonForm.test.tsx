@@ -5,15 +5,26 @@ import { PersonForm } from './PersonForm';
 const noop = () => {};
 
 describe('PersonForm', () => {
-  it('renders all fields', () => {
+  it('renders all fields, with death year hidden until checked', () => {
     render(<PersonForm onSubmit={noop} onCancel={noop} />);
     expect(screen.getByTestId('name-input')).toBeInTheDocument();
     expect(screen.getByTestId('birth-year-input')).toBeInTheDocument();
-    expect(screen.getByTestId('death-year-input')).toBeInTheDocument();
+    expect(screen.getByTestId('has-death-year-checkbox')).toBeInTheDocument();
+    expect(screen.queryByTestId('death-year-input')).not.toBeInTheDocument();
     expect(screen.getByTestId('birth-lat-input')).toBeInTheDocument();
     expect(screen.getByTestId('birth-lng-input')).toBeInTheDocument();
     expect(screen.getByTestId('birth-place-input')).toBeInTheDocument();
     expect(screen.getByTestId('notes-input')).toBeInTheDocument();
+  });
+
+  it('reveals the death year input once the checkbox is checked', async () => {
+    const user = userEvent.setup();
+    render(<PersonForm onSubmit={noop} onCancel={noop} />);
+    expect(screen.queryByTestId('death-year-input')).not.toBeInTheDocument();
+    await user.click(screen.getByTestId('has-death-year-checkbox'));
+    expect(screen.getByTestId('death-year-input')).toBeInTheDocument();
+    await user.click(screen.getByTestId('has-death-year-checkbox'));
+    expect(screen.queryByTestId('death-year-input')).not.toBeInTheDocument();
   });
 
   it('shows "Name is required" error on empty submit', async () => {
@@ -55,6 +66,7 @@ describe('PersonForm', () => {
     };
     render(<PersonForm initial={initial} onSubmit={noop} onCancel={noop} />);
     expect((screen.getByTestId('name-input') as HTMLInputElement).value).toBe('Grace Hopper');
+    expect((screen.getByTestId('death-year-input') as HTMLInputElement).value).toBe('1992');
     expect(screen.getByRole('button', { name: /update/i })).toBeInTheDocument();
   });
 });
