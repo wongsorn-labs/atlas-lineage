@@ -31,6 +31,7 @@
   },
   "relationship": {
     "addTitle": "Add relationship for {{name}}",
+    "sentenceIntro": "How is {{name}} related to someone else in this tree?",
     "relatedPerson": "Related person",
     "type": "Relationship type",
     "selectPerson": "Select a person…",

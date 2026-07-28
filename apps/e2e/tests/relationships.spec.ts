@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clearDatabase, loginTestUser } from './helpers';
+import { clearDatabase, loginTestUser, personCard } from './helpers';
 import { API_URL, DEFAULT_TREE_ID } from '../e2e.config';
 
 test.beforeEach(async ({ context }) => {
@@ -15,7 +15,7 @@ test('add relationship — badge visible', async ({ page, context }) => {
 
   await page.goto('/');
   await page.getByText('Ada').click();
-  await page.getByTestId('add-relationship-button').click();
+  await personCard(page, 'Ada').getByTestId('add-relationship-button').click();
 
   await page.getByTestId('related-person-select').click();
   await page.getByRole('option', { name: 'Charles' }).click();
@@ -43,7 +43,7 @@ test('delete relationship — badge gone', async ({ page, context }) => {
   await page.getByText('Ada').click();
   await expect(page.getByTestId('relationship-badge').filter({ hasText: /spouse/i })).toBeVisible();
 
-  await page.locator('[data-testid="add-relationship-button"]').isVisible();
+  await personCard(page, 'Ada').getByTestId('add-relationship-button').isVisible();
   // Delete the relationship via the trash icon in the relationships list
   await page.locator('.text-red-400').first().click();
   await expect(page.getByTestId('relationship-badge').filter({ hasText: /spouse/i })).not.toBeVisible();

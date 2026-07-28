@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { LogOut, Search, TreePine, UserPlus, X } from 'lucide-react';
+import { LogOut, Search, SlidersHorizontal, TreePine, UserPlus, X } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonCard } from './PersonCard';
 import { PersonForm } from './PersonForm';
@@ -24,6 +24,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
   const [search, setSearch] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const { signOut, user } = useAuth();
   const { currentTreeId } = useTree();
@@ -105,35 +106,48 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
 
       {/* Search */}
       <div className="border-b border-(--border) px-3 py-3 space-y-2">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-(--text-muted)" />
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search people…"
-            className="input-glass w-full pl-8 text-xs py-1.5"
-            aria-label="Search people"
-          />
-        </div>
         <div className="flex items-center gap-2">
-          <input
-            type="number"
-            value={yearFrom}
-            onChange={(e) => setYearFrom(e.target.value)}
-            placeholder="From year"
-            className="input-glass w-1/2 text-xs py-1.5"
-            aria-label="Filter from birth year"
-          />
-          <input
-            type="number"
-            value={yearTo}
-            onChange={(e) => setYearTo(e.target.value)}
-            placeholder="To year"
-            className="input-glass w-1/2 text-xs py-1.5"
-            aria-label="Filter to birth year"
-          />
+          <div className="relative flex-1">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-(--text-muted)" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search people…"
+              className="input-glass w-full pl-8 text-xs py-1.5"
+              aria-label="Search people"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowFilters((v) => !v)}
+            className={`btn-ghost flex-shrink-0 p-1.5 ${showFilters || yearFrom || yearTo ? 'text-(--gold)' : 'text-(--text-muted)'}`}
+            aria-label="Toggle year filters"
+            aria-expanded={showFilters}
+          >
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+          </button>
         </div>
+        {showFilters && (
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={yearFrom}
+              onChange={(e) => setYearFrom(e.target.value)}
+              placeholder="From year"
+              className="input-glass w-1/2 text-xs py-1.5"
+              aria-label="Filter from birth year"
+            />
+            <input
+              type="number"
+              value={yearTo}
+              onChange={(e) => setYearTo(e.target.value)}
+              placeholder="To year"
+              className="input-glass w-1/2 text-xs py-1.5"
+              aria-label="Filter to birth year"
+            />
+          </div>
+        )}
       </div>
 
       {/* Person count */}

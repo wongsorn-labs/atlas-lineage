@@ -48,13 +48,14 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
       <div
         role="button"
         tabIndex={0}
+        data-testid="person-card"
         onClick={() => onSelect(isSelected ? null : person)}
         onKeyDown={(e) => e.key === 'Enter' && onSelect(isSelected ? null : person)}
         className={[
-          'group relative glass-card cursor-pointer rounded-xl px-3 py-2.5 pl-4 transition-all duration-150',
+          'group relative glass-card cursor-pointer rounded-xl px-3 py-3 pl-4 transition-all duration-150',
           isSelected
             ? 'glass-card-gold ring-1 ring-(--border-gold)'
-            : 'hover:border-(--border-gold)',
+            : 'hover:border-(--border-gold) hover:shadow-md hover:-translate-y-0.5',
         ].join(' ')}
       >
         {isSelected && (
@@ -117,45 +118,51 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
           </div>
         )}
 
-        {/* Actions — visible only for the selected person, to keep action
-            test ids unambiguous when multiple people are in the sidebar */}
-        {isSelected && (
-          <div className="mt-2 flex items-center gap-1 pl-12">
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
-              className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-              aria-label={`Edit ${person.name}`}
-              data-testid="edit-person-button"
-            >
-              <Edit2 className="h-3.5 w-3.5" />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
-              className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-              aria-label={`Manage relationships for ${person.name}`}
-              data-testid="add-relationship-button"
-            >
-              <GitBranch className="h-3.5 w-3.5" />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); handleDelete(); }}
-              className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
-              aria-label={`Delete ${person.name}`}
-              data-testid="delete-person-button"
-            >
-              <Trash2 className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        )}
+        {/* Actions — always in the DOM so hovering a card reveals them
+            without first having to select it, but invisible (opacity-0)
+            until hover/focus/selection. Every card renders the same
+            test ids, so anything targeting these must scope through
+            the "person-card" testid first (see e2e tests). */}
+        <div
+          className={[
+            'mt-2 flex items-center gap-1 pl-12 transition-opacity duration-150',
+            isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100',
+          ].join(' ')}
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
+            className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
+            aria-label={`Edit ${person.name}`}
+            data-testid="edit-person-button"
+          >
+            <Edit2 className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
+            className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
+            aria-label={`Manage relationships for ${person.name}`}
+            data-testid="add-relationship-button"
+          >
+            <GitBranch className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+            className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
+            aria-label={`Delete ${person.name}`}
+            data-testid="delete-person-button"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+          </button>
+        </div>
       </div>
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="font-display">Edit Person</DialogTitle>
+            <DialogTitle className="font-display">{t('person.editTitle', { name: person.name })}</DialogTitle>
           </DialogHeader>
           <PersonForm
             initial={person}
@@ -172,7 +179,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
       <Dialog open={relOpen} onOpenChange={setRelOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="font-display">Relationships — {person.name}</DialogTitle>
+            <DialogTitle className="font-display">{t('relationship.addTitle', { name: person.name })}</DialogTitle>
           </DialogHeader>
           <RelationshipForm
             currentPerson={person}
