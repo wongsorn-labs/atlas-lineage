@@ -58,36 +58,14 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
           </div>
           <h1 className="font-display text-lg font-semibold text-(--gold) truncate">Atlas Lineage</h1>
         </div>
-        <div className="flex items-center gap-1">
-          <Dialog open={addOpen} onOpenChange={setAddOpen}>
-            <DialogTrigger
-              render={<button type="button" className="btn-ghost p-1.5" aria-label={t('sidebar.addPersonAria')} data-testid="add-person-button" />}
-            >
-              <UserPlus className="h-4 w-4" />
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{t('person.addTitle')}</DialogTitle>
-              </DialogHeader>
-              <PersonForm
-                onSubmit={async (values) => {
-                  await createPerson.mutateAsync(values);
-                  setAddOpen(false);
-                }}
-                onCancel={() => setAddOpen(false)}
-                isLoading={createPerson.isPending}
-              />
-            </DialogContent>
-          </Dialog>
-          <button
-            type="button"
-            className="btn-ghost p-1.5 md:hidden"
-            onClick={onClose}
-            aria-label={t('sidebar.closeMenu')}
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
+        <button
+          type="button"
+          className="btn-ghost p-1.5 md:hidden"
+          onClick={onClose}
+          aria-label={t('sidebar.closeMenu')}
+        >
+          <X className="h-4 w-4" />
+        </button>
       </div>
 
       {/* Tree switcher */}
@@ -148,21 +126,51 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       </div>
 
       {/* Person list */}
-      <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-2">
-        {filtered.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 py-12 text-center">
-            <p className="text-sm text-(--text-muted)">{t('sidebar.noResults')}</p>
-          </div>
-        ) : (
-          filtered.map((person) => (
-            <PersonCard
-              key={person.id}
-              person={person}
-              isSelected={selectedPerson?.id === person.id}
-              onSelect={selectPerson}
+      <div className="relative flex-1 min-h-0">
+        <div className="h-full overflow-y-auto px-2 pb-20 pt-0 space-y-2">
+          {filtered.length === 0 ? (
+            <div className="flex flex-col items-center gap-2 py-12 text-center">
+              <p className="text-sm text-(--text-muted)">{t('sidebar.noResults')}</p>
+            </div>
+          ) : (
+            filtered.map((person) => (
+              <PersonCard
+                key={person.id}
+                person={person}
+                isSelected={selectedPerson?.id === person.id}
+                onSelect={selectPerson}
+              />
+            ))
+          )}
+        </div>
+
+        <Dialog open={addOpen} onOpenChange={setAddOpen}>
+          <DialogTrigger
+            render={
+              <button
+                type="button"
+                className="absolute bottom-4 right-4 z-(--z-dropdown) flex h-12 w-12 items-center justify-center rounded-full bg-(--gold) text-(--text-primary) shadow-(--shadow-gold-glow) transition-transform hover:opacity-90 active:scale-95"
+                aria-label={t('sidebar.addPersonAria')}
+                data-testid="add-person-button"
+              />
+            }
+          >
+            <UserPlus className="h-5 w-5" />
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t('person.addTitle')}</DialogTitle>
+            </DialogHeader>
+            <PersonForm
+              onSubmit={async (values) => {
+                await createPerson.mutateAsync(values);
+                setAddOpen(false);
+              }}
+              onCancel={() => setAddOpen(false)}
+              isLoading={createPerson.isPending}
             />
-          ))
-        )}
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Footer */}
