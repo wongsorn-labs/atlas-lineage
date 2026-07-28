@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Label } from './ui/label';
@@ -7,6 +8,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { COUNTRY_MAP_DEFAULTS } from '../lib/countries';
 
 export function SettingsDialog() {
+  const { t, i18n } = useTranslation();
   const { user, updateDefaultCountry } = useAuth();
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -23,41 +25,61 @@ export function SettingsDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        render={<button type="button" className="btn-ghost p-1.5" aria-label="Settings" data-testid="settings-button" />}
+        render={<button type="button" className="btn-ghost p-1.5" aria-label={t('settings.settingsAria')} data-testid="settings-button" />}
       >
         <Settings className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="font-display">Settings</DialogTitle>
+          <DialogTitle className="font-display">{t('settings.title')}</DialogTitle>
         </DialogHeader>
-        <div className="space-y-1">
-          <Label htmlFor="default-country">Default map country</Label>
-          <Select
-            value={user?.defaultCountry ?? '__world'}
-            onValueChange={(value) => void handleChange(value)}
-            disabled={isSaving}
-          >
-            <SelectTrigger id="default-country" data-testid="default-country-select">
-              <SelectValue>
-                {(value: string | null) =>
-                  value === '__world' || !value
-                    ? 'World'
-                    : COUNTRY_MAP_DEFAULTS.find((c) => c.code === value)?.name ?? value}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="__world">World</SelectItem>
-              {COUNTRY_MAP_DEFAULTS.map((c) => (
-                <SelectItem key={c.code} value={c.code}>
-                  {c.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <p className="text-xs text-(--text-muted) mt-1">
-            Map opens centered here whenever you sign in.
-          </p>
+        <div className="space-y-4">
+          <div className="space-y-1">
+            <Label htmlFor="default-country">{t('settings.defaultCountry')}</Label>
+            <Select
+              value={user?.defaultCountry ?? '__world'}
+              onValueChange={(value) => void handleChange(value)}
+              disabled={isSaving}
+            >
+              <SelectTrigger id="default-country" data-testid="default-country-select">
+                <SelectValue>
+                  {(value: string | null) =>
+                    value === '__world' || !value
+                      ? t('settings.world')
+                      : COUNTRY_MAP_DEFAULTS.find((c) => c.code === value)?.name ?? value}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__world">{t('settings.world')}</SelectItem>
+                {COUNTRY_MAP_DEFAULTS.map((c) => (
+                  <SelectItem key={c.code} value={c.code}>
+                    {c.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-(--text-muted) mt-1">{t('settings.defaultCountryHelp')}</p>
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="language">{t('settings.language')}</Label>
+            <Select
+              value={i18n.language}
+              onValueChange={(value) => value && void i18n.changeLanguage(value)}
+            >
+              <SelectTrigger id="language" data-testid="language-select">
+                <SelectValue>
+                  {(value: string | null) =>
+                    value === 'th' ? t('settings.languageThai') : t('settings.languageEnglish')}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="en">{t('settings.languageEnglish')}</SelectItem>
+                <SelectItem value="th">{t('settings.languageThai')}</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-(--text-muted) mt-1">{t('settings.languageHelp')}</p>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

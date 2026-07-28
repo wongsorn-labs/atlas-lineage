@@ -96,5 +96,16 @@
       "viewer": "ผู้ดู"
     }
   },
+  "settings": {
+    "title": "ตั้งค่า",
+    "defaultCountry": "ประเทศเริ่มต้นบนแผนที่",
+    "defaultCountryHelp": "แผนที่จะเปิดโดยเลื่อนไปจุดนี้ทุกครั้งที่คุณเข้าสู่ระบบ",
+    "world": "โลก",
+    "settingsAria": "ตั้งค่า",
+    "language": "ภาษา",
+    "languageHelp": "เปลี่ยนเมนู ป้ายกำกับ และปุ่มต่างๆ ทั่วทั้งแอป",
+    "languageEnglish": "English",
+    "languageThai": "ไทย"
+  },
   "saving": "กำลังบันทึก…"
 }

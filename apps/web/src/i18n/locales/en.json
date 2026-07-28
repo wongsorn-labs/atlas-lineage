@@ -97,5 +97,16 @@
       "viewer": "Viewer"
     }
   },
+  "settings": {
+    "title": "Settings",
+    "defaultCountry": "Default map country",
+    "defaultCountryHelp": "Map opens centered here whenever you sign in.",
+    "world": "World",
+    "settingsAria": "Settings",
+    "language": "Language",
+    "languageHelp": "Changes menus, labels, and buttons across the app.",
+    "languageEnglish": "English",
+    "languageThai": "ไทย"
+  },
   "saving": "Saving…"
 }
