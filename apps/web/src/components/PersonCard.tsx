@@ -34,7 +34,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
     person.deathYear ? `d. ${person.deathYear}` : null,
   ]
     .filter(Boolean)
-    .join('  ');
+    .join('   ·   ');
 
   const handleDelete = () => {
     if (confirm(t('person.deleteConfirm', { name: person.name }))) {
@@ -52,36 +52,37 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         onClick={() => onSelect(isSelected ? null : person)}
         onKeyDown={(e) => e.key === 'Enter' && onSelect(isSelected ? null : person)}
         className={[
-          'group relative glass-card cursor-pointer rounded-xl px-3 py-3 pl-4 transition-all duration-150',
+          'group relative cursor-pointer overflow-hidden rounded-xl border bg-gradient-to-br from-(--bg-card) to-(--bg-surface) pl-5 pr-3 py-3.5 shadow-(--shadow-sm) transition-all duration-150',
           isSelected
-            ? 'glass-card-gold ring-1 ring-(--border-gold)'
-            : 'hover:border-(--border-gold) hover:shadow-md hover:-translate-y-0.5',
+            ? 'border-(--border-gold) shadow-(--shadow-gold-glow)'
+            : 'border-(--border) hover:border-(--border-gold) hover:shadow-md hover:-translate-y-0.5',
         ].join(' ')}
       >
-        {isSelected && (
-          <span
-            className="absolute inset-y-2 left-0 w-1 rounded-full bg-(--gold)"
-            aria-hidden="true"
-          />
-        )}
+        <span
+          className={[
+            'absolute inset-y-0 left-0 w-1.5 transition-colors duration-150',
+            isSelected ? 'bg-(--gold)' : 'bg-(--border) group-hover:bg-(--border-gold)',
+          ].join(' ')}
+          aria-hidden="true"
+        />
 
-        <div className="flex items-start gap-3">
-          <Avatar name={person.name} />
+        <div className="flex items-start gap-3.5">
+          <Avatar name={person.name} className="h-11 w-11 text-sm ring-2 ring-(--bg-card) ring-offset-1 ring-offset-(--border)" />
 
           <div className="min-w-0 flex-1">
             {/* Name */}
-            <p className="font-display text-sm font-semibold leading-snug text-(--text-primary) truncate">
+            <p className="font-display text-[15px] font-semibold leading-snug text-(--text-primary) truncate">
               {person.name}
             </p>
 
             {/* Lifespan */}
             {lifespan && (
-              <p className="mt-0.5 text-xs text-(--text-muted)">{lifespan}</p>
+              <p className="mt-0.5 text-xs tracking-wide text-(--text-muted)">{lifespan}</p>
             )}
 
             {/* Birth place */}
             {person.birthPlace && (
-              <div className="mt-1 flex items-center gap-1 text-xs text-(--text-secondary)">
+              <div className="mt-1.5 flex items-center gap-1 text-xs text-(--text-secondary)">
                 <MapPin className="h-3 w-3 flex-shrink-0 text-(--gold)" aria-hidden="true" />
                 <span className="truncate">{person.birthPlace}</span>
               </div>
@@ -93,7 +94,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             each side of a relationship otherwise renders its own matching
             badge and duplicates test-id lookups across cards */}
         {isSelected && relationships.length > 0 && (
-          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 pl-12">
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 pl-[58px]">
             {relationships.map((rel) => {
               const otherId = rel.personId === person.id ? rel.relatedPersonId : rel.personId;
               const other = allPersons.find((p) => p.id === otherId);
@@ -125,7 +126,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             the "person-card" testid first (see e2e tests). */}
         <div
           className={[
-            'mt-2 flex items-center gap-1 pl-12 transition-opacity duration-150',
+            'mt-2 flex items-center gap-1 pl-[58px] transition-opacity duration-150',
             isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100',
           ].join(' ')}
         >
