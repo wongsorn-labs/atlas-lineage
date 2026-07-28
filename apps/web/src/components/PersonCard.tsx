@@ -6,6 +6,7 @@ import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
 import { Avatar } from './ui/avatar';
 import { Badge } from './ui/badge';
+import { ConfirmDialog } from './ui/confirm-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
@@ -21,6 +22,8 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const { t } = useTranslation();
   const [editOpen, setEditOpen] = useState(false);
   const [relOpen, setRelOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [relToDelete, setRelToDelete] = useState<{ id: number; name: string } | null>(null);
   const { currentTreeId } = useTree();
   const deletePerson = useDeletePerson(currentTreeId);
   const updatePerson = useUpdatePerson(currentTreeId);
@@ -30,10 +33,8 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const { data: relationships = [] } = useRelationshipsForPerson(person.id, currentTreeId);
 
   const handleDelete = () => {
-    if (confirm(t('person.deleteConfirm', { name: person.name }))) {
-      deletePerson.mutate(person.id);
-      if (isSelected) onSelect(null);
-    }
+    deletePerson.mutate(person.id);
+    if (isSelected) onSelect(null);
   };
 
   return (
@@ -112,7 +113,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                   </Badge>
                   <button
                     type="button"
-                    onClick={(e) => { e.stopPropagation(); deleteRel.mutate(rel.id); }}
+                    onClick={(e) => { e.stopPropagation(); setRelToDelete({ id: rel.id, name: other?.name ?? '' }); }}
                     className="text-red-400 hover:text-red-500 p-0.5"
                     aria-label={other ? t('relationship.deleteAria', { name: other.name }) : t('relationship.deleteAriaUnknown')}
                     data-testid="delete-relationship-button"
@@ -166,7 +167,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               </button>
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+                onClick={(e) => { e.stopPropagation(); setDeleteOpen(true); }}
                 className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
                 aria-label={t('person.deleteAria', { name: person.name })}
                 data-testid="delete-person-button"
@@ -216,6 +217,28 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
           />
         </DialogContent>
       </Dialog>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t('person.deleteConfirm', { name: person.name })}
+        description={t('person.deleteWarning')}
+        confirmLabel={t('person.deleteButton')}
+        cancelLabel={t('person.cancel')}
+        onConfirm={handleDelete}
+        isLoading={deletePerson.isPending}
+      />
+
+      <ConfirmDialog
+        open={relToDelete !== null}
+        onOpenChange={(open) => { if (!open) setRelToDelete(null); }}
+        title={t('relationship.deleteConfirmTitle')}
+        description={relToDelete?.name ? t('relationship.deleteAria', { name: relToDelete.name }) : undefined}
+        confirmLabel={t('relationship.deleteButton')}
+        cancelLabel={t('relationship.cancel')}
+        onConfirm={() => { if (relToDelete) deleteRel.mutate(relToDelete.id); }}
+        isLoading={deleteRel.isPending}
+      />
     </>
   );
 }

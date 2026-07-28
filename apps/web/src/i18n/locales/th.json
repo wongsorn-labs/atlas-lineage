@@ -49,6 +49,8 @@
     "updateButton": "อัปเดต",
     "cancel": "ยกเลิก",
     "deleteConfirm": "ลบ {{name}}?",
+    "deleteWarning": "จะลบบุคคลนี้ออกจากสายตระกูล พร้อมความสัมพันธ์ทั้งหมดที่เชื่อมกับคนอื่น การกระทำนี้ย้อนกลับไม่ได้",
+    "deleteButton": "ลบ",
     "namePlaceholder": "ชื่อเต็ม",
     "editAria": "แก้ไข {{name}}",
     "deleteAria": "ลบ {{name}}"
@@ -63,6 +65,8 @@
     "manageAria": "จัดการความสัมพันธ์ของ {{name}}",
     "deleteAria": "ลบความสัมพันธ์กับ {{name}}",
     "deleteAriaUnknown": "ลบความสัมพันธ์",
+    "deleteConfirmTitle": "ลบความสัมพันธ์นี้?",
+    "deleteButton": "ลบ",
     "addButton": "เพิ่มความสัมพันธ์",
     "cancel": "ยกเลิก",
     "types": {

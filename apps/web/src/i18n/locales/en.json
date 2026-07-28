@@ -50,6 +50,8 @@
     "updateButton": "Update",
     "cancel": "Cancel",
     "deleteConfirm": "Delete {{name}}?",
+    "deleteWarning": "This removes them from the tree, along with any relationships to other people. This can't be undone.",
+    "deleteButton": "Delete",
     "namePlaceholder": "Full name",
     "editAria": "Edit {{name}}",
     "deleteAria": "Delete {{name}}"
@@ -64,6 +66,8 @@
     "manageAria": "Manage relationships for {{name}}",
     "deleteAria": "Delete relationship with {{name}}",
     "deleteAriaUnknown": "Delete relationship",
+    "deleteConfirmTitle": "Remove this relationship?",
+    "deleteButton": "Remove",
     "addButton": "Add Relationship",
     "cancel": "Cancel",
     "types": {
