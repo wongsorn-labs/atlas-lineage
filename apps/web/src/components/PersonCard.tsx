@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Cake, Edit2, Flower2, Trash2, GitBranch, MapPin } from 'lucide-react';
-import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
+import type { Person, RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
 import { Avatar } from './ui/avatar';
@@ -11,6 +11,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
 import { useTree } from '../contexts/TreeContext';
+
+const INVERSE_TYPE: Record<RelationshipType, RelationshipType> = {
+  parent: 'child',
+  child: 'parent',
+  sibling: 'sibling',
+  spouse: 'spouse',
+  partner: 'partner',
+};
 
 interface PersonCardProps {
   person: Person;
@@ -105,10 +113,11 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             {relationships.map((rel) => {
               const otherId = rel.personId === person.id ? rel.relatedPersonId : rel.personId;
               const other = allPersons.find((p) => p.id === otherId);
+              const displayType = rel.personId === person.id ? INVERSE_TYPE[rel.type] : rel.type;
               return (
                 <span key={rel.id} className="inline-flex items-center gap-0.5">
-                  <Badge variant={rel.type} data-testid="relationship-badge">
-                    {t(`relationship.types.${rel.type}`)}
+                  <Badge variant={displayType} data-testid="relationship-badge">
+                    {t(`relationship.types.${displayType}`)}
                     {other ? `: ${other.name}` : ''}
                   </Badge>
                   <button
