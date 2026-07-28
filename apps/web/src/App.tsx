@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2, Menu } from 'lucide-react';
+import { AlertCircle, Loader2, Map as MapIcon, Menu, Network } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { FamilyChart } from './components/FamilyChart';
 import { MapView } from './components/MapView';
 import { Sidebar } from './components/Sidebar';
 import { usePersons } from './hooks/usePersons';
@@ -18,6 +19,7 @@ export default function App() {
   const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'map' | 'chart'>('map');
   const { t } = useTranslation();
 
   const persons = personsQuery.data ?? [];
@@ -131,12 +133,47 @@ export default function App() {
         >
           <Menu className="h-5 w-5 text-(--text-primary)" />
         </button>
-        <MapView
-          persons={persons}
-          relationships={relationships}
-          selectedPerson={selectedPerson}
-          onSelectPerson={setSelectedPerson}
-        />
+
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-(--z-dropdown) glass-card flex items-center gap-1 p-1">
+          <button
+            type="button"
+            onClick={() => setViewMode('map')}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === 'map' ? 'bg-(--gold) text-(--text-primary)' : 'text-(--text-muted) hover:text-(--text-primary)'
+            }`}
+            aria-pressed={viewMode === 'map'}
+          >
+            <MapIcon className="h-3.5 w-3.5" />
+            {t('chart.mapView')}
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('chart')}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === 'chart' ? 'bg-(--gold) text-(--text-primary)' : 'text-(--text-muted) hover:text-(--text-primary)'
+            }`}
+            aria-pressed={viewMode === 'chart'}
+          >
+            <Network className="h-3.5 w-3.5" />
+            {t('chart.chartView')}
+          </button>
+        </div>
+
+        {viewMode === 'map' ? (
+          <MapView
+            persons={persons}
+            relationships={relationships}
+            selectedPerson={selectedPerson}
+            onSelectPerson={setSelectedPerson}
+          />
+        ) : (
+          <FamilyChart
+            persons={persons}
+            relationships={relationships}
+            selectedPerson={selectedPerson}
+            onSelectPerson={setSelectedPerson}
+          />
+        )}
       </main>
     </div>
   );
