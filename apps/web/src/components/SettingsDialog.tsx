@@ -5,11 +5,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Label } from './ui/label';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { COUNTRY_MAP_DEFAULTS } from '../lib/countries';
 
 export function SettingsDialog() {
   const { t, i18n } = useTranslation();
   const { user, updateDefaultCountry } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -79,6 +81,25 @@ export function SettingsDialog() {
               </SelectContent>
             </Select>
             <p className="text-xs text-(--text-muted) mt-1">{t('settings.languageHelp')}</p>
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="theme">{t('settings.theme')}</Label>
+            <Select
+              value={theme}
+              onValueChange={(value) => value && setTheme(value === 'dark' ? 'dark' : 'light')}
+            >
+              <SelectTrigger id="theme" data-testid="theme-select">
+                <SelectValue>
+                  {(value: string | null) =>
+                    value === 'dark' ? t('settings.themeDark') : t('settings.themeLight')}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">{t('settings.themeLight')}</SelectItem>
+                <SelectItem value="dark">{t('settings.themeDark')}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </DialogContent>

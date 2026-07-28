@@ -106,7 +106,10 @@
     "language": "Language",
     "languageHelp": "Changes menus, labels, and buttons across the app.",
     "languageEnglish": "English",
-    "languageThai": "ไทย"
+    "languageThai": "ไทย",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   },
   "saving": "Saving…"
 }

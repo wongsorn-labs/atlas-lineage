@@ -105,7 +105,10 @@
     "language": "ภาษา",
     "languageHelp": "เปลี่ยนเมนู ป้ายกำกับ และปุ่มต่างๆ ทั่วทั้งแอป",
     "languageEnglish": "English",
-    "languageThai": "ไทย"
+    "languageThai": "ไทย",
+    "theme": "ธีม",
+    "themeLight": "สว่าง",
+    "themeDark": "มืด"
   },
   "saving": "กำลังบันทึก…"
 }

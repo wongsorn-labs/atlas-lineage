@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
-import { ThemeToggle } from './ThemeToggle';
 import { SettingsDialog } from './SettingsDialog';
 
 interface SidebarProps {
@@ -80,16 +79,6 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
               />
             </DialogContent>
           </Dialog>
-          <ThemeToggle />
-          <button
-            type="button"
-            className="btn-ghost p-1.5"
-            onClick={() => void signOut()}
-            aria-label={t('sidebar.signOut')}
-            title={t('sidebar.signOut')}
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
           <button
             type="button"
             className="btn-ghost p-1.5 md:hidden"
@@ -182,7 +171,18 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
           {user?.email && <Avatar name={user.email} className="h-7 w-7 text-[10px]" />}
           <p className="min-w-0 truncate text-xs text-(--text-muted)">{user?.email}</p>
         </div>
-        <SettingsDialog />
+        <div className="flex flex-shrink-0 items-center gap-1">
+          <button
+            type="button"
+            className="btn-ghost p-1.5"
+            onClick={() => void signOut()}
+            aria-label={t('sidebar.signOut')}
+            title={t('sidebar.signOut')}
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+          <SettingsDialog />
+        </div>
       </div>
     </aside>
   );
