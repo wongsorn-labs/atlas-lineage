@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Edit2, Trash2, GitBranch, MapPin } from 'lucide-react';
+import { Cake, Edit2, Flower2, Trash2, GitBranch, MapPin } from 'lucide-react';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
@@ -28,13 +28,6 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const deleteRel = useDeleteRelationship(currentTreeId);
   const { data: allPersons = [] } = usePersons(currentTreeId);
   const { data: relationships = [] } = useRelationshipsForPerson(person.id, currentTreeId);
-
-  const lifespan = [
-    person.birthYear ? `b. ${person.birthYear}` : null,
-    person.deathYear ? `d. ${person.deathYear}` : null,
-  ]
-    .filter(Boolean)
-    .join('   ·   ');
 
   const handleDelete = () => {
     if (confirm(t('person.deleteConfirm', { name: person.name }))) {
@@ -76,8 +69,21 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             </p>
 
             {/* Lifespan */}
-            {lifespan && (
-              <p className="mt-0.5 text-xs tracking-wide text-(--text-muted)">{lifespan}</p>
+            {(person.birthYear || person.deathYear) && (
+              <div className="mt-0.5 flex items-center gap-3 text-xs text-(--text-muted)">
+                {person.birthYear && (
+                  <span className="inline-flex items-center gap-1">
+                    <Cake className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                    {person.birthYear}
+                  </span>
+                )}
+                {person.deathYear && (
+                  <span className="inline-flex items-center gap-1">
+                    <Flower2 className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                    {person.deathYear}
+                  </span>
+                )}
+              </div>
             )}
 
             {/* Birth place */}
@@ -120,43 +126,55 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         )}
 
         {/* Actions — always in the DOM so hovering a card reveals them
-            without first having to select it, but invisible (opacity-0)
-            until hover/focus/selection. Every card renders the same
-            test ids, so anything targeting these must scope through
-            the "person-card" testid first (see e2e tests). */}
+            without first having to select it, but collapsed to zero
+            height (grid-rows trick, animates unlike display:none) until
+            hover/focus/selection, so unselected cards stay short instead
+            of every card reserving space for a row it isn't showing.
+            Every card renders the same test ids, so anything targeting
+            these must scope through the "person-card" testid first (see
+            e2e tests). */}
         <div
           className={[
-            'mt-2 flex items-center gap-1 pl-[58px] transition-opacity duration-150',
-            isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100',
+            'grid transition-[grid-template-rows] duration-200 ease-out',
+            isSelected ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] group-hover:grid-rows-[1fr] focus-within:grid-rows-[1fr]',
           ].join(' ')}
         >
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
-            className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-            aria-label={t('person.editAria', { name: person.name })}
-            data-testid="edit-person-button"
-          >
-            <Edit2 className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
-            className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-            aria-label={t('relationship.manageAria', { name: person.name })}
-            data-testid="add-relationship-button"
-          >
-            <GitBranch className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); handleDelete(); }}
-            className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
-            aria-label={t('person.deleteAria', { name: person.name })}
-            data-testid="delete-person-button"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </button>
+          <div className="overflow-hidden">
+            <div
+              className={[
+                'flex items-center gap-1 pl-[58px] pt-2 transition-opacity duration-150',
+                isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100',
+              ].join(' ')}
+            >
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
+                className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
+                aria-label={t('person.editAria', { name: person.name })}
+                data-testid="edit-person-button"
+              >
+                <Edit2 className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
+                className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
+                aria-label={t('relationship.manageAria', { name: person.name })}
+                data-testid="add-relationship-button"
+              >
+                <GitBranch className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handleDelete(); }}
+                className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
+                aria-label={t('person.deleteAria', { name: person.name })}
+                data-testid="delete-person-button"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
