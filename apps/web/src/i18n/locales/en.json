@@ -11,7 +11,22 @@
     "add": "Add",
     "allPeople": "← All people",
     "noCoordinates": "No coordinates",
-    "empty": "Add your first family member to get started."
+    "empty": "Add your first family member to get started.",
+    "addPersonAria": "Add person",
+    "signOut": "Sign out",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "searchPlaceholder": "Search people…",
+    "searchAria": "Search people",
+    "toggleFilters": "Toggle year filters",
+    "yearFromPlaceholder": "From year",
+    "yearToPlaceholder": "To year",
+    "yearFromAria": "Filter from birth year",
+    "yearToAria": "Filter to birth year",
+    "peopleCount_one": "{{count}} person",
+    "peopleCount_other": "{{count}} people",
+    "filteredFrom": " (filtered from {{count}})",
+    "noResults": "No people found"
   },
   "chart": {
     "mapView": "Map",
@@ -35,7 +50,9 @@
     "updateButton": "Update",
     "cancel": "Cancel",
     "deleteConfirm": "Delete {{name}}?",
-    "namePlaceholder": "Full name"
+    "namePlaceholder": "Full name",
+    "editAria": "Edit {{name}}",
+    "deleteAria": "Delete {{name}}"
   },
   "relationship": {
     "addTitle": "Add relationship for {{name}}",
@@ -44,6 +61,9 @@
     "type": "Relationship type",
     "selectPerson": "Select a person…",
     "selectType": "Select type…",
+    "manageAria": "Manage relationships for {{name}}",
+    "deleteAria": "Delete relationship with {{name}}",
+    "deleteAriaUnknown": "Delete relationship",
     "addButton": "Add Relationship",
     "cancel": "Cancel",
     "types": {

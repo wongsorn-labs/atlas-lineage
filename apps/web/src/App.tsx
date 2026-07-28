@@ -129,7 +129,7 @@ export default function App() {
           type="button"
           className="absolute top-3 right-3 z-(--z-dropdown) glass-card p-2 md:hidden"
           onClick={() => setSidebarOpen(true)}
-          aria-label="Open menu"
+          aria-label={t('sidebar.openMenu')}
         >
           <Menu className="h-5 w-5 text-(--text-primary)" />
         </button>

@@ -37,7 +37,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
     .join('  ');
 
   const handleDelete = () => {
-    if (confirm(`Remove ${person.name}?`)) {
+    if (confirm(t('person.deleteConfirm', { name: person.name }))) {
       deletePerson.mutate(person.id);
       if (isSelected) onSelect(null);
     }
@@ -107,7 +107,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                     type="button"
                     onClick={(e) => { e.stopPropagation(); deleteRel.mutate(rel.id); }}
                     className="text-red-400 hover:text-red-500 p-0.5"
-                    aria-label={`Delete relationship with ${other?.name ?? 'person'}`}
+                    aria-label={other ? t('relationship.deleteAria', { name: other.name }) : t('relationship.deleteAriaUnknown')}
                     data-testid="delete-relationship-button"
                   >
                     <Trash2 className="h-3 w-3" />
@@ -133,7 +133,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             type="button"
             onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
             className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-            aria-label={`Edit ${person.name}`}
+            aria-label={t('person.editAria', { name: person.name })}
             data-testid="edit-person-button"
           >
             <Edit2 className="h-3.5 w-3.5" />
@@ -142,7 +142,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             type="button"
             onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
             className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-            aria-label={`Manage relationships for ${person.name}`}
+            aria-label={t('relationship.manageAria', { name: person.name })}
             data-testid="add-relationship-button"
           >
             <GitBranch className="h-3.5 w-3.5" />
@@ -151,7 +151,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             type="button"
             onClick={(e) => { e.stopPropagation(); handleDelete(); }}
             className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
-            aria-label={`Delete ${person.name}`}
+            aria-label={t('person.deleteAria', { name: person.name })}
             data-testid="delete-person-button"
           >
             <Trash2 className="h-3.5 w-3.5" />

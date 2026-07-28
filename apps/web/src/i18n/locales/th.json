@@ -11,7 +11,21 @@
     "add": "เพิ่ม",
     "allPeople": "← บุคคลทั้งหมด",
     "noCoordinates": "ไม่มีพิกัด",
-    "empty": "เพิ่มสมาชิกในครอบครัวคนแรกเพื่อเริ่มต้น"
+    "empty": "เพิ่มสมาชิกในครอบครัวคนแรกเพื่อเริ่มต้น",
+    "addPersonAria": "เพิ่มบุคคล",
+    "signOut": "ออกจากระบบ",
+    "closeMenu": "ปิดเมนู",
+    "openMenu": "เปิดเมนู",
+    "searchPlaceholder": "ค้นหาบุคคล…",
+    "searchAria": "ค้นหาบุคคล",
+    "toggleFilters": "เปิด/ปิดตัวกรองปี",
+    "yearFromPlaceholder": "ปีเริ่มต้น",
+    "yearToPlaceholder": "ปีสิ้นสุด",
+    "yearFromAria": "กรองตั้งแต่ปีเกิด",
+    "yearToAria": "กรองถึงปีเกิด",
+    "peopleCount_other": "{{count}} คน",
+    "filteredFrom": " (กรองจากทั้งหมด {{count}} คน)",
+    "noResults": "ไม่พบบุคคล"
   },
   "chart": {
     "mapView": "แผนที่",
@@ -35,7 +49,9 @@
     "updateButton": "อัปเดต",
     "cancel": "ยกเลิก",
     "deleteConfirm": "ลบ {{name}}?",
-    "namePlaceholder": "ชื่อเต็ม"
+    "namePlaceholder": "ชื่อเต็ม",
+    "editAria": "แก้ไข {{name}}",
+    "deleteAria": "ลบ {{name}}"
   },
   "relationship": {
     "addTitle": "เพิ่มความสัมพันธ์สำหรับ {{name}}",
@@ -44,6 +60,9 @@
     "type": "ประเภทความสัมพันธ์",
     "selectPerson": "เลือกบุคคล…",
     "selectType": "เลือกประเภท…",
+    "manageAria": "จัดการความสัมพันธ์ของ {{name}}",
+    "deleteAria": "ลบความสัมพันธ์กับ {{name}}",
+    "deleteAriaUnknown": "ลบความสัมพันธ์",
     "addButton": "เพิ่มความสัมพันธ์",
     "cancel": "ยกเลิก",
     "types": {
