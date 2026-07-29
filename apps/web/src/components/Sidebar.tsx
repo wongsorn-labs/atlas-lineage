@@ -31,11 +31,6 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
   const { currentTreeId } = useTree();
   const createPerson = useCreatePerson(currentTreeId);
 
-  const selectPerson = (person: Person | null) => {
-    onSelectPerson(person);
-    onClose?.();
-  };
-
   const filtered = useMemo(() => {
     return persons.filter((p) => {
       const matchesName = p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -138,7 +133,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
                 key={person.id}
                 person={person}
                 isSelected={selectedPerson?.id === person.id}
-                onSelect={selectPerson}
+                onSelect={onSelectPerson}
               />
             ))
           )}
