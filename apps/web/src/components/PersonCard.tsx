@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
 import { useTree } from '../contexts/TreeContext';
+import { formatPartialDate } from '../lib/formatPartialDate';
 
 const INVERSE_TYPE: Record<RelationshipType, RelationshipType> = {
   parent: 'child',
@@ -89,13 +90,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                 {person.birthYear && (
                   <span className="inline-flex items-center gap-1">
                     <Cake className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-                    {person.birthYear}
+                    {formatPartialDate({ year: person.birthYear, month: person.birthMonth, day: person.birthDay, time: person.birthTime })}
                   </span>
                 )}
                 {person.deathYear && (
                   <span className="inline-flex items-center gap-1">
                     <Flower2 className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-                    {person.deathYear}
+                    {formatPartialDate({ year: person.deathYear, month: person.deathMonth, day: person.deathDay, time: person.deathTime })}
                   </span>
                 )}
               </div>

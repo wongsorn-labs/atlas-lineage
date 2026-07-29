@@ -14,12 +14,19 @@ import type { Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
 const GENDERS: Gender[] = ['male', 'female', 'unspecified'];
 
 const toNum = (v: unknown) => (v === '' || v == null ? undefined : Number(v));
+const toUndefIfEmpty = (v: unknown) => (v === '' || v == null ? undefined : v);
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
   gender: z.enum(['male', 'female', 'unspecified']).nullable().optional(),
-  birthYear: z.preprocess(toNum, z.number().int().positive().nullable().optional()),
+  birthYear: z.preprocess(toNum, z.number({ required_error: 'Birth year is required' }).int().positive()),
+  birthMonth: z.preprocess(toNum, z.number().int().min(1).max(12).nullable().optional()),
+  birthDay: z.preprocess(toNum, z.number().int().min(1).max(31).nullable().optional()),
+  birthTime: z.preprocess(toUndefIfEmpty, z.string().optional()),
   deathYear: z.preprocess(toNum, z.number().int().positive().nullable().optional()),
+  deathMonth: z.preprocess(toNum, z.number().int().min(1).max(12).nullable().optional()),
+  deathDay: z.preprocess(toNum, z.number().int().min(1).max(31).nullable().optional()),
+  deathTime: z.preprocess(toUndefIfEmpty, z.string().optional()),
   birthLat: z.preprocess(toNum, z.number().min(-90).max(90).nullable().optional()),
   birthLng: z.preprocess(toNum, z.number().min(-180).max(180).nullable().optional()),
   birthPlace: z.string().optional(),
@@ -45,7 +52,13 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
           name: initial.name,
           gender: initial.gender ?? 'unspecified',
           birthYear: initial.birthYear ?? undefined,
+          birthMonth: initial.birthMonth ?? undefined,
+          birthDay: initial.birthDay ?? undefined,
+          birthTime: initial.birthTime?.slice(0, 5) ?? '',
           deathYear: initial.deathYear ?? undefined,
+          deathMonth: initial.deathMonth ?? undefined,
+          deathDay: initial.deathDay ?? undefined,
+          deathTime: initial.deathTime?.slice(0, 5) ?? '',
           birthLat: initial.birthLat ?? undefined,
           birthLng: initial.birthLng ?? undefined,
           birthPlace: initial.birthPlace ?? '',
@@ -86,36 +99,44 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label htmlFor="birthYear">{t('person.birthYear')}</Label>
+      <div>
+        <Label htmlFor="birthYear">{t('person.birthYear')} *</Label>
+        <div className="grid grid-cols-4 gap-2">
           <Input id="birthYear" data-testid="birth-year-input" type="number" {...register('birthYear')} placeholder="1900" />
+          <Input data-testid="birth-month-input" type="number" min={1} max={12} {...register('birthMonth')} placeholder={t('person.month')} />
+          <Input data-testid="birth-day-input" type="number" min={1} max={31} {...register('birthDay')} placeholder={t('person.day')} />
+          <Input data-testid="birth-time-input" type="time" {...register('birthTime')} />
         </div>
-        <div>
-          <div className="flex h-5 items-center gap-2">
-            <Checkbox
-              id="hasDeathYear"
-              data-testid="has-death-year-checkbox"
-              checked={hasDeathYear}
-              onCheckedChange={(checked) => {
-                const isChecked = checked === true;
-                setHasDeathYear(isChecked);
-                if (!isChecked) setValue('deathYear', undefined);
-              }}
-            />
-            <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')}</Label>
+        {errors.birthYear && <p className="text-xs text-red-500 mt-1">{t('person.birthYearRequired')}</p>}
+      </div>
+
+      <div>
+        <div className="flex h-5 items-center gap-2">
+          <Checkbox
+            id="hasDeathYear"
+            data-testid="has-death-year-checkbox"
+            checked={hasDeathYear}
+            onCheckedChange={(checked) => {
+              const isChecked = checked === true;
+              setHasDeathYear(isChecked);
+              if (!isChecked) {
+                setValue('deathYear', undefined);
+                setValue('deathMonth', undefined);
+                setValue('deathDay', undefined);
+                setValue('deathTime', '');
+              }
+            }}
+          />
+          <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')}</Label>
+        </div>
+        {hasDeathYear && (
+          <div className="grid grid-cols-4 gap-2 mt-1.5">
+            <Input id="deathYear" data-testid="death-year-input" type="number" {...register('deathYear')} placeholder="1980" />
+            <Input data-testid="death-month-input" type="number" min={1} max={12} {...register('deathMonth')} placeholder={t('person.month')} />
+            <Input data-testid="death-day-input" type="number" min={1} max={31} {...register('deathDay')} placeholder={t('person.day')} />
+            <Input data-testid="death-time-input" type="time" {...register('deathTime')} />
           </div>
-          {hasDeathYear && (
-            <Input
-              id="deathYear"
-              data-testid="death-year-input"
-              type="number"
-              {...register('deathYear')}
-              placeholder="1980"
-              className="mt-1"
-            />
-          )}
-        </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-3">

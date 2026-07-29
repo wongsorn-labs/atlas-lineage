@@ -41,10 +41,11 @@ describe('PersonForm', () => {
     const onSubmit = vi.fn();
     render(<PersonForm onSubmit={onSubmit} onCancel={noop} />);
     await user.type(screen.getByTestId('name-input'), 'Ada Lovelace');
+    await user.type(screen.getByTestId('birth-year-input'), '1815');
     await user.click(screen.getByRole('button', { name: /add person/i }));
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ name: 'Ada Lovelace' }),
+        expect.objectContaining({ name: 'Ada Lovelace', birthYear: 1815 }),
         expect.anything(),
       );
     });
@@ -60,7 +61,9 @@ describe('PersonForm', () => {
 
   it('pre-fills values when initial prop provided and shows Update button', () => {
     const initial = {
-      id: 1, name: 'Grace Hopper', birthYear: 1906, deathYear: 1992,
+      id: 1, name: 'Grace Hopper', gender: null,
+      birthYear: 1906, birthMonth: null, birthDay: null, birthTime: null,
+      deathYear: 1992, deathMonth: null, deathDay: null, deathTime: null,
       birthLat: null, birthLng: null, birthPlace: 'New York', notes: 'Pioneer',
       createdAt: '', updatedAt: '',
     };
