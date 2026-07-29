@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { personCard } from '../helpers';
 
 async function addPersonViaUi(page: import('@playwright/test').Page, name: string) {
   await page.getByTestId('add-person-button').click();
@@ -12,7 +13,7 @@ test('add relationship — badge visible', async ({ signedInPage: page }) => {
   await addPersonViaUi(page, 'Charles');
 
   await page.getByText('Ada').click();
-  await page.getByTestId('add-relationship-button').click();
+  await personCard(page, 'Ada').getByTestId('add-relationship-button').click();
 
   await page.getByTestId('related-person-select').click();
   await page.getByRole('option', { name: 'Charles' }).click();
@@ -28,7 +29,7 @@ test('delete relationship — badge gone', async ({ signedInPage: page }) => {
   await addPersonViaUi(page, 'Charles');
 
   await page.getByText('Ada').click();
-  await page.getByTestId('add-relationship-button').click();
+  await personCard(page, 'Ada').getByTestId('add-relationship-button').click();
   await page.getByTestId('related-person-select').click();
   await page.getByRole('option', { name: 'Charles' }).click();
   await page.getByTestId('relationship-type-select').click();

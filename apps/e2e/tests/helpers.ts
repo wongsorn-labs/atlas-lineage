@@ -1,5 +1,13 @@
-import type { APIRequestContext } from '@playwright/test';
+import type { APIRequestContext, Page } from '@playwright/test';
 import { API_URL, DEFAULT_TREE_ID, E2E_TEST_EMAIL, E2E_TEST_PASSWORD } from '../e2e.config';
+
+// Every person card shares the same "person-card" test id (action buttons
+// inside are always in the DOM now, revealed on hover rather than only
+// after selecting a card), so tests must scope through the specific card
+// rather than querying action test ids page-wide.
+export function personCard(page: Page, name: string) {
+  return page.getByTestId('person-card').filter({ hasText: name });
+}
 
 export async function loginTestUser(request: APIRequestContext) {
   const res = await request.post(`${API_URL}/auth/login`, {

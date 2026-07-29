@@ -11,12 +11,41 @@
     "add": "Add",
     "allPeople": "← All people",
     "noCoordinates": "No coordinates",
-    "empty": "Add your first family member to get started."
+    "empty": "Add your first family member to get started.",
+    "addPersonAria": "Add person",
+    "signOut": "Sign out",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "searchPlaceholder": "Search people…",
+    "searchAria": "Search people",
+    "toggleFilters": "Toggle year filters",
+    "yearFromPlaceholder": "From year",
+    "yearToPlaceholder": "To year",
+    "yearFromAria": "Filter from birth year",
+    "yearToAria": "Filter to birth year",
+    "peopleCount_one": "{{count}} person",
+    "peopleCount_other": "{{count}} people",
+    "filteredFrom": " (filtered from {{count}})",
+    "noResults": "No people found"
+  },
+  "chart": {
+    "mapView": "Map",
+    "chartView": "Chart",
+    "empty": "Add people and relationships to see the family chart.",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "ariaLabel": "Family tree chart"
   },
   "person": {
     "addTitle": "Add person",
     "editTitle": "Edit {{name}}",
     "name": "Name",
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "unspecified": "Unspecified"
+    },
     "birthYear": "Birth year",
     "deathYear": "Death year",
     "latitude": "Latitude",
@@ -27,14 +56,24 @@
     "updateButton": "Update",
     "cancel": "Cancel",
     "deleteConfirm": "Delete {{name}}?",
-    "namePlaceholder": "Full name"
+    "deleteWarning": "This removes them from the tree, along with any relationships to other people. This can't be undone.",
+    "deleteButton": "Delete",
+    "namePlaceholder": "Full name",
+    "editAria": "Edit {{name}}",
+    "deleteAria": "Delete {{name}}"
   },
   "relationship": {
     "addTitle": "Add relationship for {{name}}",
+    "sentenceIntro": "How is {{name}} related to someone else in this tree?",
     "relatedPerson": "Related person",
     "type": "Relationship type",
     "selectPerson": "Select a person…",
     "selectType": "Select type…",
+    "manageAria": "Manage relationships for {{name}}",
+    "deleteAria": "Delete relationship with {{name}}",
+    "deleteAriaUnknown": "Delete relationship",
+    "deleteConfirmTitle": "Remove this relationship?",
+    "deleteButton": "Remove",
     "addButton": "Add Relationship",
     "cancel": "Cancel",
     "types": {
@@ -67,6 +106,20 @@
       "editor": "Editor",
       "viewer": "Viewer"
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "defaultCountry": "Default map country",
+    "defaultCountryHelp": "Map opens centered here whenever you sign in.",
+    "world": "World",
+    "settingsAria": "Settings",
+    "language": "Language",
+    "languageHelp": "Changes menus, labels, and buttons across the app.",
+    "languageEnglish": "English",
+    "languageThai": "ไทย",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark"
   },
   "saving": "Saving…"
 }

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { clearDatabase, loginTestUser } from './helpers';
+import { clearDatabase, loginTestUser, personCard } from './helpers';
 import { API_URL, DEFAULT_TREE_ID } from '../e2e.config';
 
 test.beforeEach(async ({ context }) => {
@@ -21,7 +21,7 @@ test('edit person — new name visible', async ({ page, context }) => {
   await context.request.post(`${API_URL}/persons`, { data: { treeId: DEFAULT_TREE_ID, name: 'Ada Lovelace' } });
   await page.goto('/');
   await page.getByText('Ada Lovelace').click();
-  await page.getByTestId('edit-person-button').click();
+  await personCard(page, 'Ada Lovelace').getByTestId('edit-person-button').click();
   await page.getByTestId('name-input').fill('Ada Byron');
   await page.getByRole('button', { name: /update/i }).click();
   await expect(page.getByText('Ada Byron')).toBeVisible();
@@ -32,7 +32,7 @@ test('delete person — name disappears', async ({ page, context }) => {
   await page.goto('/');
   await page.getByText('Grace Hopper').click();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByTestId('delete-person-button').click();
+  await personCard(page, 'Grace Hopper').getByTestId('delete-person-button').click();
   await expect(page.getByText('Grace Hopper')).not.toBeVisible();
 });
 

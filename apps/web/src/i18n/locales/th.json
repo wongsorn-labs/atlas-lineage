@@ -11,12 +11,40 @@
     "add": "เพิ่ม",
     "allPeople": "← บุคคลทั้งหมด",
     "noCoordinates": "ไม่มีพิกัด",
-    "empty": "เพิ่มสมาชิกในครอบครัวคนแรกเพื่อเริ่มต้น"
+    "empty": "เพิ่มสมาชิกในครอบครัวคนแรกเพื่อเริ่มต้น",
+    "addPersonAria": "เพิ่มบุคคล",
+    "signOut": "ออกจากระบบ",
+    "closeMenu": "ปิดเมนู",
+    "openMenu": "เปิดเมนู",
+    "searchPlaceholder": "ค้นหาบุคคล…",
+    "searchAria": "ค้นหาบุคคล",
+    "toggleFilters": "เปิด/ปิดตัวกรองปี",
+    "yearFromPlaceholder": "ปีเริ่มต้น",
+    "yearToPlaceholder": "ปีสิ้นสุด",
+    "yearFromAria": "กรองตั้งแต่ปีเกิด",
+    "yearToAria": "กรองถึงปีเกิด",
+    "peopleCount_other": "{{count}} คน",
+    "filteredFrom": " (กรองจากทั้งหมด {{count}} คน)",
+    "noResults": "ไม่พบบุคคล"
+  },
+  "chart": {
+    "mapView": "แผนที่",
+    "chartView": "ผังตระกูล",
+    "empty": "เพิ่มบุคคลและความสัมพันธ์เพื่อดูผังตระกูล",
+    "zoomIn": "ซูมเข้า",
+    "zoomOut": "ซูมออก",
+    "ariaLabel": "ผังตระกูล"
   },
   "person": {
     "addTitle": "เพิ่มบุคคล",
     "editTitle": "แก้ไข {{name}}",
     "name": "ชื่อ",
+    "gender": "เพศ",
+    "genders": {
+      "male": "ชาย",
+      "female": "หญิง",
+      "unspecified": "ไม่ระบุ"
+    },
     "birthYear": "ปีเกิด",
     "deathYear": "ปีเสียชีวิต",
     "latitude": "ละติจูด",
@@ -27,14 +55,24 @@
     "updateButton": "อัปเดต",
     "cancel": "ยกเลิก",
     "deleteConfirm": "ลบ {{name}}?",
-    "namePlaceholder": "ชื่อเต็ม"
+    "deleteWarning": "จะลบบุคคลนี้ออกจากสายตระกูล พร้อมความสัมพันธ์ทั้งหมดที่เชื่อมกับคนอื่น การกระทำนี้ย้อนกลับไม่ได้",
+    "deleteButton": "ลบ",
+    "namePlaceholder": "ชื่อเต็ม",
+    "editAria": "แก้ไข {{name}}",
+    "deleteAria": "ลบ {{name}}"
   },
   "relationship": {
     "addTitle": "เพิ่มความสัมพันธ์สำหรับ {{name}}",
+    "sentenceIntro": "{{name}} เกี่ยวข้องกับใครในสายตระกูลนี้อย่างไร?",
     "relatedPerson": "บุคคลที่เกี่ยวข้อง",
     "type": "ประเภทความสัมพันธ์",
     "selectPerson": "เลือกบุคคล…",
     "selectType": "เลือกประเภท…",
+    "manageAria": "จัดการความสัมพันธ์ของ {{name}}",
+    "deleteAria": "ลบความสัมพันธ์กับ {{name}}",
+    "deleteAriaUnknown": "ลบความสัมพันธ์",
+    "deleteConfirmTitle": "ลบความสัมพันธ์นี้?",
+    "deleteButton": "ลบ",
     "addButton": "เพิ่มความสัมพันธ์",
     "cancel": "ยกเลิก",
     "types": {
@@ -67,6 +105,20 @@
       "editor": "ผู้แก้ไข",
       "viewer": "ผู้ดู"
     }
+  },
+  "settings": {
+    "title": "ตั้งค่า",
+    "defaultCountry": "ประเทศเริ่มต้นบนแผนที่",
+    "defaultCountryHelp": "แผนที่จะเปิดโดยเลื่อนไปจุดนี้ทุกครั้งที่คุณเข้าสู่ระบบ",
+    "world": "โลก",
+    "settingsAria": "ตั้งค่า",
+    "language": "ภาษา",
+    "languageHelp": "เปลี่ยนเมนู ป้ายกำกับ และปุ่มต่างๆ ทั่วทั้งแอป",
+    "languageEnglish": "English",
+    "languageThai": "ไทย",
+    "theme": "ธีม",
+    "themeLight": "สว่าง",
+    "themeDark": "มืด"
   },
   "saving": "กำลังบันทึก…"
 }

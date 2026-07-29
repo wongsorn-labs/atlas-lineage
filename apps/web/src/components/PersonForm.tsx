@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
@@ -7,13 +7,17 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
+import type { Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
+
+const GENDERS: Gender[] = ['male', 'female', 'unspecified'];
 
 const toNum = (v: unknown) => (v === '' || v == null ? undefined : Number(v));
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
+  gender: z.enum(['male', 'female', 'unspecified']).nullable().optional(),
   birthYear: z.preprocess(toNum, z.number().int().positive().nullable().optional()),
   deathYear: z.preprocess(toNum, z.number().int().positive().nullable().optional()),
   birthLat: z.preprocess(toNum, z.number().min(-90).max(90).nullable().optional()),
@@ -34,11 +38,12 @@ interface PersonFormProps {
 export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFormProps) {
   const { t } = useTranslation();
   const [hasDeathYear, setHasDeathYear] = useState(initial?.deathYear != null);
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, control, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: initial
       ? {
           name: initial.name,
+          gender: initial.gender ?? 'unspecified',
           birthYear: initial.birthYear ?? undefined,
           deathYear: initial.deathYear ?? undefined,
           birthLat: initial.birthLat ?? undefined,
@@ -46,7 +51,7 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
           birthPlace: initial.birthPlace ?? '',
           notes: initial.notes ?? '',
         }
-      : {},
+      : { gender: 'unspecified' },
   });
 
   return (
@@ -55,6 +60,30 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
         <Label htmlFor="name">{t('person.name')} *</Label>
         <Input id="name" data-testid="name-input" {...register('name')} placeholder={t('person.namePlaceholder')} />
         {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>}
+      </div>
+
+      <div>
+        <Label>{t('person.gender')}</Label>
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value ?? 'unspecified'}>
+              <SelectTrigger data-testid="gender-select">
+                <SelectValue placeholder={t('person.gender')}>
+                  {(value: Gender | null) => t(`person.genders.${value ?? 'unspecified'}`)}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {GENDERS.map((g) => (
+                  <SelectItem key={g} value={g}>
+                    {t(`person.genders.${g}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -74,7 +103,7 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
                 if (!isChecked) setValue('deathYear', undefined);
               }}
             />
-            <Label htmlFor="hasDeathYear" className="cursor-pointer">{t('person.deathYear')}</Label>
+            <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')}</Label>
           </div>
           {hasDeathYear && (
             <Input

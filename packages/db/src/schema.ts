@@ -3,6 +3,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
+export const genderEnum = pgEnum('gender', ['male', 'female', 'unspecified']);
 
 export const profiles = pgTable('profiles', {
   id: text('id').primaryKey(),
@@ -36,6 +37,7 @@ export const persons = pgTable('persons', {
   id: serial('id').primaryKey(),
   treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
+  gender: genderEnum('gender'),
   birthYear: integer('birth_year'),
   deathYear: integer('death_year'),
   birthLat: doublePrecision('birth_lat'),
