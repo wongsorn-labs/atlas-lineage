@@ -2,7 +2,8 @@
 
 A map-based genealogy app. Persons are placed on a Leaflet world map by birth
 coordinates; parent-child and other relationships are drawn as lines between
-markers. Supports multi-tenant family trees with owner/editor/viewer roles,
+markers, with an alternate family-tree chart view (SVG, pan/zoom) alongside
+the map. Supports multi-tenant family trees with owner/editor/viewer roles,
 Google/email sign-in, a light/dark theme, and a per-account default map view.
 
 ## Tech stack

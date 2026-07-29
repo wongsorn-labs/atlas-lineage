@@ -91,6 +91,11 @@ Test before committing. Run `pnpm test` to verify everything passes.
 - `ENCRYPTION_KEY` env var must be set (64-char hex string)
 - Null and empty strings stored as SQL NULL (not encrypted)
 
+## Gotchas
+
+- **Relationship direction**: a `Relationship` row's `type` describes `personId`'s role toward `relatedPersonId` (e.g. `{personId: A, relatedPersonId: B, type: 'parent'}` = A is B's parent). No reciprocal row is auto-created. UI that renders a relationship from either person's side must invert `parent`↔`child` when displaying from the `personId` side — see `INVERSE_TYPE` in `apps/web/src/components/PersonCard.tsx` and the fuller note in CLAUDE.md.
+- **Mobile full-height layout**: use `h-dvh`, not `h-screen`, for anything meant to fill the visible viewport — `100vh` on mobile Safari/Chrome includes the address bar and clips fixed-height content.
+
 ## Code Style
 
 - **TypeScript**: Strict mode, no `any`

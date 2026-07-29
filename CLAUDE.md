@@ -103,7 +103,8 @@ profiles        – id (Supabase user id, PK), email, display_name, avatar_url,
 family_trees    – id (serial PK), name, description, owner_id (FK→profiles), created_at, updated_at
 tree_members    – id (serial PK), tree_id (FK→family_trees cascade), user_id (FK→profiles cascade),
                   role (owner|editor|viewer), created_at
-persons         – id (serial PK), tree_id (FK→family_trees cascade), name, birth_year, death_year,
+persons         – id (serial PK), tree_id (FK→family_trees cascade), name, gender (enum:
+                  male|female|unspecified, nullable, not encrypted), birth_year, death_year,
                   birth_lat, birth_lng, birth_place (encrypted), notes (encrypted), created_at, updated_at
 relationships   – id (serial PK), tree_id (FK→family_trees cascade), person_id (FK→persons cascade),
                   related_person_id (FK→persons cascade), type, created_at
@@ -136,6 +137,14 @@ relationships   – id (serial PK), tree_id (FK→family_trees cascade), person_
 
 `MapView` uses `react-leaflet`. Only persons with non-null `birthLat`/`birthLng` are rendered as markers. `RelationshipLines` draws Leaflet `Polyline` elements between paired persons that both have coordinates. The Leaflet default icon path fix (deleting `_getIconUrl` and calling `L.Icon.Default.mergeOptions`) is required because Vite breaks the bundled image paths — this is intentional, not a bug.
 
+### Family tree chart view
+
+`App.tsx` toggles between `MapView` and `FamilyChart` (`apps/web/src/components/FamilyChart.tsx`) via a pill switcher; both read the same `persons`/`relationships` data. `FamilyChart` is a hand-rolled SVG renderer (no charting library) with pan/zoom controls — `apps/web/src/lib/familyTreeLayout.ts` computes the layout (generation via longest parent chain, barycenter ordering, partner-adjacency pulling) independent of rendering, and is unit-tested (`familyTreeLayout.test.ts`). Avatar initials/colors are shared between the DOM `Avatar` component and the SVG nodes via `apps/web/src/lib/avatarStyle.ts` (`getInitials`, `getAvatarColors`) so both views render the same person consistently.
+
+### Relationship direction
+
+A `Relationship` row's `type` describes **`personId`'s role toward `relatedPersonId`** — e.g. `{personId: A, relatedPersonId: B, type: 'parent'}` means A is B's parent (see `familyTreeLayout.ts`'s `parent`/`child` handling, and `RelationshipForm`'s `currentPerson` → `personId` binding). There is no reciprocal row auto-created. When rendering a relationship on a person card, the `type` must be inverted (`parent`↔`child`; `sibling`/`spouse`/`partner` are symmetric) whenever the card's `person` is the row's `personId` side rather than its `relatedPersonId` side — otherwise the badge reads backwards (e.g. a parent's own card would label their child as "Parent"). See the `INVERSE_TYPE` map in `PersonCard.tsx`.
+
 ### UI stack
 
 The web frontend uses **Tailwind CSS v4** for styling and **Base UI** (`@base-ui/react`) primitives (via a local shadcn/ui-style component library under `apps/web/src/components/ui/`) — Dialog and Select/Combobox are built on `@floating-ui/react` under the hood, giving auto-flip/auto-size popup positioning for free. Forms use **React Hook Form** with Zod resolvers (from `packages/shared`). The `@` alias maps to `apps/web/src/` in both Vite and Vitest configs.
@@ -147,6 +156,12 @@ Tailwind v4 custom-property gotcha: `bg-[--foo]` (bracket syntax) silently gener
 **Design tokens** live in `apps/web/src/styles/app.css`: a warm heritage/archival palette (antique gold, sage green, terracotta on parchment cream) exposed as semantic CSS custom properties (`--bg-card`, `--text-primary`, `--gold`, `--border`, ...) rather than hardcoded Tailwind colors, so components stay theme-agnostic. The token *names* (`--gold`, `--teal`, `--coral`) are historical from an earlier Flip7-branded palette and no longer describe their literal hues — treat them as primary/secondary/tertiary accent slots, not color names. `--font-display` (Playfair Display, used via the `.font-display` utility class) pairs a serif heading voice against `--font-body` (Inter) for everything else; both are preloaded in `index.html`. A parallel dark-mode block (`:root[data-theme="dark"]`, plus an OS-`prefers-color-scheme` fallback) redefines the same properties — components never need their own dark-mode variants. `ThemeContext` (`apps/web/src/contexts/ThemeContext.tsx`) owns the toggle, persists to `localStorage`, and sets `data-theme` on `<html>`; `index.html` sets it pre-hydration to avoid a flash of the wrong theme. `MapView`'s CARTO tile layer (`light_all`/`dark_all`) switches with the theme.
 
 **Overlay z-index** is a named scale in `app.css` (`--z-dropdown`, `--z-overlay`, `--z-dialog`, `--z-popover`, `--z-tooltip`, `--z-toast`) — components reference it by name (`z-(--z-dialog)`) instead of a hand-picked number. Add a new tier there rather than guessing a magic number when building a new overlay.
+
+### Sidebar & mobile layout
+
+`Sidebar.tsx` is a fixed-position drawer on mobile (slides in via `translate-x`, toggled by a hamburger button in `App.tsx`) and a static column on `md:` and up. Its header holds only the wordmark and a close button; theme toggle and sign-out live in the footer next to the `SettingsDialog` gear icon (not in the header — kept deliberately uncluttered), and "add person" is a floating action button pinned to the bottom-right corner of the person list rather than a header button. Destructive actions (delete person, delete relationship) go through the shared `ConfirmDialog` (`apps/web/src/components/ui/confirm-dialog.tsx`) rather than a native `confirm()`.
+
+Full-height containers (`Sidebar`'s `<aside>`, the app root in `App.tsx`) use `h-dvh`, not `h-screen` — `100vh` on mobile Safari/Chrome includes the address-bar area, which can push fixed-height content (e.g. the sidebar footer) below the actually-visible viewport. `h-dvh` tracks the real visible viewport instead.
 
 ### i18n
 
