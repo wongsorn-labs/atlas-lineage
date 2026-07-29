@@ -34,31 +34,9 @@ export function RelationshipForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-      <div>
-        <Label>{t('relationship.relatedPerson')}</Label>
-        <Controller
-          name="relatedPersonId"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger data-testid="related-person-select">
-                <SelectValue placeholder={t('relationship.selectPerson')}>
-                  {(value: string | null) => others.find((p) => String(p.id) === value)?.name ?? t('relationship.selectPerson')}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {others.map((p) => (
-                  <SelectItem key={p.id} value={String(p.id)}>
-                    {p.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
-        {errors.relatedPersonId && <p className="text-xs text-red-500 mt-1">Required</p>}
-      </div>
+      <p className="text-sm text-(--text-secondary)">
+        {t('relationship.sentenceIntro', { name: currentPerson.name })}
+      </p>
 
       <div>
         <Label>{t('relationship.type')}</Label>
@@ -84,6 +62,32 @@ export function RelationshipForm({
           )}
         />
         {errors.type && <p className="text-xs text-red-500 mt-1">Required</p>}
+      </div>
+
+      <div>
+        <Label>{t('relationship.relatedPerson')}</Label>
+        <Controller
+          name="relatedPersonId"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value}>
+              <SelectTrigger data-testid="related-person-select">
+                <SelectValue placeholder={t('relationship.selectPerson')}>
+                  {(value: string | null) => others.find((p) => String(p.id) === value)?.name ?? t('relationship.selectPerson')}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {others.map((p) => (
+                  <SelectItem key={p.id} value={String(p.id)}>
+                    {p.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
+        {errors.relatedPersonId && <p className="text-xs text-red-500 mt-1">Required</p>}
       </div>
 
       <div className="flex gap-2 pt-2">

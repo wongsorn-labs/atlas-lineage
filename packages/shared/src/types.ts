@@ -1,9 +1,11 @@
 export type RelationshipType = 'parent' | 'child' | 'sibling' | 'spouse' | 'partner';
+export type Gender = 'male' | 'female' | 'unspecified';
 
 export interface Person {
   id: number;
   treeId: number;
   name: string;
+  gender: Gender | null;
   birthYear: number | null;
   deathYear: number | null;
   birthLat: number | null;
@@ -26,6 +28,7 @@ export interface Relationship {
 export interface CreatePersonInput {
   treeId: number;
   name: string;
+  gender?: Gender | null;
   birthYear?: number | null;
   deathYear?: number | null;
   birthLat?: number | null;

@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { personCard } from '../helpers';
 
 // GET /persons is mocked and starts empty for every test (fresh mockDataStore
 // per test, see fixtures.ts), regardless of what real people exist in prod.
@@ -23,7 +24,7 @@ test('edit person — new name visible', async ({ signedInPage: page }) => {
   await expect(page.getByText('Ada Lovelace')).toBeVisible();
 
   await page.getByText('Ada Lovelace').click();
-  await page.getByTestId('edit-person-button').click();
+  await personCard(page, 'Ada Lovelace').getByTestId('edit-person-button').click();
   await page.getByTestId('name-input').fill('Ada Byron');
   await page.getByRole('button', { name: /update/i }).click();
   await expect(page.getByText('Ada Byron')).toBeVisible();
@@ -37,7 +38,7 @@ test('delete person — name disappears', async ({ signedInPage: page }) => {
 
   await page.getByText('Grace Hopper').click();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByTestId('delete-person-button').click();
+  await personCard(page, 'Grace Hopper').getByTestId('delete-person-button').click();
   await expect(page.getByText('Grace Hopper')).not.toBeVisible();
 });
 
