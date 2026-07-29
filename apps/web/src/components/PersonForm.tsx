@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import type { Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
+import { toBuddhistYear, toGregorianYear } from '@/lib/formatPartialDate';
 
 const GENDERS: Gender[] = ['male', 'female', 'unspecified'];
 
@@ -43,7 +44,9 @@ interface PersonFormProps {
 }
 
 export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFormProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const buddhistEra = i18n.language === 'th';
+  const displayYear = (y: number | null | undefined) => (y == null ? undefined : buddhistEra ? toBuddhistYear(y) : y);
   const [hasDeathYear, setHasDeathYear] = useState(initial?.deathYear != null);
   const { register, handleSubmit, setValue, control, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -51,11 +54,11 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
       ? {
           name: initial.name,
           gender: initial.gender ?? 'unspecified',
-          birthYear: initial.birthYear ?? undefined,
+          birthYear: displayYear(initial.birthYear),
           birthMonth: initial.birthMonth ?? undefined,
           birthDay: initial.birthDay ?? undefined,
           birthTime: initial.birthTime?.slice(0, 5) ?? '',
-          deathYear: initial.deathYear ?? undefined,
+          deathYear: displayYear(initial.deathYear),
           deathMonth: initial.deathMonth ?? undefined,
           deathDay: initial.deathDay ?? undefined,
           deathTime: initial.deathTime?.slice(0, 5) ?? '',
@@ -67,8 +70,20 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
       : { gender: 'unspecified' },
   });
 
+  const handleFormSubmit = (values: FormValues) => {
+    onSubmit(
+      buddhistEra
+        ? {
+            ...values,
+            birthYear: toGregorianYear(values.birthYear),
+            deathYear: values.deathYear != null ? toGregorianYear(values.deathYear) : values.deathYear,
+          }
+        : values,
+    );
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
       <div>
         <Label htmlFor="name">{t('person.name')} *</Label>
         <Input id="name" data-testid="name-input" {...register('name')} placeholder={t('person.namePlaceholder')} />
@@ -100,9 +115,9 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
       </div>
 
       <div>
-        <Label htmlFor="birthYear">{t('person.birthYear')} *</Label>
+        <Label htmlFor="birthYear">{t('person.birthYear')} {buddhistEra && '(พ.ศ.)'} *</Label>
         <div className="grid grid-cols-4 gap-2">
-          <Input id="birthYear" data-testid="birth-year-input" type="number" {...register('birthYear')} placeholder="1900" />
+          <Input id="birthYear" data-testid="birth-year-input" type="number" {...register('birthYear')} placeholder={buddhistEra ? '2443' : '1900'} />
           <Input data-testid="birth-month-input" type="number" min={1} max={12} {...register('birthMonth')} placeholder={t('person.month')} />
           <Input data-testid="birth-day-input" type="number" min={1} max={31} {...register('birthDay')} placeholder={t('person.day')} />
           <Input data-testid="birth-time-input" type="time" {...register('birthTime')} />
@@ -127,11 +142,11 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
               }
             }}
           />
-          <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')}</Label>
+          <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')} {buddhistEra && '(พ.ศ.)'}</Label>
         </div>
         {hasDeathYear && (
           <div className="grid grid-cols-4 gap-2 mt-1.5">
-            <Input id="deathYear" data-testid="death-year-input" type="number" {...register('deathYear')} placeholder="1980" />
+            <Input id="deathYear" data-testid="death-year-input" type="number" {...register('deathYear')} placeholder={buddhistEra ? '2523' : '1980'} />
             <Input data-testid="death-month-input" type="number" min={1} max={12} {...register('deathMonth')} placeholder={t('person.month')} />
             <Input data-testid="death-day-input" type="number" min={1} max={31} {...register('deathDay')} placeholder={t('person.day')} />
             <Input data-testid="death-time-input" type="time" {...register('deathTime')} />

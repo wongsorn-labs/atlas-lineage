@@ -9,6 +9,7 @@ interface PartialDate {
 const pad = (n: number) => String(n).padStart(2, '0');
 
 export const toBuddhistYear = (year: number) => year + 543;
+export const toGregorianYear = (year: number) => year - 543;
 
 export function formatPartialDate({ year, month, day, time, buddhistEra }: PartialDate): string {
   if (year == null) return '';
