@@ -28,7 +28,8 @@ interface PersonCardProps {
 }
 
 export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const buddhistEra = i18n.language === 'th';
   const [editOpen, setEditOpen] = useState(false);
   const [relOpen, setRelOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -90,13 +91,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                 {person.birthYear && (
                   <span className="inline-flex items-center gap-1">
                     <Cake className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-                    {formatPartialDate({ year: person.birthYear, month: person.birthMonth, day: person.birthDay, time: person.birthTime })}
+                    {formatPartialDate({ year: person.birthYear, month: person.birthMonth, day: person.birthDay, time: person.birthTime, buddhistEra })}
                   </span>
                 )}
                 {person.deathYear && (
                   <span className="inline-flex items-center gap-1">
                     <Flower2 className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
-                    {formatPartialDate({ year: person.deathYear, month: person.deathMonth, day: person.deathDay, time: person.deathTime })}
+                    {formatPartialDate({ year: person.deathYear, month: person.deathMonth, day: person.deathDay, time: person.deathTime, buddhistEra })}
                   </span>
                 )}
               </div>

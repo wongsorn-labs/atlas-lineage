@@ -1,6 +1,8 @@
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import { useTranslation } from 'react-i18next';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
+import { toBuddhistYear } from '@/lib/formatPartialDate';
 
 const goldIcon = L.divIcon({
   className: 'atlas-marker',
@@ -25,6 +27,11 @@ interface PersonMarkerProps {
 }
 
 export function PersonMarker({ person, isSelected, onSelect }: PersonMarkerProps) {
+  const { i18n } = useTranslation();
+  const displayBirthYear = person.birthYear != null && i18n.language === 'th'
+    ? toBuddhistYear(person.birthYear)
+    : person.birthYear;
+
   return (
     <Marker
       position={[person.birthLat!, person.birthLng!]}
@@ -33,7 +40,7 @@ export function PersonMarker({ person, isSelected, onSelect }: PersonMarkerProps
     >
       <Popup>
         <strong>{person.name}</strong>
-        {person.birthYear && <div>b. {person.birthYear}</div>}
+        {displayBirthYear && <div>b. {displayBirthYear}</div>}
         {person.birthPlace && <div>{person.birthPlace}</div>}
       </Popup>
     </Marker>

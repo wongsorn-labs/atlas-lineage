@@ -4,6 +4,7 @@ import { ZoomIn, ZoomOut } from 'lucide-react';
 import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 import { computeFamilyTreeLayout, CARD_WIDTH, CARD_HEIGHT } from '@/lib/familyTreeLayout';
 import { getAvatarColors, getInitials } from '@/lib/avatarStyle';
+import { toBuddhistYear } from '@/lib/formatPartialDate';
 
 const MARGIN = 48;
 const ZOOM_STEP = 0.15;
@@ -18,7 +19,8 @@ interface FamilyChartProps {
 }
 
 export function FamilyChart({ persons, relationships, selectedPerson, onSelectPerson }: FamilyChartProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const buddhistEra = i18n.language === 'th';
   const [zoom, setZoom] = useState(1);
   const layout = useMemo(() => computeFamilyTreeLayout(persons, relationships), [persons, relationships]);
 
@@ -110,7 +112,10 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
               const { person } = node;
               const isSelected = selectedPerson?.id === person.id;
               const { bg, fg } = getAvatarColors(person.name);
-              const years = [person.birthYear, person.deathYear].filter((y) => y != null).join('–');
+              const years = [person.birthYear, person.deathYear]
+                .filter((y) => y != null)
+                .map((y) => (buddhistEra ? toBuddhistYear(y) : y))
+                .join('–');
 
               return (
                 <g
