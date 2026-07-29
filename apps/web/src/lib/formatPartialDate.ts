@@ -3,15 +3,20 @@ interface PartialDate {
   month?: number | null;
   day?: number | null;
   time?: string | null;
+  buddhistEra?: boolean;
 }
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-export function formatPartialDate({ year, month, day, time }: PartialDate): string {
+export const toBuddhistYear = (year: number) => year + 543;
+export const toGregorianYear = (year: number) => year - 543;
+
+export function formatPartialDate({ year, month, day, time, buddhistEra }: PartialDate): string {
   if (year == null) return '';
-  let result = String(year);
+  const displayYear = buddhistEra ? toBuddhistYear(year) : year;
+  let result = String(displayYear);
   if (month != null) {
-    result = day != null ? `${pad(day)}/${pad(month)}/${year}` : `${pad(month)}/${year}`;
+    result = day != null ? `${pad(day)}/${pad(month)}/${displayYear}` : `${pad(month)}/${displayYear}`;
   }
   if (time) result += ` ${time.slice(0, 5)}`;
   return result;

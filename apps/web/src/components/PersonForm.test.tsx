@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import i18n from 'i18next';
 import { PersonForm } from './PersonForm';
 
 const noop = () => {};
@@ -46,7 +47,6 @@ describe('PersonForm', () => {
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'Ada Lovelace', birthYear: 1815 }),
-        expect.anything(),
       );
     });
   });
@@ -57,6 +57,34 @@ describe('PersonForm', () => {
     render(<PersonForm onSubmit={noop} onCancel={onCancel} />);
     await user.click(screen.getByRole('button', { name: /cancel/i }));
     expect(onCancel).toHaveBeenCalled();
+  });
+
+  it('converts Buddhist Era input to Gregorian on submit when language is th', async () => {
+    await i18n.changeLanguage('th');
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(<PersonForm onSubmit={onSubmit} onCancel={noop} />);
+    await user.type(screen.getByTestId('name-input'), 'Somchai');
+    await user.type(screen.getByTestId('birth-year-input'), '2533');
+    await user.click(screen.getByRole('button', { name: /add person/i }));
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ birthYear: 1990 }));
+    });
+    await i18n.changeLanguage('en');
+  });
+
+  it('displays a Gregorian birth year as Buddhist Era when editing under language th', async () => {
+    await i18n.changeLanguage('th');
+    const initial = {
+      id: 1, name: 'Somchai', gender: null,
+      birthYear: 1990, birthMonth: null, birthDay: null, birthTime: null,
+      deathYear: null, deathMonth: null, deathDay: null, deathTime: null,
+      birthLat: null, birthLng: null, birthPlace: null, notes: null,
+      createdAt: '', updatedAt: '',
+    };
+    render(<PersonForm initial={initial} onSubmit={noop} onCancel={noop} />);
+    expect((screen.getByTestId('birth-year-input') as HTMLInputElement).value).toBe('2533');
+    await i18n.changeLanguage('en');
   });
 
   it('pre-fills values when initial prop provided and shows Update button', () => {
