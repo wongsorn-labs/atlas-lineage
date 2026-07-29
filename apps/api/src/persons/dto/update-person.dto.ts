@@ -1,10 +1,16 @@
-import { IsString, IsNumber, IsOptional, Min, Max, IsInt } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsIn, Min, Max, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
+
+const GENDERS = ['male', 'female', 'unspecified'] as const;
 
 export class UpdatePersonDto {
   @IsOptional()
   @IsString()
   name?: string;
+
+  @IsOptional()
+  @IsIn(GENDERS)
+  gender?: 'male' | 'female' | 'unspecified' | null;
 
   @IsOptional()
   @IsInt()

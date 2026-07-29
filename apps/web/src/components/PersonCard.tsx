@@ -73,8 +73,14 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
 
           <div className="min-w-0 flex-1">
             {/* Name */}
-            <p className="font-display text-[15px] font-semibold leading-snug text-(--text-primary) truncate">
-              {person.name}
+            <p className="flex items-center gap-1 font-display text-[15px] font-semibold leading-snug text-(--text-primary)">
+              <span className="truncate">{person.name}</span>
+              {person.gender === 'male' && (
+                <span className="flex-shrink-0 text-sm leading-none text-blue-400" aria-label={t('person.genders.male')}>♂</span>
+              )}
+              {person.gender === 'female' && (
+                <span className="flex-shrink-0 text-sm leading-none text-rose-400" aria-label={t('person.genders.female')}>♀</span>
+              )}
             </p>
 
             {/* Lifespan */}

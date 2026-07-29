@@ -39,6 +39,12 @@
     "addTitle": "เพิ่มบุคคล",
     "editTitle": "แก้ไข {{name}}",
     "name": "ชื่อ",
+    "gender": "เพศ",
+    "genders": {
+      "male": "ชาย",
+      "female": "หญิง",
+      "unspecified": "ไม่ระบุ"
+    },
     "birthYear": "ปีเกิด",
     "deathYear": "ปีเสียชีวิต",
     "latitude": "ละติจูด",

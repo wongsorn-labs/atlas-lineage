@@ -40,6 +40,12 @@
     "addTitle": "Add person",
     "editTitle": "Edit {{name}}",
     "name": "Name",
+    "gender": "Gender",
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "unspecified": "Unspecified"
+    },
     "birthYear": "Birth year",
     "deathYear": "Death year",
     "latitude": "Latitude",
