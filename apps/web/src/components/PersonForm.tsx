@@ -103,7 +103,7 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
                 if (!isChecked) setValue('deathYear', undefined);
               }}
             />
-            <Label htmlFor="hasDeathYear" className="cursor-pointer">{t('person.deathYear')}</Label>
+            <Label htmlFor="hasDeathYear" className="mb-0 cursor-pointer">{t('person.deathYear')}</Label>
           </div>
           {hasDeathYear && (
             <Input
