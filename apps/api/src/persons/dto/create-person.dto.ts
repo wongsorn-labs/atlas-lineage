@@ -1,5 +1,7 @@
-import { IsString, IsNumber, IsOptional, Min, Max, IsInt, IsPositive, MinLength } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsIn, Min, Max, IsInt, IsPositive, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
+
+const GENDERS = ['male', 'female', 'unspecified'] as const;
 
 export class CreatePersonDto {
   @IsInt()
@@ -10,6 +12,10 @@ export class CreatePersonDto {
   @IsString()
   @MinLength(1)
   name: string;
+
+  @IsOptional()
+  @IsIn(GENDERS)
+  gender?: 'male' | 'female' | 'unspecified' | null;
 
   @IsOptional()
   @IsInt()

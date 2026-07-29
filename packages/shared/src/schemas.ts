@@ -1,10 +1,12 @@
 import { z } from 'zod';
 
 export const RelationshipTypeSchema = z.enum(['parent', 'child', 'sibling', 'spouse', 'partner']);
+export const GenderSchema = z.enum(['male', 'female', 'unspecified']);
 
 export const CreatePersonSchema = z.object({
   treeId: z.number().int().positive(),
   name: z.string().min(1, 'Name is required'),
+  gender: GenderSchema.nullable().optional(),
   birthYear: z.number().int().nullable().optional(),
   deathYear: z.number().int().nullable().optional(),
   birthLat: z.number().min(-90).max(90).nullable().optional(),
