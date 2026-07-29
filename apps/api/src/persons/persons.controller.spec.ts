@@ -49,17 +49,26 @@ describe('PersonsController (integration)', () => {
       expect(res.body[0].name).toBe('Ada Lovelace');
     }));
 
-  it('POST /api/persons {treeId:1, name:"Ada"} → 201', () =>
-    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'Ada' }).expect(201));
+  it('POST /api/persons {treeId:1, name:"Ada", birthYear:1815} → 201', () =>
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'Ada', birthYear: 1815 }).expect(201));
 
   it('POST /api/persons missing treeId → 400', () =>
-    request(app.getHttpServer()).post('/api/persons').send({ name: 'Ada' }).expect(400));
+    request(app.getHttpServer()).post('/api/persons').send({ name: 'Ada', birthYear: 1815 }).expect(400));
+
+  it('POST /api/persons missing birthYear → 400', () =>
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'Ada' }).expect(400));
 
   it('POST /api/persons {name:""} → 400', () =>
-    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: '' }).expect(400));
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: '', birthYear: 1815 }).expect(400));
 
   it('POST /api/persons {birthLat:999} → 400', () =>
-    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'X', birthLat: 999 }).expect(400));
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'X', birthYear: 1815, birthLat: 999 }).expect(400));
+
+  it('POST /api/persons {birthMonth:13} → 400', () =>
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'X', birthYear: 1815, birthMonth: 13 }).expect(400));
+
+  it('POST /api/persons {birthTime:"25:99"} → 400', () =>
+    request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, name: 'X', birthYear: 1815, birthTime: '25:99' }).expect(400));
 
   it('GET /api/persons/1?treeId=1 → 200', () =>
     request(app.getHttpServer()).get('/api/persons/1?treeId=1').expect(200));

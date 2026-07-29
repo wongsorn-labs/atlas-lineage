@@ -18,7 +18,13 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
     name: row.name,
     gender: row.gender ?? null,
     birthYear: row.birthYear ?? null,
+    birthMonth: row.birthMonth ?? null,
+    birthDay: row.birthDay ?? null,
+    birthTime: row.birthTime ?? null,
     deathYear: row.deathYear ?? null,
+    deathMonth: row.deathMonth ?? null,
+    deathDay: row.deathDay ?? null,
+    deathTime: row.deathTime ?? null,
     birthLat: row.birthLat ?? null,
     birthLng: row.birthLng ?? null,
     birthPlace: decryptField(row.birthPlace, key),
@@ -50,8 +56,14 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
       treeId: input.treeId,
       name: input.name,
       gender: input.gender ?? null,
-      birthYear: input.birthYear ?? null,
+      birthYear: input.birthYear,
+      birthMonth: input.birthMonth ?? null,
+      birthDay: input.birthDay ?? null,
+      birthTime: input.birthTime ?? null,
       deathYear: input.deathYear ?? null,
+      deathMonth: input.deathMonth ?? null,
+      deathDay: input.deathDay ?? null,
+      deathTime: input.deathTime ?? null,
       birthLat: input.birthLat ?? null,
       birthLng: input.birthLng ?? null,
       birthPlace: encryptField(input.birthPlace, key),
@@ -66,8 +78,14 @@ export async function updatePerson(id: number, treeId: number, input: UpdatePers
   const updates: Partial<typeof persons.$inferInsert> = {};
   if (input.name !== undefined) updates.name = input.name;
   if ('gender' in input) updates.gender = input.gender ?? null;
-  if ('birthYear' in input) updates.birthYear = input.birthYear ?? null;
+  if (input.birthYear !== undefined) updates.birthYear = input.birthYear;
+  if ('birthMonth' in input) updates.birthMonth = input.birthMonth ?? null;
+  if ('birthDay' in input) updates.birthDay = input.birthDay ?? null;
+  if ('birthTime' in input) updates.birthTime = input.birthTime ?? null;
   if ('deathYear' in input) updates.deathYear = input.deathYear ?? null;
+  if ('deathMonth' in input) updates.deathMonth = input.deathMonth ?? null;
+  if ('deathDay' in input) updates.deathDay = input.deathDay ?? null;
+  if ('deathTime' in input) updates.deathTime = input.deathTime ?? null;
   if ('birthLat' in input) updates.birthLat = input.birthLat ?? null;
   if ('birthLng' in input) updates.birthLng = input.birthLng ?? null;
   if ('birthPlace' in input) updates.birthPlace = encryptField(input.birthPlace, key);

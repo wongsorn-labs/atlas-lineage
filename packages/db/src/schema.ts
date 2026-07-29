@@ -1,5 +1,5 @@
 import {
-  pgTable, serial, integer, doublePrecision, text, timestamp, pgEnum, uniqueIndex
+  pgTable, serial, integer, doublePrecision, text, time, timestamp, pgEnum, uniqueIndex
 } from 'drizzle-orm/pg-core';
 
 export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
@@ -39,7 +39,13 @@ export const persons = pgTable('persons', {
   name: text('name').notNull(),
   gender: genderEnum('gender'),
   birthYear: integer('birth_year'),
+  birthMonth: integer('birth_month'),
+  birthDay: integer('birth_day'),
+  birthTime: time('birth_time'),
   deathYear: integer('death_year'),
+  deathMonth: integer('death_month'),
+  deathDay: integer('death_day'),
+  deathTime: time('death_time'),
   birthLat: doublePrecision('birth_lat'),
   birthLng: doublePrecision('birth_lng'),
   birthPlace: text('birth_place'),

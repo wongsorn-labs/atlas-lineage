@@ -43,6 +43,13 @@
       "when": 1785337056936,
       "tag": "0005_stale_doctor_strange",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1785341346825,
+      "tag": "0006_lucky_spencer_smythe",
+      "breakpoints": true
     }
   ]
 }

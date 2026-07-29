@@ -3,12 +3,20 @@ import { z } from 'zod';
 export const RelationshipTypeSchema = z.enum(['parent', 'child', 'sibling', 'spouse', 'partner']);
 export const GenderSchema = z.enum(['male', 'female', 'unspecified']);
 
+const timeStringSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/, 'Use HH:MM');
+
 export const CreatePersonSchema = z.object({
   treeId: z.number().int().positive(),
   name: z.string().min(1, 'Name is required'),
   gender: GenderSchema.nullable().optional(),
-  birthYear: z.number().int().nullable().optional(),
+  birthYear: z.number().int(),
+  birthMonth: z.number().int().min(1).max(12).nullable().optional(),
+  birthDay: z.number().int().min(1).max(31).nullable().optional(),
+  birthTime: timeStringSchema.nullable().optional(),
   deathYear: z.number().int().nullable().optional(),
+  deathMonth: z.number().int().min(1).max(12).nullable().optional(),
+  deathDay: z.number().int().min(1).max(31).nullable().optional(),
+  deathTime: timeStringSchema.nullable().optional(),
   birthLat: z.number().min(-90).max(90).nullable().optional(),
   birthLng: z.number().min(-180).max(180).nullable().optional(),
   birthPlace: z.string().nullable().optional(),

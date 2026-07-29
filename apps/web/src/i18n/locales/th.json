@@ -46,6 +46,9 @@
       "unspecified": "ไม่ระบุ"
     },
     "birthYear": "ปีเกิด",
+    "birthYearRequired": "กรุณากรอกปีเกิด",
+    "month": "ดด",
+    "day": "วว",
     "deathYear": "ปีเสียชีวิต",
     "latitude": "ละติจูด",
     "longitude": "ลองจิจูด",

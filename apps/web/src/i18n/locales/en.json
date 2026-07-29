@@ -47,6 +47,9 @@
       "unspecified": "Unspecified"
     },
     "birthYear": "Birth year",
+    "birthYearRequired": "Birth year is required",
+    "month": "MM",
+    "day": "DD",
     "deathYear": "Death year",
     "latitude": "Latitude",
     "longitude": "Longitude",
