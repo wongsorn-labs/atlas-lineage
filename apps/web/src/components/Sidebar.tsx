@@ -48,7 +48,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-(--z-dialog) flex h-screen w-72 max-w-[85vw] flex-shrink-0 flex-col glass-card rounded-none border-r border-(--border) transition-transform duration-200 md:static md:z-auto md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      className={`fixed inset-y-0 left-0 z-(--z-dialog) flex h-dvh w-72 max-w-[85vw] flex-shrink-0 flex-col glass-card rounded-none border-r border-(--border) transition-transform duration-200 md:static md:z-auto md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">

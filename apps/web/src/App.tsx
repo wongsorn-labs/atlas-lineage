@@ -39,7 +39,7 @@ export default function App() {
 
   if (authLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
+      <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
           <Loader2 className="h-4 w-4 animate-spin" />
           Loading…
@@ -52,7 +52,7 @@ export default function App() {
 
   if (treesLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
+      <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
           <Loader2 className="h-4 w-4 animate-spin" />
           {t('app.loading')}
@@ -63,7 +63,7 @@ export default function App() {
 
   if (currentTreeId == null) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) px-6">
+      <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) px-6">
         <div className="glass-card flex max-w-sm flex-col items-center gap-3 p-8 text-center">
           <AlertCircle className="h-8 w-8 text-(--color-error)" />
           <h1 className="font-display text-lg font-semibold text-(--text-primary)">{t('tree.noTreeTitle')}</h1>
@@ -75,7 +75,7 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
+      <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
           <Loader2 className="h-4 w-4 animate-spin" />
           {t('app.loading')}
@@ -86,7 +86,7 @@ export default function App() {
 
   if (hasError) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-(--bg-base) px-6">
+      <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) px-6">
         <div className="glass-card flex max-w-sm flex-col items-center gap-3 p-8 text-center">
           <AlertCircle className="h-8 w-8 text-(--color-error)" />
           <h1 className="font-display text-lg font-semibold text-(--text-primary)">{t('app.errorTitle')}</h1>
@@ -109,7 +109,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-(--bg-base)">
+    <div className="flex h-dvh w-screen overflow-hidden bg-(--bg-base)">
       <Sidebar
         persons={persons}
         selectedPerson={selectedPerson}
