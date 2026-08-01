@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useTree } from '../contexts/TreeContext';
 import { CreateTreeDialog } from './CreateTreeDialog';
+import { EditTreeDialog } from './EditTreeDialog';
 import { InviteMemberDialog } from './InviteMemberDialog';
 
 export function TreeSwitcher() {
@@ -28,6 +29,7 @@ export function TreeSwitcher() {
         </SelectContent>
       </Select>
       <CreateTreeDialog />
+      {currentTree && <EditTreeDialog tree={currentTree} />}
       {currentTree && <InviteMemberDialog tree={currentTree} />}
     </div>
   );

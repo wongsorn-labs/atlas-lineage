@@ -7,7 +7,7 @@
 #
 # status values: implemented | gap | in-progress | planned
 
-updated: 2026-07-27
+updated: 2026-08-01
 
 capabilities:
   - name: appearance
@@ -100,4 +100,7 @@ capabilities:
       caller's role, so the invite UI can gate itself to owners. Remaining
       gaps: no GET /trees/:id/members (list) or remove-member endpoint yet,
       and inviting a member requires their raw Supabase UUID since there is
-      no lookup-by-email endpoint.
+      no lookup-by-email endpoint. Owners can now rename a tree or change
+      its description via PATCH /trees/:treeId (TreeMemberGuard +
+      @RequireRoles('owner')), exposed in the web UI as an "Edit tree"
+      pencil icon next to the tree switcher (EditTreeDialog.tsx).

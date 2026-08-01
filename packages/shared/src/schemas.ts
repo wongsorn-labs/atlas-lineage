@@ -39,6 +39,8 @@ export const createTreeSchema = z.object({
   description: z.string().max(500).optional().nullable(),
 });
 
+export const updateTreeSchema = createTreeSchema.partial();
+
 export const addTreeMemberSchema = z.object({
   userId: z.string().uuid(),
   role: treeRoleSchema,

@@ -99,6 +99,8 @@ export interface CreateTreeInput {
   description?: string | null;
 }
 
+export type UpdateTreeInput = Partial<CreateTreeInput>;
+
 export interface AddTreeMemberInput {
   userId: string;
   role: TreeRole;

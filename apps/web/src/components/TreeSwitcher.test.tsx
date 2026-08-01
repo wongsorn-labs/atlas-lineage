@@ -8,6 +8,11 @@ vi.mock('../contexts/TreeContext', () => ({ useTree: vi.fn() }));
 vi.mock('./CreateTreeDialog', () => ({
   CreateTreeDialog: () => <div data-testid="create-tree-dialog" />,
 }));
+vi.mock('./EditTreeDialog', () => ({
+  EditTreeDialog: ({ tree }: { tree: FamilyTreeMembership }) => (
+    <div data-testid="edit-tree-dialog" data-tree-id={tree.id} />
+  ),
+}));
 vi.mock('./InviteMemberDialog', () => ({
   InviteMemberDialog: ({ tree }: { tree: FamilyTreeMembership }) => (
     <div data-testid="invite-member-dialog" data-tree-id={tree.id} />
@@ -29,16 +34,18 @@ describe('TreeSwitcher', () => {
 
     expect(screen.getByTestId('tree-select')).toBeInTheDocument();
     expect(screen.getByTestId('create-tree-dialog')).toBeInTheDocument();
+    expect(screen.getByTestId('edit-tree-dialog')).toHaveAttribute('data-tree-id', '1');
     expect(screen.getByTestId('invite-member-dialog')).toHaveAttribute('data-tree-id', '1');
   });
 
-  it('does not render the invite dialog when no tree is selected', () => {
+  it('does not render the edit/invite dialogs when no tree is selected', () => {
     vi.mocked(useTree).mockReturnValue({
       trees: [], currentTree: null, currentTreeId: null, isLoading: false, setCurrentTreeId: vi.fn(),
     });
 
     render(<TreeSwitcher />);
 
+    expect(screen.queryByTestId('edit-tree-dialog')).not.toBeInTheDocument();
     expect(screen.queryByTestId('invite-member-dialog')).not.toBeInTheDocument();
   });
 });
