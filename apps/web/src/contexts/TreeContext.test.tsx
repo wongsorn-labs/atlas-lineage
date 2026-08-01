@@ -4,9 +4,14 @@ import { http, HttpResponse } from 'msw';
 import { server } from '../test/mocks/server';
 import { TreeProvider, useTree } from './TreeContext';
 
-vi.mock('./AuthContext', () => ({
-  useAuth: () => ({ user: { id: 'user-1', email: 'test@test.com' } }),
-}));
+const { useAuth } = vi.hoisted(() => ({ useAuth: vi.fn() }));
+vi.mock('./AuthContext', () => ({ useAuth }));
+
+function mockUser(primaryTreeId: number | null = null) {
+  useAuth.mockReturnValue({
+    user: { id: 'user-1', email: 'test@test.com', defaultCountry: null, primaryTreeId },
+  });
+}
 
 function TestConsumer() {
   const { currentTreeId, isLoading } = useTree();
@@ -28,6 +33,7 @@ function renderWithProvider() {
 describe('TreeContext', () => {
   beforeEach(() => {
     localStorage.clear();
+    mockUser(null);
   });
 
   it('defaults to the first tree when nothing is remembered', async () => {
@@ -53,6 +59,32 @@ describe('TreeContext', () => {
   });
 
   it('restores the remembered tree id when still valid', async () => {
+    localStorage.setItem('currentTreeId', '6');
+    server.use(http.get('/api/trees', () => HttpResponse.json([
+      { id: 5, name: 'Tree A', description: null, ownerId: 'user-1', createdAt: '', updatedAt: '', role: 'owner' },
+      { id: 6, name: 'Tree B', description: null, ownerId: 'user-1', createdAt: '', updatedAt: '', role: 'viewer' },
+    ])));
+
+    renderWithProvider();
+
+    await waitFor(() => expect(screen.getByTestId('current-tree')).toHaveTextContent('6'));
+  });
+
+  it('the primary tree wins over a remembered localStorage selection', async () => {
+    mockUser(6);
+    localStorage.setItem('currentTreeId', '5');
+    server.use(http.get('/api/trees', () => HttpResponse.json([
+      { id: 5, name: 'Tree A', description: null, ownerId: 'user-1', createdAt: '', updatedAt: '', role: 'owner' },
+      { id: 6, name: 'Tree B', description: null, ownerId: 'user-1', createdAt: '', updatedAt: '', role: 'viewer' },
+    ])));
+
+    renderWithProvider();
+
+    await waitFor(() => expect(screen.getByTestId('current-tree')).toHaveTextContent('6'));
+  });
+
+  it('falls back to localStorage when the primary tree is no longer in the list', async () => {
+    mockUser(999);
     localStorage.setItem('currentTreeId', '6');
     server.use(http.get('/api/trees', () => HttpResponse.json([
       { id: 5, name: 'Tree A', description: null, ownerId: 'user-1', createdAt: '', updatedAt: '', role: 'owner' },

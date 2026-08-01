@@ -18,6 +18,14 @@ vi.mock('./InviteMemberDialog', () => ({
     <div data-testid="invite-member-dialog" data-tree-id={tree.id} />
   ),
 }));
+vi.mock('./TrashDialog', () => ({
+  TrashDialog: () => <div data-testid="trash-dialog" />,
+}));
+vi.mock('./LinkPersonDialog', () => ({
+  LinkPersonDialog: ({ tree }: { tree: FamilyTreeMembership }) => (
+    <div data-testid="link-person-dialog" data-tree-id={tree.id} />
+  ),
+}));
 
 const trees: FamilyTreeMembership[] = [
   { id: 1, name: 'Tree A', description: null, ownerId: '1', createdAt: '', updatedAt: '', role: 'owner' },

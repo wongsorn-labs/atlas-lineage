@@ -10,6 +10,8 @@ import type {
   UpdateTreeInput,
   AddTreeMemberInput,
   TreeMember,
+  PersonTreeLink,
+  UpdateProfileSettingsInput,
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
@@ -60,6 +62,7 @@ export interface AuthUser {
   id: string;
   email: string;
   defaultCountry: string | null;
+  primaryTreeId: number | null;
 }
 
 export const api = {
@@ -76,20 +79,37 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ accessToken, refreshToken }),
       }),
-    updateProfile: (defaultCountry: string | null) =>
-      request<{ defaultCountry: string | null }>('/auth/profile', {
+    updateProfile: (data: UpdateProfileSettingsInput) =>
+      request<AuthUser>('/auth/profile', {
         method: 'PATCH',
-        body: JSON.stringify({ defaultCountry }),
+        body: JSON.stringify(data),
       }),
   },
   trees: {
     list: () => request<FamilyTreeMembership[]>('/trees'),
+    trash: () => request<FamilyTree[]>('/trees/trash'),
     create: (data: CreateTreeInput) =>
       request<FamilyTree>('/trees', { method: 'POST', body: JSON.stringify(data) }),
     update: (treeId: number, data: UpdateTreeInput) =>
       request<FamilyTree>(`/trees/${treeId}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    delete: (treeId: number) => request<FamilyTree>(`/trees/${treeId}`, { method: 'DELETE' }),
+    restore: (treeId: number) => request<FamilyTree>(`/trees/${treeId}/restore`, { method: 'POST' }),
+    purge: (treeId: number) => request<{ deleted: boolean }>(`/trees/${treeId}/purge`, { method: 'DELETE' }),
     addMember: (treeId: number, data: AddTreeMemberInput) =>
       request<TreeMember>(`/trees/${treeId}/members`, { method: 'POST', body: JSON.stringify(data) }),
+  },
+  personLinks: {
+    request: (treeId: number, personId: number) =>
+      request<PersonTreeLink>(`/trees/${treeId}/person-links`, {
+        method: 'POST',
+        body: JSON.stringify({ personId }),
+      }),
+    forPerson: (treeId: number, personId: number) =>
+      request<PersonTreeLink | null>(`/trees/${treeId}/person-links/${personId}`),
+    pending: () => request<PersonTreeLink[]>('/person-links/pending'),
+    approve: (id: number) => request<PersonTreeLink>(`/person-links/${id}/approve`, { method: 'POST' }),
+    reject: (id: number) => request<{ deleted: boolean }>(`/person-links/${id}/reject`, { method: 'POST' }),
+    unlink: (id: number) => request<{ deleted: boolean }>(`/person-links/${id}`, { method: 'DELETE' }),
   },
   persons: {
     list: (treeId: number) => request<Person[]>(`/persons?treeId=${treeId}`),

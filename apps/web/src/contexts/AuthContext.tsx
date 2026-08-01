@@ -10,6 +10,7 @@ interface AuthContextValue {
   signInWithGoogle: () => Promise<void>;
   completeOAuthCallback: () => Promise<void>;
   updateDefaultCountry: (defaultCountry: string | null) => Promise<void>;
+  setPrimaryTree: (treeId: number | null) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -61,13 +62,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateDefaultCountry = async (defaultCountry: string | null) => {
-    await api.auth.updateProfile(defaultCountry);
+    await api.auth.updateProfile({ defaultCountry });
     setUser((u) => (u ? { ...u, defaultCountry } : u));
+  };
+
+  const setPrimaryTree = async (primaryTreeId: number | null) => {
+    await api.auth.updateProfile({ primaryTreeId });
+    setUser((u) => (u ? { ...u, primaryTreeId } : u));
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, signIn, signOut, signInWithGoogle, completeOAuthCallback, updateDefaultCountry }}
+      value={{ user, isLoading, signIn, signOut, signInWithGoogle, completeOAuthCallback, updateDefaultCountry, setPrimaryTree }}
     >
       {children}
     </AuthContext.Provider>

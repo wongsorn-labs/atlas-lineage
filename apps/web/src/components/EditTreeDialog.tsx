@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { Edit2 } from 'lucide-react';
+import { Edit2, Trash2 } from 'lucide-react';
 import { updateTreeSchema } from '@wongsorn-labs/atlas-lineage-shared';
 import type { z } from 'zod';
 import type { FamilyTreeMembership } from '@wongsorn-labs/atlas-lineage-shared';
@@ -11,7 +11,8 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { useUpdateTree } from '@/hooks/useTrees';
+import { ConfirmDialog } from './ui/confirm-dialog';
+import { useUpdateTree, useDeleteTree } from '@/hooks/useTrees';
 
 type FormValues = z.infer<typeof updateTreeSchema>;
 
@@ -23,7 +24,10 @@ export function EditTreeDialog({ tree }: EditTreeDialogProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [result, setResult] = useState<'success' | 'error' | null>(null);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
   const updateTree = useUpdateTree();
+  const deleteTree = useDeleteTree();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(updateTreeSchema),
     values: { name: tree.name, description: tree.description ?? undefined },
@@ -42,7 +46,18 @@ export function EditTreeDialog({ tree }: EditTreeDialogProps) {
     }
   };
 
+  const handleDelete = async () => {
+    setDeleteError(false);
+    try {
+      await deleteTree.mutateAsync(tree.id);
+      setOpen(false);
+    } catch {
+      setDeleteError(true);
+    }
+  };
+
   return (
+    <>
     <Dialog open={open} onOpenChange={(next) => { setOpen(next); if (next) { setResult(null); reset({ name: tree.name, description: tree.description ?? undefined }); } }}>
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.editTitle')} data-testid="edit-tree-button" />}
@@ -75,7 +90,33 @@ export function EditTreeDialog({ tree }: EditTreeDialogProps) {
             </Button>
           </div>
         </form>
+        <div className="pt-3 mt-1 border-t border-(--border)">
+          {deleteError && (
+            <p className="text-xs text-red-500 mb-2" data-testid="delete-tree-error">{t('tree.deleteError')}</p>
+          )}
+          <button
+            type="button"
+            className="btn-ghost text-sm text-(--color-error) flex items-center gap-1.5"
+            aria-label={t('tree.deleteAria')}
+            data-testid="delete-tree-button"
+            onClick={() => setConfirmDeleteOpen(true)}
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            {t('tree.deleteButton')}
+          </button>
+        </div>
       </DialogContent>
     </Dialog>
+    <ConfirmDialog
+      open={confirmDeleteOpen}
+      onOpenChange={setConfirmDeleteOpen}
+      title={t('tree.deleteConfirmTitle', { name: tree.name })}
+      description={t('tree.deleteConfirmWarning')}
+      confirmLabel={t('tree.deleteButton')}
+      cancelLabel={t('tree.cancel')}
+      isLoading={deleteTree.isPending}
+      onConfirm={() => void handleDelete()}
+    />
+    </>
   );
 }

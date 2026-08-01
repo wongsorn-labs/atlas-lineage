@@ -6,6 +6,9 @@ const COL_GAP = 32;
 const ROW_GAP = 96;
 const COL_STEP = CARD_WIDTH + COL_GAP;
 const ROW_STEP = CARD_HEIGHT + ROW_GAP;
+/** Seam between two merged partners' avatars — narrower than COL_GAP so the pair reads as one fused card. */
+const MERGED_SEAM = 16;
+export const MERGED_CARD_WIDTH = CARD_WIDTH * 2 + MERGED_SEAM;
 
 export interface PersonNode {
   person: Person;
@@ -15,6 +18,12 @@ export interface PersonNode {
 }
 
 export interface PartnerLink {
+  a: PersonNode;
+  b: PersonNode;
+}
+
+/** A partner pair rendered as a single fused card (see MERGED_CARD_WIDTH) instead of two cards + a connector. */
+export interface MergedPair {
   a: PersonNode;
   b: PersonNode;
 }
@@ -29,6 +38,7 @@ export interface FamilyTreeLayout {
   width: number;
   height: number;
   partnerLinks: PartnerLink[];
+  mergedPairs: MergedPair[];
   parentGroupLinks: ParentGroupLink[];
 }
 
@@ -39,7 +49,7 @@ function pairKey(a: number, b: number): string {
 export function computeFamilyTreeLayout(persons: Person[], relationships: Relationship[]): FamilyTreeLayout {
   const personIds = new Set(persons.map((p) => p.id));
   const childToParents = new Map<number, Set<number>>();
-  const partnerPairs = new Map<string, [number, number]>();
+  const partnerPairs = new Map<string, { a: number; b: number; relId: number }>();
 
   for (const rel of relationships) {
     if (!personIds.has(rel.personId) || !personIds.has(rel.relatedPersonId)) continue;
@@ -49,8 +59,24 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
       addParent(childToParents, rel.personId, rel.relatedPersonId);
     } else if (rel.type === 'spouse' || rel.type === 'partner') {
       const key = pairKey(rel.personId, rel.relatedPersonId);
-      if (!partnerPairs.has(key)) partnerPairs.set(key, [rel.personId, rel.relatedPersonId]);
+      if (!partnerPairs.has(key)) partnerPairs.set(key, { a: rel.personId, b: rel.relatedPersonId, relId: rel.id });
     }
+  }
+
+  // A pair only merges into one fused card when it is the lowest-id partner
+  // relationship for BOTH people — i.e. each person's "first recorded"
+  // partner. Anyone with additional partner rows keeps the older
+  // separate-card-plus-connector rendering for those extra relationships.
+  const minPartnerRelId = new Map<number, number>();
+  for (const { a, b, relId } of partnerPairs.values()) {
+    for (const id of [a, b]) {
+      const current = minPartnerRelId.get(id);
+      if (current === undefined || relId < current) minPartnerRelId.set(id, relId);
+    }
+  }
+  const mergedPairKeys = new Set<string>();
+  for (const [key, { a, b, relId }] of partnerPairs) {
+    if (minPartnerRelId.get(a) === relId && minPartnerRelId.get(b) === relId) mergedPairKeys.add(key);
   }
 
   // Generation = longest chain of recorded parents above a person. Guarded
@@ -82,7 +108,7 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
   // (or lack of it) would otherwise put them a generation apart.
   for (let i = 0; i < 3; i++) {
     let changed = false;
-    for (const [a, b] of partnerPairs.values()) {
+    for (const { a, b } of partnerPairs.values()) {
       const ga = generation.get(a)!;
       const gb = generation.get(b)!;
       if (ga !== gb) {
@@ -103,6 +129,7 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
 
   const sortedGenerations = [...rows.keys()].sort((a, b) => a - b);
   const xById = new Map<number, number>();
+  const mergedPairIds: [number, number][] = [];
 
   for (const g of sortedGenerations) {
     const ids = rows.get(g)!;
@@ -124,7 +151,7 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
       if (consumed.has(id)) continue;
       placed.push(id);
       consumed.add(id);
-      for (const [a, b] of partnerPairs.values()) {
+      for (const { a, b } of partnerPairs.values()) {
         const partnerId = a === id ? b : b === id ? a : null;
         if (partnerId != null && ids.includes(partnerId) && !consumed.has(partnerId)) {
           placed.push(partnerId);
@@ -133,7 +160,25 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
       }
     }
 
-    placed.forEach((id, i) => xById.set(id, i * COL_STEP));
+    // Walk the row left-to-right; a merge-eligible pair shares one x (the
+    // fused card's left edge) and the cursor advances by the wider merged
+    // width instead of a normal single-card column step.
+    let cursor = 0;
+    for (let i = 0; i < placed.length; i++) {
+      const id = placed[i];
+      if (xById.has(id)) continue;
+      const nextId = placed[i + 1];
+      const key = nextId !== undefined ? pairKey(id, nextId) : null;
+      if (key && mergedPairKeys.has(key)) {
+        xById.set(id, cursor);
+        xById.set(nextId, cursor);
+        mergedPairIds.push([id, nextId]);
+        cursor += MERGED_CARD_WIDTH + COL_GAP;
+      } else {
+        xById.set(id, cursor);
+        cursor += COL_STEP;
+      }
+    }
   }
 
   const nodes: PersonNode[] = persons.map((p) => ({
@@ -144,8 +189,17 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
   }));
   const nodeById = new Map(nodes.map((n) => [n.person.id, n]));
 
-  const partnerLinks: PartnerLink[] = [...partnerPairs.values()]
+  const mergedPairs: MergedPair[] = mergedPairIds
     .map(([a, b]) => {
+      const nodeA = nodeById.get(a);
+      const nodeB = nodeById.get(b);
+      return nodeA && nodeB ? { a: nodeA, b: nodeB } : null;
+    })
+    .filter((l): l is MergedPair => l !== null);
+
+  const partnerLinks: PartnerLink[] = [...partnerPairs]
+    .filter(([key]) => !mergedPairKeys.has(key))
+    .map(([, { a, b }]) => {
       const nodeA = nodeById.get(a);
       const nodeB = nodeById.get(b);
       if (!nodeA || !nodeB || nodeA.generation !== nodeB.generation) return null;
@@ -174,14 +228,17 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
     })
     .filter((l): l is ParentGroupLink => l !== null);
 
-  const maxX = nodes.length > 0 ? Math.max(...nodes.map((n) => n.x)) : 0;
+  const mergedAnchorIds = new Set(mergedPairIds.map(([a]) => a));
+  const rightEdge = (n: PersonNode) => n.x + (mergedAnchorIds.has(n.person.id) ? MERGED_CARD_WIDTH : CARD_WIDTH);
+  const maxRight = nodes.length > 0 ? Math.max(...nodes.map(rightEdge)) : CARD_WIDTH;
   const maxY = nodes.length > 0 ? Math.max(...nodes.map((n) => n.y)) : 0;
 
   return {
     nodes,
-    width: maxX + CARD_WIDTH,
+    width: maxRight,
     height: maxY + CARD_HEIGHT,
     partnerLinks,
+    mergedPairs,
     parentGroupLinks,
   };
 }
