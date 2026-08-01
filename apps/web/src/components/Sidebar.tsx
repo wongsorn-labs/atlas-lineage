@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { LogOut, Search, SlidersHorizontal, TreePine, UserPlus, X } from 'lucide-react';
+import { LogOut, Search, SlidersHorizontal, UserPlus, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonCard } from './PersonCard';
@@ -48,9 +48,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       {/* Header */}
       <div className="flex items-center justify-between border-b border-(--border) px-4 py-3">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-(--gold-muted) text-(--gold)">
-            <TreePine className="h-4 w-4" />
-          </div>
+          <img src="/icon-192.png" alt="" className="h-8 w-8 flex-shrink-0 rounded-lg" />
           <h1 className="font-display text-lg font-semibold text-(--gold) truncate">Atlas Lineage</h1>
         </div>
         <button
