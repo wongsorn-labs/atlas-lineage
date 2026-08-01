@@ -47,5 +47,11 @@ export const addTreeMemberSchema = z.object({
 });
 
 export const updateProfileSettingsSchema = z.object({
-  defaultCountry: z.string().length(3).nullable(),
+  defaultCountry: z.string().length(3).nullable().optional(),
+  primaryTreeId: z.number().int().positive().nullable().optional(),
+});
+
+export const requestPersonLinkSchema = z.object({
+  personId: z.number().int().positive(),
+  treeId: z.number().int().positive(),
 });
