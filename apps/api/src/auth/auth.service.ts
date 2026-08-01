@@ -1,6 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { upsertProfile, claimDefaultTree, getProfile, updateProfileSettings as updateProfileSettingsQuery } from '@wongsorn-labs/atlas-lineage-db';
+import { upsertProfile, createPersonalTreeIfNeeded, getProfile, setPrimaryTree, updateProfileSettings as updateProfileSettingsQuery } from '@wongsorn-labs/atlas-lineage-db';
 
 @Injectable()
 export class AuthService {
@@ -17,13 +17,13 @@ export class AuthService {
     const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
     if (error || !data.session) throw new Error(error?.message ?? 'Sign-in failed');
     await upsertProfile(data.user.id, data.user.email!);
-    await claimDefaultTree(data.user.id);
+    await createPersonalTreeIfNeeded(data.user.id);
     const profile = await getProfile(data.user.id);
     return {
       accessToken: data.session.access_token,
       refreshToken: data.session.refresh_token,
       expiresIn: data.session.expires_in,
-      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null },
+      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null, primaryTreeId: profile?.primaryTreeId ?? null },
     };
   }
 
@@ -44,12 +44,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid or expired session');
     }
     await upsertProfile(data.user.id, data.user.email!);
-    await claimDefaultTree(data.user.id);
+    await createPersonalTreeIfNeeded(data.user.id);
     const profile = await getProfile(data.user.id);
     return {
       accessToken,
       refreshToken,
-      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null },
+      user: { id: data.user.id, email: data.user.email, defaultCountry: profile?.defaultCountry ?? null, primaryTreeId: profile?.primaryTreeId ?? null },
     };
   }
 
@@ -65,10 +65,21 @@ export class AuthService {
       id: data.user.id,
       email: data.user.email,
       defaultCountry: profile?.defaultCountry ?? null,
+      primaryTreeId: profile?.primaryTreeId ?? null,
     };
   }
 
-  async updateProfileSettings(userId: string, defaultCountry: string | null) {
-    return updateProfileSettingsQuery(userId, defaultCountry);
+  async updateProfileSettings(userId: string, input: { defaultCountry?: string | null; primaryTreeId?: number | null }) {
+    let current = await getProfile(userId);
+
+    if (input.primaryTreeId !== undefined) {
+      const updated = await setPrimaryTree(userId, input.primaryTreeId);
+      if (!updated) throw new NotFoundException('Tree not found or not a member');
+      current = updated;
+    }
+    if (input.defaultCountry !== undefined) {
+      current = await updateProfileSettingsQuery(userId, input.defaultCountry);
+    }
+    return current;
   }
 }

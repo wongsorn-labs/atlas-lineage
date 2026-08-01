@@ -1,13 +1,19 @@
 import 'reflect-metadata';
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { PersonsService } from './persons.service';
 
 const mockPerson = { id: 1, treeId: 1, name: 'Ada Lovelace', birthYear: 1815, deathYear: 1852, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '2024-01-01', updatedAt: '2024-01-01' };
+const linkedPerson = { ...mockPerson, id: 2, treeId: 9 };
 
 jest.mock('@wongsorn-labs/atlas-lineage-db', () => ({
   findAllPersons: jest.fn(() => [mockPerson]),
-  findPersonById: jest.fn((id: number) => (id === 1 ? mockPerson : null)),
+  findPersonById: jest.fn((id: number, treeId: number) => {
+    if (id === 1) return mockPerson;
+    // Visible to treeId 1 only via an approved cross-tree link, origin tree is 9.
+    if (id === 2 && treeId === 1) return linkedPerson;
+    return null;
+  }),
   createPerson: jest.fn((dto: unknown) => ({ ...mockPerson, ...(dto as object) })),
   updatePerson: jest.fn((id: number, treeId: number, dto: unknown) => (id === 1 ? { ...mockPerson, ...(dto as object) } : null)),
   deletePerson: jest.fn((id: number) => id === 1),
@@ -56,5 +62,13 @@ describe('PersonsService', () => {
 
   it('remove throws NotFoundException when not found', async () => {
     await expect(service.remove(99, 1)).rejects.toThrow(NotFoundException);
+  });
+
+  it('update throws ForbiddenException for a person visible only via a cross-tree link', async () => {
+    await expect(service.update(2, 1, { name: 'X' } as never)).rejects.toThrow(ForbiddenException);
+  });
+
+  it('remove throws ForbiddenException for a person visible only via a cross-tree link', async () => {
+    await expect(service.remove(2, 1)).rejects.toThrow(ForbiddenException);
   });
 });
