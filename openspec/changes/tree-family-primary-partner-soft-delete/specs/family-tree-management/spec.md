@@ -108,6 +108,105 @@ The system SHALL render a person's first recorded partner relationship (`spouse`
 - **WHEN** a person has more than one recorded `spouse`/`partner` relationship
 - **THEN** only the first recorded partner relationship (by relationship id) renders as a merged card with that person; every additional partner relationship renders using the pre-existing separate-card-plus-connector-line rendering
 
+### Requirement: Request Cross-Tree Person Link
+The system SHALL let a tree's `owner` request that an existing person, identified by `personId` and that person's origin `treeId`, become visible in their own tree, creating a `person_trees` row with `status = 'pending'`.
+
+#### Scenario: Owner requests a link to a known person
+- **WHEN** the `owner` of tree B sends a link request specifying a `personId` and the origin `treeId` (tree A) they already know out of band
+- **THEN** the system creates a `person_trees` row (`personId`, `treeId: B, status: 'pending'`) and does not yet grant tree B any access to the person
+
+#### Scenario: Requesting a link for a person tree B already has access to
+- **WHEN** tree B's owner requests a link for a `personId` that already has an `approved` (or `pending`) `person_trees` row for tree B, or whose origin `treeId` already equals B
+- **THEN** the system rejects the request without creating a duplicate row
+
+#### Scenario: Non-owner requests a link
+- **WHEN** a user with `editor` or `viewer` role on tree B requests a person link
+- **THEN** the system returns 403 Forbidden
+
+### Requirement: Approve or Reject Person Link Request
+The system SHALL let the origin tree's `owner` approve or reject a pending link request; only an approved link grants the destination tree access.
+
+#### Scenario: Origin owner approves a pending request
+- **WHEN** the `owner` of a person's origin tree approves a `pending` `person_trees` row for that person
+- **THEN** the system sets that row's `status` to `approved`, and the destination tree gains read access to the person from that point on
+
+#### Scenario: Origin owner rejects a pending request
+- **WHEN** the `owner` of a person's origin tree rejects a `pending` `person_trees` row
+- **THEN** the system deletes that row and the destination tree gains no access
+
+#### Scenario: Non-origin-owner attempts to decide a request
+- **WHEN** a user who is not the `owner` of the person's origin tree attempts to approve or reject a `person_trees` request for that person
+- **THEN** the system returns 403 Forbidden
+
+### Requirement: Read-Only Access To Linked Persons
+The system SHALL let a destination tree with an `approved` `person_trees` link view the linked person, but SHALL NOT let it modify that person's own fields; only the origin tree may edit them.
+
+#### Scenario: Destination tree views a linked person
+- **WHEN** a member of tree B GETs persons scoped to tree B, and a `person_trees` row links a person to tree B with `status = 'approved'`
+- **THEN** the response includes that person's current fields (name, dates, coordinates, `birthPlace`, `notes`) as returned by their origin tree
+
+#### Scenario: Destination tree attempts to edit a linked person
+- **WHEN** a member of tree B (including an `owner` or `editor`) PATCHes or DELETEs a person whose origin `treeId` is not B, even though B has an `approved` link to them
+- **THEN** the system returns 403 Forbidden and does not modify or delete the person
+
+#### Scenario: Origin tree retains full edit rights
+- **WHEN** an `editor` or `owner` of the person's origin tree PATCHes that person
+- **THEN** the update succeeds exactly as it would for a person with no cross-tree links
+
+### Requirement: Relationships May Reference Linked Persons
+The system SHALL let a tree create relationships that reference a person linked into that tree via an `approved` `person_trees` row, in addition to persons whose origin `treeId` matches directly.
+
+#### Scenario: Creating a relationship to a linked person
+- **WHEN** a client POSTs `/api/relationships` with `treeId` B, and `personId`/`relatedPersonId` where one side's origin tree is B and the other side has an `approved` `person_trees` link to B
+- **THEN** the system creates the relationship, scoped to tree B
+
+#### Scenario: Creating a relationship to an unlinked person from another tree still fails
+- **WHEN** a client POSTs `/api/relationships` with `treeId` B and a `personId`/`relatedPersonId` whose origin tree is not B and has no `approved` `person_trees` row for B
+- **THEN** the system returns 404 Not Found and does not create the relationship
+
+### Requirement: Unlink Person From Tree
+The system SHALL let either the origin tree's `owner` or the destination tree's `owner` remove an `approved` (or `pending`) `person_trees` link at any time, unilaterally.
+
+#### Scenario: Destination owner unlinks
+- **WHEN** the destination tree's `owner` removes a `person_trees` link for a person visible in their tree
+- **THEN** the system deletes that `person_trees` row and the person (and any relationships that referenced them) is no longer accessible from the destination tree
+
+#### Scenario: Origin owner unlinks
+- **WHEN** the origin tree's `owner` removes a `person_trees` link they previously approved
+- **THEN** the system deletes that `person_trees` row with the same effect, with no approval or notice required from the destination tree
+
+### Requirement: Linked Access Revoked When Origin Tree Soft-Deleted
+The system SHALL treat a person's linked (destination) trees as losing access when that person's origin tree is soft-deleted, consistent with the existing soft-delete lockout.
+
+#### Scenario: Soft-deleting the origin tree hides the person from linked trees
+- **WHEN** a person's origin tree is soft-deleted
+- **THEN** every tree with an `approved` `person_trees` link to that person can no longer view or reference that person until the origin tree is restored
+
+## MODIFIED Requirements
+
+### Requirement: Role Hierarchy Is Enforced On Data Endpoints
+The system SHALL define an `owner > editor > viewer` role hierarchy via `TreeMemberGuard` and a `RequireRoles` decorator, and SHALL apply that guard to every route that reads or writes person/relationship data, scoping every query by `treeId`.
+
+#### Scenario: Persons and relationships endpoints require tree membership
+- **WHEN** examining `PersonsController` and `RelationshipsController`
+- **THEN** both apply `@UseGuards(SupabaseAuthGuard, TreeMemberGuard)`, requiring a `treeId` (route param, query param, or body field, depending on the route) and denying requests from users without a `tree_members` row for that tree
+
+#### Scenario: Reads require viewer role or higher, writes require editor role or higher
+- **WHEN** a user with only `viewer` role on a tree calls a write endpoint (`POST`/`PATCH`/`DELETE` on persons or relationships)
+- **THEN** the system returns 403 Forbidden; the same user calling a read endpoint (`GET`) on that tree succeeds
+
+#### Scenario: Data queries are scoped by treeId
+- **WHEN** any persons or relationships query runs (`findAllPersons`, `findPersonById`, `updatePerson`, `deletePerson`, `findAllRelationships`, `findRelationshipsByPerson`, `deleteRelationship`)
+- **THEN** the query filters by `tree_id`, so rows belonging to a different tree are never returned or mutated, even if the caller supplies a valid id for a row in another tree — except that a person with an `approved` `person_trees` link to the queried tree is included in reads (see "Read-Only Access To Linked Persons")
+
+#### Scenario: Relationships cannot link persons across trees unless explicitly shared
+- **WHEN** a client POSTs `/api/relationships` with a `treeId` and a `personId`/`relatedPersonId` where either person's origin tree does not match that `treeId` and has no `approved` `person_trees` link to it
+- **THEN** the system returns 404 Not Found and does not create the relationship
+
+#### Scenario: Adding a tree member requires the owner role
+- **WHEN** a client POSTs `/api/trees/:treeId/members`
+- **THEN** the system applies `@UseGuards(TreeMemberGuard)` with `@RequireRoles('owner')`, rejecting the request with 403 Forbidden unless the caller is an `owner` of that tree
+
 ## REMOVED Requirements
 
 ### Requirement: Default Tree Auto-Claim on First Sign-In
