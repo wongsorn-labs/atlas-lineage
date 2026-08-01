@@ -85,7 +85,7 @@ capabilities:
 
   - name: family-tree-management
     spec: specs/family-tree-management/spec.md
-    requirements: 5
+    requirements: 20
     status: implemented
     notes: >-
       TreeMemberGuard + @RequireRoles(...) are applied to PersonsController,
@@ -104,3 +104,34 @@ capabilities:
       its description via PATCH /trees/:treeId (TreeMemberGuard +
       @RequireRoles('owner')), exposed in the web UI as an "Edit tree"
       pencil icon next to the tree switcher (EditTreeDialog.tsx).
+
+      Four more additions landed together (change
+      2026-08-01-tree-family-primary-partner-soft-delete): (1) Primary tree
+      -- profiles.primary_tree_id, set via PATCH /api/auth/profile, always
+      wins as the initial tree on sign-in (TreeContext), overriding the
+      localStorage "last selected" value; the old claimDefaultTree()
+      hardcoded-tree-id-1 auto-claim is retired in favor of
+      createPersonalTreeIfNeeded, which gives every zero-membership user
+      their own tree. (2) Soft delete -- family_trees.deleted_at, with
+      DELETE/POST /trees/:treeId(/restore|/purge) (owner-only) and GET
+      /trees/trash; TreeMemberGuard treats a soft-deleted tree as
+      not-found for every route since findMemberRole now filters
+      deletedAt IS NULL, so no guard code changed. Manual purge only, no
+      scheduled auto-expiry. (3) Partner merge view -- FamilyChart renders
+      a person's first recorded partner relationship (lowest relationship
+      id, symmetric on both sides) as one fused MERGED_CARD_WIDTH card
+      instead of two cards + a connector line; extra partner relationships
+      still use the old rendering (familyTreeLayout.ts's mergedPairs vs.
+      partnerLinks). (4) Cross-tree person sharing -- a new person_trees
+      join table (pending/approved) lets a destination tree's owner
+      request read-only access to a person whose origin tree they don't
+      own; only the origin tree owner can approve/reject, either owner can
+      unlink, and destination trees can build relationships against a
+      linked person (PersonsService.assertWritable still restricts writes
+      to the origin tree, 403 not 404). New UI: LinkPersonDialog,
+      PendingLinkRequestsDialog, TrashDialog, and a "shared from another
+      tree" badge + Unlink action on PersonCard. Known gap: before/after
+      FamilyChart screenshots for the merge-view UI change were not
+      captured (no live Postgres in the environment that implemented
+      this) -- capture them against a seeded dev database before the next
+      UI review.

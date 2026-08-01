@@ -199,7 +199,7 @@ The system SHALL define an `owner > editor > viewer` role hierarchy via `TreeMem
 - **WHEN** any persons or relationships query runs (`findAllPersons`, `findPersonById`, `updatePerson`, `deletePerson`, `findAllRelationships`, `findRelationshipsByPerson`, `deleteRelationship`)
 - **THEN** the query filters by `tree_id`, so rows belonging to a different tree are never returned or mutated, even if the caller supplies a valid id for a row in another tree — except that a person with an `approved` `person_trees` link to the queried tree is included in reads (see "Read-Only Access To Linked Persons")
 
-#### Scenario: Relationships cannot link persons across trees unless explicitly shared
+#### Scenario: Relationships cannot link persons across trees
 - **WHEN** a client POSTs `/api/relationships` with a `treeId` and a `personId`/`relatedPersonId` where either person's origin tree does not match that `treeId` and has no `approved` `person_trees` link to it
 - **THEN** the system returns 404 Not Found and does not create the relationship
 
