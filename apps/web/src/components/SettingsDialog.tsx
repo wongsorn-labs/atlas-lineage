@@ -5,15 +5,18 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Label } from './ui/label';
 import { useAuth } from '../contexts/AuthContext';
+import { useTree } from '../contexts/TreeContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { COUNTRY_MAP_DEFAULTS } from '../lib/countries';
 
 export function SettingsDialog() {
   const { t, i18n } = useTranslation();
-  const { user, updateDefaultCountry } = useAuth();
+  const { user, updateDefaultCountry, setPrimaryTree } = useAuth();
+  const { currentTreeId } = useTree();
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingPrimary, setIsSavingPrimary] = useState(false);
 
   const handleChange = async (value: string | null) => {
     setIsSaving(true);
@@ -21,6 +24,18 @@ export function SettingsDialog() {
       await updateDefaultCountry(value === '__world' || value === null ? null : value);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const isCurrentTreePrimary = currentTreeId != null && currentTreeId === user?.primaryTreeId;
+
+  const handleSetPrimary = async () => {
+    if (currentTreeId == null) return;
+    setIsSavingPrimary(true);
+    try {
+      await setPrimaryTree(currentTreeId);
+    } finally {
+      setIsSavingPrimary(false);
     }
   };
 
@@ -61,6 +76,26 @@ export function SettingsDialog() {
               </SelectContent>
             </Select>
             <p className="text-xs text-(--text-muted) mt-1">{t('settings.defaultCountryHelp')}</p>
+          </div>
+
+          <div className="space-y-1">
+            <Label>{t('settings.primaryTree')}</Label>
+            {isCurrentTreePrimary ? (
+              <p className="text-sm text-(--text-secondary)" data-testid="primary-tree-current">
+                {t('settings.primaryTreeCurrent')}
+              </p>
+            ) : (
+              <button
+                type="button"
+                className="btn-secondary text-sm"
+                data-testid="set-primary-tree-button"
+                disabled={isSavingPrimary || currentTreeId == null}
+                onClick={() => void handleSetPrimary()}
+              >
+                {t('settings.setPrimaryButton')}
+              </button>
+            )}
+            <p className="text-xs text-(--text-muted) mt-1">{t('settings.primaryTreeHelp')}</p>
           </div>
 
           <div className="space-y-1">

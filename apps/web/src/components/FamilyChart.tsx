@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ZoomIn, ZoomOut } from 'lucide-react';
 import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
-import { computeFamilyTreeLayout, CARD_WIDTH, CARD_HEIGHT } from '@/lib/familyTreeLayout';
+import { computeFamilyTreeLayout, CARD_WIDTH, CARD_HEIGHT, MERGED_CARD_WIDTH, type PersonNode } from '@/lib/familyTreeLayout';
 import { getAvatarColors, getInitials } from '@/lib/avatarStyle';
 import { toBuddhistYear } from '@/lib/formatPartialDate';
 
@@ -16,6 +16,84 @@ interface FamilyChartProps {
   relationships: Relationship[];
   selectedPerson: Person | null;
   onSelectPerson: (person: Person | null) => void;
+}
+
+function PersonMark({
+  node, isSelected, onSelect, buddhistEra, offsetX = 0,
+}: {
+  node: PersonNode;
+  isSelected: boolean;
+  onSelect: () => void;
+  buddhistEra: boolean;
+  offsetX?: number;
+}) {
+  const { person } = node;
+  const { bg, fg } = getAvatarColors(person.name);
+  const years = [person.birthYear, person.deathYear]
+    .filter((y) => y != null)
+    .map((y) => (buddhistEra ? toBuddhistYear(y) : y))
+    .join('–');
+
+  return (
+    <g
+      transform={`translate(${offsetX}, 0)`}
+      onClick={onSelect}
+      className="cursor-pointer"
+      role="button"
+      tabIndex={0}
+      aria-label={person.name}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') onSelect();
+      }}
+    >
+      {isSelected && (
+        <rect
+          x={-6}
+          y={-6}
+          width={CARD_WIDTH + 12}
+          height={CARD_HEIGHT + 12}
+          rx={12}
+          className="fill-(--gold-muted) stroke-(--border-gold)"
+          strokeWidth={1.5}
+        />
+      )}
+      <circle cx={CARD_WIDTH / 2} cy={26} r={22} fill={bg} />
+      <text
+        x={CARD_WIDTH / 2}
+        y={26}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fill={fg}
+        fontSize={13}
+        fontWeight={700}
+      >
+        {getInitials(person.name)}
+      </text>
+      <text
+        x={CARD_WIDTH / 2}
+        y={62}
+        textAnchor="middle"
+        className="fill-(--text-primary)"
+        fontSize={12}
+        fontWeight={600}
+        fontFamily="var(--font-display)"
+      >
+        {person.name.length > 18 ? `${person.name.slice(0, 17)}…` : person.name}
+      </text>
+      {years && (
+        <text
+          x={CARD_WIDTH / 2}
+          y={76}
+          textAnchor="middle"
+          className="fill-(--text-muted)"
+          fontSize={10}
+        >
+          {years}
+        </text>
+      )}
+      <title>{person.name}</title>
+    </g>
+  );
 }
 
 export function FamilyChart({ persons, relationships, selectedPerson, onSelectPerson }: FamilyChartProps) {
@@ -34,6 +112,20 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
 
   const svgWidth = layout.width + MARGIN * 2;
   const svgHeight = layout.height + MARGIN * 2;
+
+  // Merged partners share one x — a "center" lookup that widens to the
+  // fused card's true midpoint keeps parent/child drop-lines anchored
+  // correctly, and a plain id set keeps them out of the single-card pass.
+  const mergedPersonIds = new Set(layout.mergedPairs.flatMap((pair) => [pair.a.person.id, pair.b.person.id]));
+  const singleNodes = layout.nodes.filter((n) => !mergedPersonIds.has(n.person.id));
+  const mergedCenterXById = new Map<number, number>();
+  for (const pair of layout.mergedPairs) {
+    const cx = pair.a.x + MERGED_CARD_WIDTH / 2;
+    mergedCenterXById.set(pair.a.person.id, cx);
+    mergedCenterXById.set(pair.b.person.id, cx);
+  }
+  const centerX = (node: PersonNode) => mergedCenterXById.get(node.person.id) ?? node.x + CARD_WIDTH / 2;
+  const SEAM_OFFSET = MERGED_CARD_WIDTH - CARD_WIDTH;
 
   return (
     <div className="relative h-full w-full bg-(--bg-base)">
@@ -69,12 +161,12 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
         >
           <g transform={`translate(${MARGIN}, ${MARGIN})`}>
             {layout.parentGroupLinks.map((link, i) => {
-              const parentXs = link.parents.map((p) => p.x + CARD_WIDTH / 2);
+              const parentXs = link.parents.map(centerX);
               const parentAnchorX = parentXs.reduce((a, b) => a + b, 0) / parentXs.length;
               const parentY = Math.max(...link.parents.map((p) => p.y)) + CARD_HEIGHT;
               const childY = Math.min(...link.children.map((c) => c.y));
               const busY = parentY + (childY - parentY) / 2;
-              const childXs = link.children.map((c) => c.x + CARD_WIDTH / 2);
+              const childXs = link.children.map(centerX);
               const busMinX = Math.min(parentAnchorX, ...childXs);
               const busMaxX = Math.max(parentAnchorX, ...childXs);
 
@@ -85,9 +177,9 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
                   {link.children.map((child) => (
                     <line
                       key={child.person.id}
-                      x1={child.x + CARD_WIDTH / 2}
+                      x1={centerX(child)}
                       y1={busY}
-                      x2={child.x + CARD_WIDTH / 2}
+                      x2={centerX(child)}
                       y2={child.y}
                     />
                   ))}
@@ -108,74 +200,44 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
               );
             })}
 
-            {layout.nodes.map((node) => {
-              const { person } = node;
-              const isSelected = selectedPerson?.id === person.id;
-              const { bg, fg } = getAvatarColors(person.name);
-              const years = [person.birthYear, person.deathYear]
-                .filter((y) => y != null)
-                .map((y) => (buddhistEra ? toBuddhistYear(y) : y))
-                .join('–');
-
+            {layout.mergedPairs.map((pair) => {
+              const aSelected = selectedPerson?.id === pair.a.person.id;
+              const bSelected = selectedPerson?.id === pair.b.person.id;
               return (
-                <g
-                  key={person.id}
-                  transform={`translate(${node.x}, ${node.y})`}
-                  onClick={() => onSelectPerson(isSelected ? null : person)}
-                  className="cursor-pointer"
-                  role="button"
-                  tabIndex={0}
-                  aria-label={person.name}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') onSelectPerson(isSelected ? null : person);
-                  }}
-                >
-                  {isSelected && (
-                    <rect
-                      x={-6}
-                      y={-6}
-                      width={CARD_WIDTH + 12}
-                      height={CARD_HEIGHT + 12}
-                      rx={12}
-                      className="fill-(--gold-muted) stroke-(--border-gold)"
-                      strokeWidth={1.5}
-                    />
-                  )}
-                  <circle cx={CARD_WIDTH / 2} cy={26} r={22} fill={bg} />
-                  <text
-                    x={CARD_WIDTH / 2}
-                    y={26}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fill={fg}
-                    fontSize={13}
-                    fontWeight={700}
-                  >
-                    {getInitials(person.name)}
-                  </text>
-                  <text
-                    x={CARD_WIDTH / 2}
-                    y={62}
-                    textAnchor="middle"
-                    className="fill-(--text-primary)"
-                    fontSize={12}
-                    fontWeight={600}
-                    fontFamily="var(--font-display)"
-                  >
-                    {person.name.length > 18 ? `${person.name.slice(0, 17)}…` : person.name}
-                  </text>
-                  {years && (
-                    <text
-                      x={CARD_WIDTH / 2}
-                      y={76}
-                      textAnchor="middle"
-                      className="fill-(--text-muted)"
-                      fontSize={10}
-                    >
-                      {years}
-                    </text>
-                  )}
-                  <title>{person.name}</title>
+                <g key={`merged-${pair.a.person.id}-${pair.b.person.id}`} transform={`translate(${pair.a.x}, ${pair.a.y})`}>
+                  <circle
+                    cx={CARD_WIDTH + SEAM_OFFSET / 2}
+                    cy={CARD_HEIGHT / 2}
+                    r={4}
+                    className="fill-(--coral)"
+                  />
+                  <PersonMark
+                    node={pair.a}
+                    isSelected={aSelected}
+                    onSelect={() => onSelectPerson(aSelected ? null : pair.a.person)}
+                    buddhistEra={buddhistEra}
+                  />
+                  <PersonMark
+                    node={pair.b}
+                    isSelected={bSelected}
+                    onSelect={() => onSelectPerson(bSelected ? null : pair.b.person)}
+                    buddhistEra={buddhistEra}
+                    offsetX={SEAM_OFFSET}
+                  />
+                </g>
+              );
+            })}
+
+            {singleNodes.map((node) => {
+              const isSelected = selectedPerson?.id === node.person.id;
+              return (
+                <g key={node.person.id} transform={`translate(${node.x}, ${node.y})`}>
+                  <PersonMark
+                    node={node}
+                    isSelected={isSelected}
+                    onSelect={() => onSelectPerson(isSelected ? null : node.person)}
+                    buddhistEra={buddhistEra}
+                  />
                 </g>
               );
             })}

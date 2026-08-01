@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EditTreeDialog } from './EditTreeDialog';
-import { useUpdateTree } from '@/hooks/useTrees';
+import { useUpdateTree, useDeleteTree } from '@/hooks/useTrees';
 import type { FamilyTreeMembership } from '@wongsorn-labs/atlas-lineage-shared';
 
 vi.mock('@/hooks/useTrees');
@@ -13,10 +13,13 @@ const editorTree: FamilyTreeMembership = { ...ownerTree, role: 'editor' };
 
 describe('EditTreeDialog', () => {
   const mutateAsync = vi.fn();
+  const deleteMutateAsync = vi.fn();
 
   beforeEach(() => {
     mutateAsync.mockReset();
+    deleteMutateAsync.mockReset();
     vi.mocked(useUpdateTree).mockReturnValue({ mutateAsync, isPending: false } as unknown as ReturnType<typeof useUpdateTree>);
+    vi.mocked(useDeleteTree).mockReturnValue({ mutateAsync: deleteMutateAsync, isPending: false } as unknown as ReturnType<typeof useDeleteTree>);
   });
 
   it('renders nothing when the caller is not an owner', () => {

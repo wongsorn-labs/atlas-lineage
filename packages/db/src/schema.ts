@@ -1,9 +1,10 @@
 import {
-  pgTable, serial, integer, doublePrecision, text, time, timestamp, pgEnum, uniqueIndex
+  pgTable, serial, integer, doublePrecision, text, time, timestamp, pgEnum, uniqueIndex, AnyPgColumn
 } from 'drizzle-orm/pg-core';
 
 export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
 export const genderEnum = pgEnum('gender', ['male', 'female', 'unspecified']);
+export const personTreeLinkStatusEnum = pgEnum('person_tree_link_status', ['pending', 'approved']);
 
 export const profiles = pgTable('profiles', {
   id: text('id').primaryKey(),
@@ -11,6 +12,7 @@ export const profiles = pgTable('profiles', {
   displayName: text('display_name'),
   avatarUrl: text('avatar_url'),
   defaultCountry: text('default_country'),
+  primaryTreeId: integer('primary_tree_id').references((): AnyPgColumn => familyTrees.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at').defaultNow(),
 });
 
@@ -19,6 +21,7 @@ export const familyTrees = pgTable('family_trees', {
   name: text('name').notNull(),
   description: text('description'),
   ownerId: text('owner_id').references(() => profiles.id, { onDelete: 'set null' }),
+  deletedAt: timestamp('deleted_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
@@ -62,3 +65,15 @@ export const relationships = pgTable('relationships', {
   type: text('type').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const personTrees = pgTable('person_trees', {
+  id: serial('id').primaryKey(),
+  personId: integer('person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
+  status: personTreeLinkStatusEnum('status').notNull().default('pending'),
+  requestedBy: text('requested_by').notNull().references(() => profiles.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at').defaultNow(),
+  decidedAt: timestamp('decided_at'),
+}, (table) => ({
+  personTreesPersonTreeUidx: uniqueIndex('person_trees_person_tree_uidx').on(table.personId, table.treeId),
+}));

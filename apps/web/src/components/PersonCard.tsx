@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Cake, Edit2, Flower2, Trash2, GitBranch, MapPin } from 'lucide-react';
+import { Cake, Edit2, Flower2, Trash2, GitBranch, MapPin, Link2Off, Share2 } from 'lucide-react';
 import type { Person, RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonForm } from './PersonForm';
 import { RelationshipForm } from './RelationshipForm';
@@ -10,6 +10,7 @@ import { ConfirmDialog } from './ui/confirm-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
+import { usePersonLink, useUnlinkPersonTree } from '../hooks/usePersonLinks';
 import { useTree } from '../contexts/TreeContext';
 import { formatPartialDate } from '../lib/formatPartialDate';
 
@@ -34,6 +35,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const [relOpen, setRelOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [relToDelete, setRelToDelete] = useState<{ id: number; name: string } | null>(null);
+  const [unlinkOpen, setUnlinkOpen] = useState(false);
   const { currentTreeId } = useTree();
   const deletePerson = useDeletePerson(currentTreeId);
   const updatePerson = useUpdatePerson(currentTreeId);
@@ -41,6 +43,10 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const deleteRel = useDeleteRelationship(currentTreeId);
   const { data: allPersons = [] } = usePersons(currentTreeId);
   const { data: relationships = [] } = useRelationshipsForPerson(person.id, currentTreeId);
+
+  const isLinked = currentTreeId != null && person.treeId !== currentTreeId;
+  const { data: link } = usePersonLink(currentTreeId, person.id, isLinked);
+  const unlinkPersonTree = useUnlinkPersonTree();
 
   const handleDelete = () => {
     deletePerson.mutate(person.id);
@@ -82,6 +88,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               )}
               {person.gender === 'female' && (
                 <span className="flex-shrink-0 text-sm leading-none text-rose-400" aria-label={t('person.genders.female')}>♀</span>
+              )}
+              {isLinked && (
+                <Share2
+                  className="h-3.5 w-3.5 flex-shrink-0 text-(--text-muted)"
+                  aria-label={t('tree.sharedBadge')}
+                  data-testid="shared-person-badge"
+                />
               )}
             </p>
 
@@ -164,15 +177,17 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                 isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100',
               ].join(' ')}
             >
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
-                className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
-                aria-label={t('person.editAria', { name: person.name })}
-                data-testid="edit-person-button"
-              >
-                <Edit2 className="h-3.5 w-3.5" />
-              </button>
+              {!isLinked && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setEditOpen(true); }}
+                  className="btn-ghost p-1 text-(--text-muted) hover:text-(--gold)"
+                  aria-label={t('person.editAria', { name: person.name })}
+                  data-testid="edit-person-button"
+                >
+                  <Edit2 className="h-3.5 w-3.5" />
+                </button>
+              )}
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); setRelOpen(true); }}
@@ -182,15 +197,28 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               >
                 <GitBranch className="h-3.5 w-3.5" />
               </button>
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); setDeleteOpen(true); }}
-                className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
-                aria-label={t('person.deleteAria', { name: person.name })}
-                data-testid="delete-person-button"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </button>
+              {isLinked ? (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setUnlinkOpen(true); }}
+                  className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
+                  aria-label={t('tree.unlinkAria', { name: person.name })}
+                  data-testid="unlink-person-button"
+                  disabled={!link}
+                >
+                  <Link2Off className="h-3.5 w-3.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setDeleteOpen(true); }}
+                  className="btn-ghost p-1 text-(--text-muted) hover:text-red-400 ml-auto"
+                  aria-label={t('person.deleteAria', { name: person.name })}
+                  data-testid="delete-person-button"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -255,6 +283,17 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         cancelLabel={t('relationship.cancel')}
         onConfirm={() => { if (relToDelete) deleteRel.mutate(relToDelete.id); }}
         isLoading={deleteRel.isPending}
+      />
+
+      <ConfirmDialog
+        open={unlinkOpen}
+        onOpenChange={setUnlinkOpen}
+        title={t('tree.unlinkConfirmTitle', { name: person.name })}
+        description={t('tree.unlinkConfirmWarning')}
+        confirmLabel={t('tree.unlinkButton')}
+        cancelLabel={t('person.cancel')}
+        onConfirm={() => { if (link) unlinkPersonTree.mutate(link.id); if (isSelected) onSelect(null); }}
+        isLoading={unlinkPersonTree.isPending}
       />
     </>
   );

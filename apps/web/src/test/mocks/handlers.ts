@@ -14,4 +14,6 @@ export const handlers = [
     )),
   http.post('/api/trees/:treeId/members', () =>
     HttpResponse.json({ id: 1, treeId: 1, userId: 'user-2', role: 'viewer', createdAt: '' }, { status: 201 })),
+  http.get('/api/trees/trash', () => HttpResponse.json([])),
+  http.get('/api/person-links/pending', () => HttpResponse.json([])),
 ];

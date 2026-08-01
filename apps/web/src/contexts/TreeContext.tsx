@@ -31,10 +31,19 @@ export function TreeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (trees.length === 0) return;
     if (currentTreeId != null && trees.some((tree) => tree.id === currentTreeId)) return;
+
+    // Primary tree always wins as the initial pick for a fresh session. Once
+    // the user switches trees mid-session, localStorage tracks that choice
+    // for the rest of the session, but the *next* sign-in resets to primary.
+    const primary = trees.find((tree) => tree.id === user?.primaryTreeId);
+    if (primary) {
+      setCurrentTreeIdState(primary.id);
+      return;
+    }
     const stored = Number(localStorage.getItem(STORAGE_KEY));
     const remembered = trees.find((tree) => tree.id === stored);
     setCurrentTreeIdState(remembered ? remembered.id : trees[0].id);
-  }, [trees, currentTreeId]);
+  }, [trees, currentTreeId, user?.primaryTreeId]);
 
   const setCurrentTreeId = (id: number) => {
     setCurrentTreeIdState(id);

@@ -10,6 +10,12 @@ const mockTreesService = {
   addMember: jest.fn(),
   getTree: jest.fn(),
   getMemberRole: jest.fn(),
+  deleteTree: jest.fn(),
+  restoreTree: jest.fn(),
+  purgeTree: jest.fn(),
+  getTrash: jest.fn(),
+  requestPersonLink: jest.fn(),
+  getLinkForPerson: jest.fn(),
 };
 
 describe('TreesController', () => {
@@ -67,5 +73,43 @@ describe('TreesController', () => {
     const result = await controller.addMember(5, body);
     expect(mockTreesService.addMember).toHaveBeenCalledWith(5, body);
     expect(result).toMatchObject({ userId: 'user-2', role: 'editor' });
+  });
+
+  it('deleteTree delegates to the service with the caller id', async () => {
+    const mockReq = { user: { id: 'user-1' } } as any;
+    mockTreesService.deleteTree.mockResolvedValue({ id: 5, deletedAt: '2024-06-01T00:00:00.000Z' });
+    const result = await controller.deleteTree(5, mockReq);
+    expect(mockTreesService.deleteTree).toHaveBeenCalledWith(5, 'user-1');
+    expect(result).toMatchObject({ deletedAt: '2024-06-01T00:00:00.000Z' });
+  });
+
+  it('restoreTree delegates to the service with the caller id', async () => {
+    const mockReq = { user: { id: 'user-1' } } as any;
+    mockTreesService.restoreTree.mockResolvedValue({ id: 5, deletedAt: null });
+    await controller.restoreTree(5, mockReq);
+    expect(mockTreesService.restoreTree).toHaveBeenCalledWith(5, 'user-1');
+  });
+
+  it('purgeTree delegates to the service with the caller id', async () => {
+    const mockReq = { user: { id: 'user-1' } } as any;
+    mockTreesService.purgeTree.mockResolvedValue({ deleted: true });
+    const result = await controller.purgeTree(5, mockReq);
+    expect(mockTreesService.purgeTree).toHaveBeenCalledWith(5, 'user-1');
+    expect(result).toEqual({ deleted: true });
+  });
+
+  it('listTrash delegates to the service with the caller id', async () => {
+    const mockReq = { user: { id: 'user-1' } } as any;
+    mockTreesService.getTrash.mockResolvedValue([]);
+    await controller.listTrash(mockReq);
+    expect(mockTreesService.getTrash).toHaveBeenCalledWith('user-1');
+  });
+
+  it('requestPersonLink delegates to the service scoped to the destination tree', async () => {
+    const mockReq = { user: { id: 'user-1' } } as any;
+    const body = { personId: 5 } as any;
+    mockTreesService.requestPersonLink.mockResolvedValue({ id: 10, personId: 5, treeId: 3, status: 'pending' });
+    await controller.requestPersonLink(3, body, mockReq);
+    expect(mockTreesService.requestPersonLink).toHaveBeenCalledWith(3, { personId: 5, treeId: 3 }, 'user-1');
   });
 });

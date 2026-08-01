@@ -4,6 +4,8 @@ import { useTree } from '../contexts/TreeContext';
 import { CreateTreeDialog } from './CreateTreeDialog';
 import { EditTreeDialog } from './EditTreeDialog';
 import { InviteMemberDialog } from './InviteMemberDialog';
+import { TrashDialog } from './TrashDialog';
+import { LinkPersonDialog } from './LinkPersonDialog';
 
 export function TreeSwitcher() {
   const { t } = useTranslation();
@@ -31,6 +33,8 @@ export function TreeSwitcher() {
       <CreateTreeDialog />
       {currentTree && <EditTreeDialog tree={currentTree} />}
       {currentTree && <InviteMemberDialog tree={currentTree} />}
+      {currentTree && <LinkPersonDialog tree={currentTree} />}
+      <TrashDialog />
     </div>
   );
 }

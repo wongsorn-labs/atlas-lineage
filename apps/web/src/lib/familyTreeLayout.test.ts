@@ -47,16 +47,19 @@ describe('computeFamilyTreeLayout', () => {
     expect(nodes.find((n) => n.person.id === 2)!.generation).toBe(1);
   });
 
-  it('keeps partners on the same generation and adjacent', () => {
+  it('merges a single partner pair into one fused card instead of a connector line', () => {
     const persons = [makePerson(1, 'A'), makePerson(2, 'B')];
     const relationships = [rel(1, 2, 'spouse')];
-    const { nodes, partnerLinks } = computeFamilyTreeLayout(persons, relationships);
+    const { nodes, partnerLinks, mergedPairs } = computeFamilyTreeLayout(persons, relationships);
 
     const a = nodes.find((n) => n.person.id === 1)!;
     const b = nodes.find((n) => n.person.id === 2)!;
     expect(a.generation).toBe(b.generation);
-    expect(Math.abs(a.x - b.x)).toBeGreaterThan(0);
-    expect(partnerLinks).toHaveLength(1);
+    expect(a.x).toBe(b.x);
+    expect(partnerLinks).toHaveLength(0);
+    expect(mergedPairs).toHaveLength(1);
+    expect(mergedPairs[0].a.person.id).toBe(1);
+    expect(mergedPairs[0].b.person.id).toBe(2);
   });
 
   it('pulls a spouse who married in (no recorded parents) onto their partner\'s generation', () => {
@@ -83,6 +86,43 @@ describe('computeFamilyTreeLayout', () => {
     expect(parentGroupLinks).toHaveLength(1);
     expect(parentGroupLinks[0].parents.map((n) => n.person.id).sort()).toEqual([1, 2]);
     expect(parentGroupLinks[0].children.map((n) => n.person.id).sort()).toEqual([3, 4]);
+  });
+
+  it('only merges the first recorded partner relationship; a second partner falls back to a connector', () => {
+    const persons = [makePerson(1, 'A'), makePerson(2, 'B'), makePerson(3, 'C')];
+    const relationships = [rel(1, 2, 'spouse'), rel(1, 3, 'partner')];
+    const { mergedPairs, partnerLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(mergedPairs).toHaveLength(1);
+    expect([mergedPairs[0].a.person.id, mergedPairs[0].b.person.id].sort()).toEqual([1, 2]);
+    expect(partnerLinks).toHaveLength(1);
+    expect([partnerLinks[0].a.person.id, partnerLinks[0].b.person.id].sort()).toEqual([1, 3]);
+  });
+
+  it('does not merge a pair when each side\'s lowest-id partner relationship points elsewhere', () => {
+    // B's lowest-id partner is C (rel id 1), not A — so A-B (rel id 2) can't merge either.
+    const persons = [makePerson(1, 'A'), makePerson(2, 'B'), makePerson(3, 'C')];
+    const relationships = [rel(2, 3, 'spouse'), rel(1, 2, 'spouse')];
+    const { mergedPairs, partnerLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(mergedPairs).toHaveLength(1);
+    expect([mergedPairs[0].a.person.id, mergedPairs[0].b.person.id].sort()).toEqual([2, 3]);
+    expect(partnerLinks.some((l) => [l.a.person.id, l.b.person.id].sort().join(',') === '1,2')).toBe(true);
+  });
+
+  it('anchors a parent-to-children drop line at the merged couple\'s fused center, not either partner\'s own x', () => {
+    const persons = [makePerson(1, 'Mom'), makePerson(2, 'Dad'), makePerson(3, 'Kid')];
+    const relationships = [rel(1, 2, 'spouse'), rel(1, 3, 'parent'), rel(2, 3, 'parent')];
+    const { mergedPairs, parentGroupLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(mergedPairs).toHaveLength(1);
+    expect(parentGroupLinks).toHaveLength(1);
+    expect(parentGroupLinks[0].parents.map((n) => n.person.id).sort()).toEqual([1, 2]);
+    // Both merged parents share one x — the group link's own rendering (FamilyChart)
+    // is responsible for widening to the fused center; here we just confirm the
+    // layout gives both parents the identical x a fused card needs.
+    const [mom, dad] = parentGroupLinks[0].parents;
+    expect(mom.x).toBe(dad.x);
   });
 
   it('does not infinite-loop on a cyclical (invalid) parent relationship', () => {

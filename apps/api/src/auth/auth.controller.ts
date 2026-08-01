@@ -101,6 +101,9 @@ export class AuthController {
     if (!token) throw new UnauthorizedException();
     const user = await this.authService.getUser(token);
     if (!user) throw new UnauthorizedException();
-    return this.authService.updateProfileSettings(user.id, body.defaultCountry);
+    return this.authService.updateProfileSettings(user.id, {
+      defaultCountry: body.defaultCountry,
+      primaryTreeId: body.primaryTreeId,
+    });
   }
 }

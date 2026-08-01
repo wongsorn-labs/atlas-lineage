@@ -66,11 +66,13 @@ export interface UserProfile {
   displayName: string | null;
   avatarUrl: string | null;
   defaultCountry: string | null;
+  primaryTreeId: number | null;
   createdAt: string;
 }
 
 export interface UpdateProfileSettingsInput {
-  defaultCountry: string | null;
+  defaultCountry?: string | null;
+  primaryTreeId?: number | null;
 }
 
 export interface FamilyTree {
@@ -78,6 +80,7 @@ export interface FamilyTree {
   name: string;
   description: string | null;
   ownerId: string | null;
+  deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -104,4 +107,21 @@ export type UpdateTreeInput = Partial<CreateTreeInput>;
 export interface AddTreeMemberInput {
   userId: string;
   role: TreeRole;
+}
+
+export type PersonTreeLinkStatus = 'pending' | 'approved';
+
+export interface PersonTreeLink {
+  id: number;
+  personId: number;
+  treeId: number;
+  status: PersonTreeLinkStatus;
+  requestedBy: string;
+  createdAt: string;
+  decidedAt: string | null;
+}
+
+export interface RequestPersonLinkInput {
+  personId: number;
+  treeId: number;
 }

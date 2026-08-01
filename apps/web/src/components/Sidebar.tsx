@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTree } from '../contexts/TreeContext';
 import { TreeSwitcher } from './TreeSwitcher';
 import { SettingsDialog } from './SettingsDialog';
+import { PendingLinkRequestsDialog } from './PendingLinkRequestsDialog';
 
 interface SidebarProps {
   persons: Person[];
@@ -182,6 +183,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
           >
             <LogOut className="h-4 w-4" />
           </button>
+          <PendingLinkRequestsDialog />
           <SettingsDialog />
         </div>
       </div>
