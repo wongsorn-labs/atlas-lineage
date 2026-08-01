@@ -1,4 +1,4 @@
-import { eq, and, isNull } from 'drizzle-orm';
+import { eq, and, isNull, isNotNull } from 'drizzle-orm';
 import { db } from '../client';
 import { familyTrees, treeMembers, profiles } from '../schema';
 import type { FamilyTree, FamilyTreeMembership, TreeMember, TreeRole, CreateTreeInput, UpdateTreeInput, AddTreeMemberInput, UserProfile } from '@wongsorn-labs/atlas-lineage-shared';
@@ -10,6 +10,7 @@ function mapProfile(row: typeof profiles.$inferSelect): UserProfile {
     displayName: row.displayName ?? null,
     avatarUrl: row.avatarUrl ?? null,
     defaultCountry: row.defaultCountry ?? null,
+    primaryTreeId: row.primaryTreeId ?? null,
     createdAt: row.createdAt?.toISOString() ?? '',
   };
 }
@@ -20,6 +21,7 @@ function mapTree(row: typeof familyTrees.$inferSelect): FamilyTree {
     name: row.name,
     description: row.description ?? null,
     ownerId: row.ownerId ?? null,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
     createdAt: row.createdAt?.toISOString() ?? '',
     updatedAt: row.updatedAt?.toISOString() ?? '',
   };
@@ -40,12 +42,16 @@ export async function findTreesByUser(userId: string): Promise<FamilyTreeMembers
     .select({ tree: familyTrees, role: treeMembers.role })
     .from(treeMembers)
     .innerJoin(familyTrees, eq(treeMembers.treeId, familyTrees.id))
-    .where(eq(treeMembers.userId, userId));
+    .where(and(eq(treeMembers.userId, userId), isNull(familyTrees.deletedAt)));
   return rows.map((r) => ({ ...mapTree(r.tree), role: r.role as TreeRole }));
 }
 
 export async function findTreeById(treeId: number): Promise<FamilyTree | null> {
-  const [row] = await db.select().from(familyTrees).where(eq(familyTrees.id, treeId)).limit(1);
+  const [row] = await db
+    .select()
+    .from(familyTrees)
+    .where(and(eq(familyTrees.id, treeId), isNull(familyTrees.deletedAt)))
+    .limit(1);
   return row ? mapTree(row) : null;
 }
 
@@ -69,9 +75,10 @@ export async function updateTree(treeId: number, input: UpdateTreeInput): Promis
 
 export async function findMemberRole(treeId: number, userId: string): Promise<TreeRole | null> {
   const [row] = await db
-    .select()
+    .select({ role: treeMembers.role })
     .from(treeMembers)
-    .where(and(eq(treeMembers.treeId, treeId), eq(treeMembers.userId, userId)))
+    .innerJoin(familyTrees, eq(treeMembers.treeId, familyTrees.id))
+    .where(and(eq(treeMembers.treeId, treeId), eq(treeMembers.userId, userId), isNull(familyTrees.deletedAt)))
     .limit(1);
   return row ? (row.role as TreeRole) : null;
 }
@@ -112,13 +119,74 @@ export async function updateProfileSettings(id: string, defaultCountry: string |
   return mapProfile(row);
 }
 
-export async function claimDefaultTree(userId: string): Promise<void> {
-  await db
+/** Creates a personal tree and sets it primary for a user with zero tree memberships. No-op otherwise. */
+export async function createPersonalTreeIfNeeded(userId: string): Promise<void> {
+  const [existingMembership] = await db
+    .select({ id: treeMembers.id })
+    .from(treeMembers)
+    .where(eq(treeMembers.userId, userId))
+    .limit(1);
+  if (existingMembership) return;
+
+  const [tree] = await db
+    .insert(familyTrees)
+    .values({ name: 'My Family Tree', ownerId: userId })
+    .returning();
+  await db.insert(treeMembers).values({ treeId: tree.id, userId, role: 'owner' });
+  await db.update(profiles).set({ primaryTreeId: tree.id }).where(eq(profiles.id, userId));
+}
+
+/** Validates `treeId` is null or a tree the user is a (non-deleted) member of, then sets it primary. */
+export async function setPrimaryTree(userId: string, treeId: number | null): Promise<UserProfile | null> {
+  if (treeId !== null) {
+    const role = await findMemberRole(treeId, userId);
+    if (!role) return null;
+  }
+  const [row] = await db
+    .update(profiles)
+    .set({ primaryTreeId: treeId })
+    .where(eq(profiles.id, userId))
+    .returning();
+  return row ? mapProfile(row) : null;
+}
+
+/** Soft-deletes a tree (owner-checked by the caller) and clears it as primary for every member who had it set. */
+export async function softDeleteTree(treeId: number, callerId: string): Promise<FamilyTree | null> {
+  const role = await findMemberRole(treeId, callerId);
+  if (role !== 'owner') return null;
+
+  const [row] = await db
     .update(familyTrees)
-    .set({ ownerId: userId })
-    .where(and(eq(familyTrees.id, 1), isNull(familyTrees.ownerId)));
-  await db
-    .insert(treeMembers)
-    .values({ treeId: 1, userId, role: 'owner' })
-    .onConflictDoNothing();
+    .set({ deletedAt: new Date() })
+    .where(and(eq(familyTrees.id, treeId), isNull(familyTrees.deletedAt)))
+    .returning();
+  if (!row) return null;
+
+  await db.update(profiles).set({ primaryTreeId: null }).where(eq(profiles.primaryTreeId, treeId));
+  return mapTree(row);
+}
+
+export async function restoreTree(treeId: number, callerId: string): Promise<FamilyTree | null> {
+  const [row] = await db
+    .update(familyTrees)
+    .set({ deletedAt: null })
+    .where(and(eq(familyTrees.id, treeId), eq(familyTrees.ownerId, callerId), isNotNull(familyTrees.deletedAt)))
+    .returning();
+  return row ? mapTree(row) : null;
+}
+
+export async function purgeTree(treeId: number, callerId: string): Promise<boolean> {
+  const [row] = await db
+    .delete(familyTrees)
+    .where(and(eq(familyTrees.id, treeId), eq(familyTrees.ownerId, callerId), isNotNull(familyTrees.deletedAt)))
+    .returning();
+  return !!row;
+}
+
+export async function findTrashedTreesByOwner(ownerId: string): Promise<FamilyTree[]> {
+  const rows = await db
+    .select()
+    .from(familyTrees)
+    .where(and(eq(familyTrees.ownerId, ownerId), isNotNull(familyTrees.deletedAt)));
+  return rows.map(mapTree);
 }

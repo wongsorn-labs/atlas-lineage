@@ -1,7 +1,8 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray, or } from 'drizzle-orm';
 import { db } from '../client';
 import { persons } from '../schema';
 import { encryptField, decryptField } from '../crypto';
+import { findApprovedLinkedPersonIds } from './person-links';
 import type { Person, CreatePersonInput, UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 function getKey(): string {
@@ -35,17 +36,25 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
 }
 
 export async function findAllPersons(treeId: number): Promise<Person[]> {
-  const rows = await db.select().from(persons).where(eq(persons.treeId, treeId));
+  const linkedIds = await findApprovedLinkedPersonIds(treeId);
+  const rows = await db
+    .select()
+    .from(persons)
+    .where(
+      linkedIds.length > 0
+        ? or(eq(persons.treeId, treeId), inArray(persons.id, linkedIds))
+        : eq(persons.treeId, treeId),
+    );
   return rows.map(mapPerson);
 }
 
 export async function findPersonById(id: number, treeId: number): Promise<Person | null> {
-  const [row] = await db
-    .select()
-    .from(persons)
-    .where(and(eq(persons.id, id), eq(persons.treeId, treeId)))
-    .limit(1);
-  return row ? mapPerson(row) : null;
+  const [row] = await db.select().from(persons).where(eq(persons.id, id)).limit(1);
+  if (!row) return null;
+  if (row.treeId === treeId) return mapPerson(row);
+
+  const linkedIds = await findApprovedLinkedPersonIds(treeId);
+  return linkedIds.includes(id) ? mapPerson(row) : null;
 }
 
 export async function createPerson(input: CreatePersonInput): Promise<Person> {

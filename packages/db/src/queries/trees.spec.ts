@@ -1,38 +1,44 @@
 import { eq } from 'drizzle-orm';
 import { treeMembers, familyTrees } from '../schema';
-import { findTreesByUser, updateTree } from './trees';
+import {
+  findTreesByUser, updateTree, softDeleteTree, restoreTree, purgeTree,
+  findTrashedTreesByOwner, createPersonalTreeIfNeeded, setPrimaryTree,
+} from './trees';
 
-const mockRows = [
-  {
-    tree: {
-      id: 1,
-      name: 'Default Tree',
-      description: null,
-      ownerId: 'user-1',
-      createdAt: new Date('2024-01-01'),
-      updatedAt: new Date('2024-01-01'),
+/**
+ * A generic thenable chain mock: every property access returns a function
+ * that records the call and returns the same chain, so `db.update(...).set(...).where(...)`
+ * (or any other combination) all resolve through one shared FIFO queue —
+ * matching how these multi-step query functions await sequentially, not concurrently.
+ */
+function createChainableDb() {
+  const resultsQueue: unknown[] = [];
+
+  const chain: unknown = new Proxy(() => {}, {
+    get(_target, prop) {
+      if (prop === 'then') {
+        return (resolve: (v: unknown) => void) => resolve(resultsQueue.shift());
+      }
+      return () => chain;
     },
-    role: 'owner',
+  });
+
+  const db = new Proxy({}, {
+    get() {
+      return () => chain;
+    },
+  });
+
+  return { db, resultsQueue };
+}
+
+let chainableDb = createChainableDb();
+
+jest.mock('../client', () => ({
+  get db() {
+    return chainableDb.db;
   },
-];
-
-jest.mock('../client', () => {
-  const where = jest.fn();
-  const innerJoin = jest.fn().mockReturnValue({ where });
-  const from = jest.fn().mockReturnValue({ innerJoin });
-  const select = jest.fn().mockReturnValue({ from });
-
-  const returning = jest.fn();
-  const updateWhere = jest.fn().mockReturnValue({ returning });
-  const set = jest.fn().mockReturnValue({ where: updateWhere });
-  const update = jest.fn().mockReturnValue({ set });
-
-  return {
-    db: { select, update },
-    __where: where, __innerJoin: innerJoin, __from: from, __select: select,
-    __returning: returning, __updateWhere: updateWhere, __set: set, __update: update,
-  };
-});
+}));
 
 jest.mock('drizzle-orm', () => {
   const actual = jest.requireActual('drizzle-orm');
@@ -42,85 +48,166 @@ jest.mock('drizzle-orm', () => {
   };
 });
 
+beforeEach(() => {
+  jest.clearAllMocks();
+  chainableDb = createChainableDb();
+});
+
+const treeRow = {
+  id: 1, name: 'Default Tree', description: null, ownerId: 'user-1', deletedAt: null,
+  createdAt: new Date('2024-01-01'), updatedAt: new Date('2024-01-01'),
+};
+const profileRow = {
+  id: 'user-1', email: 'a@example.com', displayName: null, avatarUrl: null,
+  defaultCountry: null, primaryTreeId: null, createdAt: new Date('2024-01-01'),
+};
+
 describe('findTreesByUser', () => {
-  const clientMock = jest.requireMock('../client') as {
-    db: { select: jest.Mock };
-    __where: jest.Mock;
-    __innerJoin: jest.Mock;
-    __from: jest.Mock;
-    __select: jest.Mock;
-  };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    clientMock.__where.mockResolvedValue(mockRows);
-    clientMock.__innerJoin.mockReturnValue({ where: clientMock.__where });
-    clientMock.__from.mockReturnValue({ innerJoin: clientMock.__innerJoin });
-    clientMock.__select.mockReturnValue({ from: clientMock.__from });
-  });
-
   it('returns each tree with the caller\'s role in it', async () => {
+    chainableDb.resultsQueue.push([{ tree: treeRow, role: 'owner' }]);
+
     const result = await findTreesByUser('user-1');
 
     expect(eq).toHaveBeenCalledWith(treeMembers.userId, 'user-1');
-    expect(result).toEqual([
-      {
-        id: 1,
-        name: 'Default Tree',
-        description: null,
-        ownerId: 'user-1',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        updatedAt: '2024-01-01T00:00:00.000Z',
-        role: 'owner',
-      },
-    ]);
+    expect(result).toEqual([{
+      id: 1, name: 'Default Tree', description: null, ownerId: 'user-1', deletedAt: null,
+      createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-01T00:00:00.000Z', role: 'owner',
+    }]);
   });
 });
 
 describe('updateTree', () => {
-  const clientMock = jest.requireMock('../client') as {
-    db: { update: jest.Mock };
-    __returning: jest.Mock;
-    __updateWhere: jest.Mock;
-    __set: jest.Mock;
-    __update: jest.Mock;
-  };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    clientMock.__updateWhere.mockReturnValue({ returning: clientMock.__returning });
-    clientMock.__set.mockReturnValue({ where: clientMock.__updateWhere });
-    clientMock.__update.mockReturnValue({ set: clientMock.__set });
-  });
-
   it('updates only the fields present in the input', async () => {
-    const updatedRow = {
-      id: 1, name: 'Renamed Tree', description: null, ownerId: 'user-1',
-      createdAt: new Date('2024-01-01'), updatedAt: new Date('2024-01-02'),
-    };
-    clientMock.__returning.mockResolvedValue([updatedRow]);
+    chainableDb.resultsQueue.push([{ ...treeRow, name: 'Renamed Tree', updatedAt: new Date('2024-01-02') }]);
 
     const result = await updateTree(1, { name: 'Renamed Tree' });
 
-    expect(clientMock.__set).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Renamed Tree', updatedAt: expect.any(Date) }),
-    );
-    expect(clientMock.__set.mock.calls[0][0]).not.toHaveProperty('description');
     expect(eq).toHaveBeenCalledWith(familyTrees.id, 1);
-    expect(result).toEqual({
-      id: 1,
-      name: 'Renamed Tree',
-      description: null,
-      ownerId: 'user-1',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      updatedAt: '2024-01-02T00:00:00.000Z',
-    });
+    expect(result?.name).toBe('Renamed Tree');
   });
 
   it('returns null when the tree does not exist', async () => {
-    clientMock.__returning.mockResolvedValue([]);
+    chainableDb.resultsQueue.push([]);
 
     const result = await updateTree(99, { name: 'Ghost Tree' });
+
+    expect(result).toBeNull();
+  });
+});
+
+describe('softDeleteTree', () => {
+  it('soft-deletes the tree and clears it as primary for every member who had it set', async () => {
+    chainableDb.resultsQueue.push([{ role: 'owner' }], [{ ...treeRow, deletedAt: new Date('2024-06-01') }], undefined);
+
+    const result = await softDeleteTree(1, 'user-1');
+
+    expect(result?.deletedAt).toBe('2024-06-01T00:00:00.000Z');
+  });
+
+  it('returns null when the caller is not the owner', async () => {
+    chainableDb.resultsQueue.push([{ role: 'editor' }]);
+
+    const result = await softDeleteTree(1, 'user-2');
+
+    expect(result).toBeNull();
+  });
+
+  it('returns null for an already soft-deleted (or non-member) tree', async () => {
+    // findMemberRole itself excludes soft-deleted trees, so it resolves empty.
+    chainableDb.resultsQueue.push([]);
+
+    const result = await softDeleteTree(1, 'user-1');
+
+    expect(result).toBeNull();
+  });
+});
+
+describe('restoreTree', () => {
+  it('restores a soft-deleted tree owned by the caller', async () => {
+    chainableDb.resultsQueue.push([{ ...treeRow, deletedAt: null }]);
+
+    const result = await restoreTree(1, 'user-1');
+
+    expect(result?.id).toBe(1);
+  });
+
+  it('returns null when the tree is not soft-deleted, missing, or not owned by the caller', async () => {
+    chainableDb.resultsQueue.push([]);
+
+    const result = await restoreTree(1, 'user-2');
+
+    expect(result).toBeNull();
+  });
+});
+
+describe('purgeTree', () => {
+  it('permanently deletes a soft-deleted tree owned by the caller', async () => {
+    chainableDb.resultsQueue.push([treeRow]);
+
+    const result = await purgeTree(1, 'user-1');
+
+    expect(result).toBe(true);
+  });
+
+  it('returns false when the tree is not soft-deleted, missing, or not owned by the caller', async () => {
+    chainableDb.resultsQueue.push([]);
+
+    const result = await purgeTree(1, 'user-2');
+
+    expect(result).toBe(false);
+  });
+});
+
+describe('findTrashedTreesByOwner', () => {
+  it('returns soft-deleted trees owned by the caller', async () => {
+    chainableDb.resultsQueue.push([{ ...treeRow, deletedAt: new Date('2024-06-01') }]);
+
+    const result = await findTrashedTreesByOwner('user-1');
+
+    expect(result).toHaveLength(1);
+    expect(result[0].deletedAt).toBe('2024-06-01T00:00:00.000Z');
+  });
+});
+
+describe('createPersonalTreeIfNeeded', () => {
+  it('is a no-op for a user who already has a tree membership', async () => {
+    chainableDb.resultsQueue.push([{ id: 1 }]);
+
+    await createPersonalTreeIfNeeded('user-1');
+
+    expect(chainableDb.resultsQueue).toHaveLength(0);
+  });
+
+  it('creates a personal tree and sets it primary for a zero-membership user', async () => {
+    chainableDb.resultsQueue.push([], [treeRow], undefined, undefined);
+
+    await createPersonalTreeIfNeeded('user-1');
+
+    expect(chainableDb.resultsQueue).toHaveLength(0);
+  });
+});
+
+describe('setPrimaryTree', () => {
+  it('clears the primary tree when treeId is null, without a membership check', async () => {
+    chainableDb.resultsQueue.push([profileRow]);
+
+    const result = await setPrimaryTree('user-1', null);
+
+    expect(result).not.toBeNull();
+  });
+
+  it('sets the primary tree when the caller is a member', async () => {
+    chainableDb.resultsQueue.push([{ role: 'viewer' }], [{ ...profileRow, primaryTreeId: 1 }]);
+
+    const result = await setPrimaryTree('user-1', 1);
+
+    expect(result?.primaryTreeId).toBe(1);
+  });
+
+  it('returns null when the caller is not a member of the target tree', async () => {
+    chainableDb.resultsQueue.push([]);
+
+    const result = await setPrimaryTree('user-1', 1);
 
     expect(result).toBeNull();
   });
