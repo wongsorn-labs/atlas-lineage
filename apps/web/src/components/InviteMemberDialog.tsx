@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import { UserPlus } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import { addTreeMemberSchema } from '@wongsorn-labs/atlas-lineage-shared';
 import type { z } from 'zod';
 import type { FamilyTreeMembership, TreeRole } from '@wongsorn-labs/atlas-lineage-shared';
@@ -49,7 +49,7 @@ export function InviteMemberDialog({ tree }: InviteMemberDialogProps) {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.inviteTitle')} data-testid="invite-member-button" />}
       >
-        <UserPlus className="h-4 w-4" />
+        <Share2 className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -7,6 +7,7 @@ import type {
   FamilyTree,
   FamilyTreeMembership,
   CreateTreeInput,
+  UpdateTreeInput,
   AddTreeMemberInput,
   TreeMember,
 } from '@wongsorn-labs/atlas-lineage-shared';
@@ -85,6 +86,8 @@ export const api = {
     list: () => request<FamilyTreeMembership[]>('/trees'),
     create: (data: CreateTreeInput) =>
       request<FamilyTree>('/trees', { method: 'POST', body: JSON.stringify(data) }),
+    update: (treeId: number, data: UpdateTreeInput) =>
+      request<FamilyTree>(`/trees/${treeId}`, { method: 'PATCH', body: JSON.stringify(data) }),
     addMember: (treeId: number, data: AddTreeMemberInput) =>
       request<TreeMember>(`/trees/${treeId}/members`, { method: 'POST', body: JSON.stringify(data) }),
   },

@@ -1,10 +1,11 @@
 import {
-  Controller, Get, Post, Body, Param, ParseIntPipe, UseGuards, Req,
+  Controller, Get, Post, Patch, Body, Param, ParseIntPipe, UseGuards, Req,
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { TreesService } from './trees.service';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { TreeMemberGuard, RequireRoles } from './tree-member.guard';
+import { UpdateTreeDto } from './dto/update-tree.dto';
 import type { CreateTreeInput, AddTreeMemberInput } from '@wongsorn-labs/atlas-lineage-shared';
 
 @Controller('trees')
@@ -23,6 +24,16 @@ export class TreesController {
     @Req() req: Request & { user: { id: string } },
   ) {
     return this.treesService.createTree(body, req.user.id);
+  }
+
+  @Patch(':treeId')
+  @UseGuards(TreeMemberGuard)
+  @RequireRoles('owner')
+  updateTree(
+    @Param('treeId', ParseIntPipe) treeId: number,
+    @Body() body: UpdateTreeDto,
+  ) {
+    return this.treesService.updateTree(treeId, body);
   }
 
   @Post(':treeId/members')

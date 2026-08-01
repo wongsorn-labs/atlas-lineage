@@ -6,6 +6,7 @@ import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 const mockTreesService = {
   getTreesForUser: jest.fn(),
   createTree: jest.fn(),
+  updateTree: jest.fn(),
   addMember: jest.fn(),
   getTree: jest.fn(),
   getMemberRole: jest.fn(),
@@ -46,6 +47,18 @@ describe('TreesController', () => {
     const mockReq = { user: { id: 'user-1' } } as any;
     const result = await controller.listTrees(mockReq);
     expect(result).toEqual([tree]);
+  });
+
+  it('updateTree delegates to the service', async () => {
+    const body = { name: 'Renamed Tree' } as any;
+    const updated = {
+      id: 5, name: 'Renamed Tree', description: null, ownerId: 'user-1',
+      createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-02T00:00:00.000Z',
+    };
+    mockTreesService.updateTree.mockResolvedValue(updated);
+    const result = await controller.updateTree(5, body);
+    expect(mockTreesService.updateTree).toHaveBeenCalledWith(5, body);
+    expect(result).toEqual(updated);
   });
 
   it('addMember delegates to the service', async () => {
