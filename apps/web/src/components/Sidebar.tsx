@@ -188,9 +188,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
             <SettingsDialog />
           </div>
         </div>
-        {__APP_COMMIT__ && (
+        {__APP_VERSION__ && (
           <p className="px-4 pb-2 text-[10px] text-(--text-muted)">
-            {t('sidebar.version', { sha: __APP_COMMIT__ })}
+            {t('sidebar.version', { version: __APP_VERSION__ })}
           </p>
         )}
       </div>

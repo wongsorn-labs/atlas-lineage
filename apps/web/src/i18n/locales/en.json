@@ -27,7 +27,7 @@
     "peopleCount_other": "{{count}} people",
     "filteredFrom": " (filtered from {{count}})",
     "noResults": "No people found",
-    "version": "Version {{sha}}"
+    "version": "Version {{version}}"
   },
   "chart": {
     "mapView": "Map",

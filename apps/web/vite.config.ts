@@ -3,25 +3,13 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { resolve } from 'path';
-import { execSync } from 'child_process';
+import { readFileSync } from 'fs';
 
-// Vercel sets VERCEL_GIT_COMMIT_SHA at build time; fall back to the local
-// git HEAD so the same footer works in dev and self-hosted builds.
-function getCommitSha(): string {
-  const sha = process.env.VERCEL_GIT_COMMIT_SHA
-    ?? (() => {
-      try {
-        return execSync('git rev-parse HEAD').toString().trim();
-      } catch {
-        return '';
-      }
-    })();
-  return sha.slice(0, 7);
-}
+const { version } = JSON.parse(readFileSync(resolve(__dirname, './package.json'), 'utf-8'));
 
 export default defineConfig({
   define: {
-    __APP_COMMIT__: JSON.stringify(getCommitSha()),
+    __APP_VERSION__: JSON.stringify(version),
   },
   plugins: [
     react(),
