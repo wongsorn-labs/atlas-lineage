@@ -80,6 +80,25 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
     if (minPartnerRelId.get(a) === relId && minPartnerRelId.get(b) === relId) mergedPairKeys.add(key);
   }
 
+  // Group children by their exact parent set so full siblings share one
+  // drop line and one centering block, and children with only one recorded
+  // parent still connect/center on that parent alone. Computed up front
+  // (depends only on childToParents) so both the centering pass below and
+  // parentGroupLinks at the end can share one source of truth.
+  const groupKeyToChildren = new Map<string, { parentIds: number[]; children: number[] }>();
+  for (const [childId, parents] of childToParents) {
+    if (!personIds.has(childId)) continue;
+    const parentIds = [...parents].filter((pid) => personIds.has(pid)).sort((a, b) => a - b);
+    if (parentIds.length === 0) continue;
+    const key = parentIds.join(',');
+    if (!groupKeyToChildren.has(key)) groupKeyToChildren.set(key, { parentIds, children: [] });
+    groupKeyToChildren.get(key)!.children.push(childId);
+  }
+  const childGroupKeyById = new Map<number, string>();
+  for (const [key, { children }] of groupKeyToChildren) {
+    for (const childId of children) childGroupKeyById.set(childId, key);
+  }
+
   // Generation = longest chain of recorded parents above a person. Guarded
   // against cycles (shouldn't exist in real data, but relationships are
   // free-form user input) by tracking the current recursion stack.
@@ -187,6 +206,91 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
         cursor += COL_STEP;
       }
     }
+
+    // Center each sibling block under its own parents' midpoint, now that
+    // the parent generation (processed in an earlier iteration of this
+    // same loop, since generations run low-to-high) has its final x. A
+    // sibling group whose member is itself part of a merged partner pair is
+    // left untouched — dragging a married-in spouse along as the group
+    // resizes is more complexity than this pass takes on; that sibling
+    // (and their block) simply keeps its original packed position.
+    const mergeAnchorOf = new Map<number, number>();
+    for (const [a, b] of mergedPairIds) {
+      mergeAnchorOf.set(a, a);
+      mergeAnchorOf.set(b, a);
+    }
+    const centerXOf = (id: number): number => {
+      const anchor = mergeAnchorOf.get(id);
+      if (anchor !== undefined) return xById.get(anchor)! + MERGED_CARD_WIDTH / 2;
+      return xById.get(id)! + CARD_WIDTH / 2;
+    };
+    const widthOf = (id: number): number => (mergeAnchorOf.has(id) ? MERGED_CARD_WIDTH : CARD_WIDTH);
+
+    // If any sibling in a group has their own partner, the whole group is
+    // ineligible for centering (not just that one sibling) — otherwise the
+    // group would split into a centered fragment and an untouched fragment,
+    // scattering siblings who should stay visually together.
+    const ineligibleGroupKeys = new Set<string>();
+    for (const [key, { children }] of groupKeyToChildren) {
+      if (children.some((cid) => mergeAnchorOf.has(cid))) ineligibleGroupKeys.add(key);
+    }
+
+    const idsInRow = ids.slice().sort((a, b) => xById.get(a)! - xById.get(b)!);
+    type Block = { ids: number[]; groupKey?: string };
+    const blocks: Block[] = [];
+    for (let i = 0; i < idsInRow.length; ) {
+      const id = idsInRow[i];
+      const groupKey = childGroupKeyById.get(id);
+      const groupEligible = groupKey !== undefined && !ineligibleGroupKeys.has(groupKey);
+      if (groupEligible) {
+        const runIds = [id];
+        let j = i + 1;
+        while (j < idsInRow.length && childGroupKeyById.get(idsInRow[j]) === groupKey) {
+          runIds.push(idsInRow[j]);
+          j++;
+        }
+        blocks.push({ ids: runIds, groupKey });
+        i = j;
+      } else if (mergeAnchorOf.has(id)) {
+        const anchor = mergeAnchorOf.get(id)!;
+        const partnerEntry = mergedPairIds.find(([a]) => a === anchor);
+        const blockIds = partnerEntry ? [partnerEntry[0], partnerEntry[1]] : [id];
+        blocks.push({ ids: blockIds });
+        i += blockIds.length;
+      } else {
+        blocks.push({ ids: [id] });
+        i += 1;
+      }
+    }
+
+    let prevRightEdge: number | null = null;
+    for (const block of blocks) {
+      const leftMost = Math.min(...block.ids.map((bid) => xById.get(bid)!));
+      const rightMost = Math.max(...block.ids.map((bid) => xById.get(bid)! + widthOf(bid)));
+      const blockWidth = rightMost - leftMost;
+
+      let desiredCenter = (leftMost + rightMost) / 2;
+      if (block.groupKey) {
+        const { parentIds } = groupKeyToChildren.get(block.groupKey)!;
+        const parentCenters = parentIds.map(centerXOf);
+        desiredCenter = parentCenters.reduce((sum, x) => sum + x, 0) / parentCenters.length;
+      }
+
+      const minLeft = prevRightEdge === null ? -Infinity : prevRightEdge + COL_GAP;
+      const newLeft = Math.max(desiredCenter - blockWidth / 2, minLeft);
+      const shift = newLeft - leftMost;
+      if (shift !== 0) {
+        for (const bid of block.ids) xById.set(bid, xById.get(bid)! + shift);
+      }
+      prevRightEdge = newLeft + blockWidth;
+    }
+  }
+
+  // Centering can push a row's leftmost block into negative x; renormalize
+  // the whole layout so nothing sits left of the canvas origin.
+  const minX = xById.size > 0 ? Math.min(...xById.values()) : 0;
+  if (minX < 0) {
+    for (const [id, x] of xById) xById.set(id, x - minX);
   }
 
   const nodes: PersonNode[] = persons.map((p) => ({
@@ -214,18 +318,6 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
       return nodeA.x <= nodeB.x ? { a: nodeA, b: nodeB } : { a: nodeB, b: nodeA };
     })
     .filter((l): l is PartnerLink => l !== null);
-
-  // Group children by their exact parent set so full siblings share one
-  // drop line, and children with only one recorded parent still connect.
-  const groupKeyToChildren = new Map<string, { parentIds: number[]; children: number[] }>();
-  for (const [childId, parents] of childToParents) {
-    if (!personIds.has(childId)) continue;
-    const parentIds = [...parents].filter((pid) => personIds.has(pid)).sort((a, b) => a - b);
-    if (parentIds.length === 0) continue;
-    const key = parentIds.join(',');
-    if (!groupKeyToChildren.has(key)) groupKeyToChildren.set(key, { parentIds, children: [] });
-    groupKeyToChildren.get(key)!.children.push(childId);
-  }
 
   const parentGroupLinks: ParentGroupLink[] = [...groupKeyToChildren.values()]
     .map(({ parentIds, children }) => {
