@@ -203,13 +203,29 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
             {layout.mergedPairs.map((pair) => {
               const aSelected = selectedPerson?.id === pair.a.person.id;
               const bSelected = selectedPerson?.id === pair.b.person.id;
+              const seamX = CARD_WIDTH + SEAM_OFFSET / 2;
               return (
                 <g key={`merged-${pair.a.person.id}-${pair.b.person.id}`} transform={`translate(${pair.a.x}, ${pair.a.y})`}>
-                  <circle
-                    cx={CARD_WIDTH + SEAM_OFFSET / 2}
-                    cy={CARD_HEIGHT / 2}
-                    r={4}
-                    className="fill-(--coral)"
+                  {/* One shared container reads as a single card holding both
+                      partners; a thin seam divider (not the old connector
+                      line + dot) marks where one person ends and the other
+                      begins. */}
+                  <rect
+                    x={-8}
+                    y={-8}
+                    width={MERGED_CARD_WIDTH + 16}
+                    height={CARD_HEIGHT + 16}
+                    rx={16}
+                    className="fill-(--bg-card) stroke-(--border)"
+                    strokeWidth={1}
+                  />
+                  <line
+                    x1={seamX}
+                    y1={14}
+                    x2={seamX}
+                    y2={CARD_HEIGHT - 14}
+                    className="stroke-(--border)"
+                    strokeWidth={1}
                   />
                   <PersonMark
                     node={pair.a}
