@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeFamilyTreeLayout } from './familyTreeLayout';
+import { computeFamilyTreeLayout, CARD_WIDTH, MERGED_CARD_WIDTH } from './familyTreeLayout';
 import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 let nextRelId = 1;
@@ -156,6 +156,105 @@ describe('computeFamilyTreeLayout', () => {
     const { parentGroupLinks } = computeFamilyTreeLayout(persons, relationships);
 
     expect(parentGroupLinks[0].children.map((n) => n.person.id)).toEqual([4, 3]);
+  });
+
+  it('centers an only child under its two (merged) parents', () => {
+    const persons = [makePerson(1, 'Mom'), makePerson(2, 'Dad'), makePerson(3, 'Kid')];
+    const relationships = [rel(1, 2, 'spouse'), rel(1, 3, 'parent'), rel(2, 3, 'parent')];
+    const { mergedPairs, nodes } = computeFamilyTreeLayout(persons, relationships);
+
+    const parentCenter = mergedPairs[0].a.x + MERGED_CARD_WIDTH / 2;
+    const kid = nodes.find((n) => n.person.id === 3)!;
+    expect(kid.x + CARD_WIDTH / 2).toBeCloseTo(parentCenter, 5);
+  });
+
+  it('centers an only child under two parents who have no recorded relationship to each other', () => {
+    // No spouse/partner row between Mom and Dad at all -- two independent
+    // single cards, not a merged pair -- centering should still work off
+    // their individual (unmerged) positions.
+    const persons = [makePerson(1, 'Mom'), makePerson(2, 'Dad'), makePerson(3, 'Kid')];
+    const relationships = [rel(1, 3, 'parent'), rel(2, 3, 'parent')];
+    const { nodes, mergedPairs } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(mergedPairs).toHaveLength(0);
+    const mom = nodes.find((n) => n.person.id === 1)!;
+    const dad = nodes.find((n) => n.person.id === 2)!;
+    const kid = nodes.find((n) => n.person.id === 3)!;
+    const parentCenter = (mom.x + CARD_WIDTH / 2 + dad.x + CARD_WIDTH / 2) / 2;
+    expect(kid.x + CARD_WIDTH / 2).toBeCloseTo(parentCenter, 5);
+  });
+
+  it('centers a multi-child sibling block as one unit under merged parents, preserving sibling spacing', () => {
+    const persons = [
+      makePerson(1, 'Mom'), makePerson(2, 'Dad'),
+      makePerson(3, 'Kid1', 1985), makePerson(4, 'Kid2', 1988), makePerson(5, 'Kid3', 1990),
+    ];
+    const relationships = [
+      rel(1, 2, 'spouse'),
+      rel(1, 3, 'parent'), rel(2, 3, 'parent'),
+      rel(1, 4, 'parent'), rel(2, 4, 'parent'),
+      rel(1, 5, 'parent'), rel(2, 5, 'parent'),
+    ];
+    const { mergedPairs, parentGroupLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    const parentCenter = mergedPairs[0].a.x + MERGED_CARD_WIDTH / 2;
+    const children = parentGroupLinks[0].children;
+    const blockLeft = Math.min(...children.map((c) => c.x));
+    const blockRight = Math.max(...children.map((c) => c.x)) + CARD_WIDTH;
+    expect((blockLeft + blockRight) / 2).toBeCloseTo(parentCenter, 5);
+
+    // Siblings stay evenly spaced by the normal column step, just shifted as a block.
+    expect(children[1].x - children[0].x).toBeCloseTo(CARD_WIDTH + 32, 5);
+    expect(children[2].x - children[1].x).toBeCloseTo(CARD_WIDTH + 32, 5);
+  });
+
+  it('does not overlap a neighboring family when centering pushes into it', () => {
+    // Two unrelated couples on the same generation, each with one child close
+    // together -- centering must not make the two families collide.
+    const persons = [
+      makePerson(1, 'MomA'), makePerson(2, 'DadA'), makePerson(3, 'KidA'),
+      makePerson(4, 'MomB'), makePerson(5, 'DadB'), makePerson(6, 'KidB'),
+    ];
+    const relationships = [
+      rel(1, 2, 'spouse'), rel(1, 3, 'parent'), rel(2, 3, 'parent'),
+      rel(4, 5, 'spouse'), rel(4, 6, 'parent'), rel(5, 6, 'parent'),
+    ];
+    const { nodes, mergedPairs } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(mergedPairs).toHaveLength(2);
+    const sorted = [...mergedPairs].sort((a, b) => a.a.x - b.a.x);
+    // The second couple's card must start at least COL_GAP after the first couple's card ends.
+    expect(sorted[1].a.x).toBeGreaterThanOrEqual(sorted[0].a.x + MERGED_CARD_WIDTH + 32);
+
+    // No two nodes anywhere in the row occupy overlapping x ranges.
+    const row = nodes.filter((n) => n.generation === nodes.find((x) => x.person.id === 3)!.generation);
+    const spans = row
+      .map((n) => {
+        const isMergedAnchor = mergedPairs.some((p) => p.a.person.id === n.person.id);
+        return { left: n.x, right: n.x + (isMergedAnchor ? MERGED_CARD_WIDTH : CARD_WIDTH) };
+      })
+      .sort((a, b) => a.left - b.left);
+    for (let i = 1; i < spans.length; i++) {
+      expect(spans[i].left).toBeGreaterThanOrEqual(spans[i - 1].right);
+    }
+  });
+
+  it('leaves a sibling group untouched when one sibling has their own partner', () => {
+    const persons = [
+      makePerson(1, 'Mom'), makePerson(2, 'Dad'),
+      makePerson(3, 'Kid1', 1985), makePerson(4, 'Kid1Spouse'), makePerson(5, 'Kid2', 1990),
+    ];
+    const relationships = [
+      rel(1, 2, 'spouse'),
+      rel(1, 3, 'parent'), rel(2, 3, 'parent'),
+      rel(1, 5, 'parent'), rel(2, 5, 'parent'),
+      rel(3, 4, 'spouse'),
+    ];
+    // Should not throw, and Kid1's merge with their own spouse must survive untouched.
+    const { mergedPairs } = computeFamilyTreeLayout(persons, relationships);
+    const kid1Pair = mergedPairs.find((p) => p.a.person.id === 3 || p.b.person.id === 3);
+    expect(kid1Pair).toBeDefined();
+    expect([kid1Pair!.a.person.id, kid1Pair!.b.person.id].sort()).toEqual([3, 4]);
   });
 
   it('does not infinite-loop on a cyclical (invalid) parent relationship', () => {
