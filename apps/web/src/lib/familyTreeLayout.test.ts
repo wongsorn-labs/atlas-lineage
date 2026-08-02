@@ -4,9 +4,9 @@ import type { Person, Relationship } from '@wongsorn-labs/atlas-lineage-shared';
 
 let nextRelId = 1;
 
-function makePerson(id: number, name: string): Person {
+function makePerson(id: number, name: string, birthYear: number | null = null): Person {
   return {
-    id, name, treeId: 1, birthYear: null, deathYear: null,
+    id, name, treeId: 1, birthYear, deathYear: null,
     birthLat: null, birthLng: null, birthPlace: null, notes: null,
     createdAt: '', updatedAt: '',
   };
@@ -123,6 +123,39 @@ describe('computeFamilyTreeLayout', () => {
     // layout gives both parents the identical x a fused card needs.
     const [mom, dad] = parentGroupLinks[0].parents;
     expect(mom.x).toBe(dad.x);
+  });
+
+  it('orders siblings left-to-right by birth year, oldest first', () => {
+    const persons = [
+      makePerson(1, 'Mom'), makePerson(2, 'Dad'),
+      // Deliberately created out of birth order to prove sort order isn't just id/insertion order.
+      makePerson(3, 'Youngest', 1995), makePerson(4, 'Eldest', 1985), makePerson(5, 'Middle', 1990),
+    ];
+    const relationships = [
+      rel(1, 2, 'spouse'),
+      rel(1, 3, 'parent'), rel(2, 3, 'parent'),
+      rel(1, 4, 'parent'), rel(2, 4, 'parent'),
+      rel(1, 5, 'parent'), rel(2, 5, 'parent'),
+    ];
+    const { parentGroupLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(parentGroupLinks).toHaveLength(1);
+    expect(parentGroupLinks[0].children.map((n) => n.person.id)).toEqual([4, 5, 3]);
+  });
+
+  it('sorts a sibling with an unknown birth year after known-birth-year siblings', () => {
+    const persons = [
+      makePerson(1, 'Mom'), makePerson(2, 'Dad'),
+      makePerson(3, 'Unknown', null), makePerson(4, 'Known', 1990),
+    ];
+    const relationships = [
+      rel(1, 2, 'spouse'),
+      rel(1, 3, 'parent'), rel(2, 3, 'parent'),
+      rel(1, 4, 'parent'), rel(2, 4, 'parent'),
+    ];
+    const { parentGroupLinks } = computeFamilyTreeLayout(persons, relationships);
+
+    expect(parentGroupLinks[0].children.map((n) => n.person.id)).toEqual([4, 3]);
   });
 
   it('does not infinite-loop on a cyclical (invalid) parent relationship', () => {
