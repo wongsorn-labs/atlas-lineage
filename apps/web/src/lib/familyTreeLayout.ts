@@ -48,6 +48,7 @@ function pairKey(a: number, b: number): string {
 
 export function computeFamilyTreeLayout(persons: Person[], relationships: Relationship[]): FamilyTreeLayout {
   const personIds = new Set(persons.map((p) => p.id));
+  const personById = new Map(persons.map((p) => [p.id, p]));
   const childToParents = new Map<number, Set<number>>();
   const partnerPairs = new Map<string, { a: number; b: number; relId: number }>();
 
@@ -142,7 +143,14 @@ export function computeFamilyTreeLayout(persons: Person[], relationships: Relati
       return xs.reduce((sum, x) => sum + x, 0) / xs.length;
     };
 
-    const ordered = [...ids].sort((a, b) => barycenter(a) - barycenter(b));
+    // Siblings share the same barycenter (same parents), so the tie-break
+    // is what actually orders them: birth year, oldest first, unknown
+    // birth years sorting last rather than arbitrarily interleaving.
+    const birthYearOf = (id: number): number => personById.get(id)?.birthYear ?? Number.POSITIVE_INFINITY;
+    const ordered = [...ids].sort((a, b) => {
+      const diff = barycenter(a) - barycenter(b);
+      return diff !== 0 ? diff : birthYearOf(a) - birthYearOf(b);
+    });
 
     // Pull partners to sit immediately next to each other.
     const placed: number[] = [];
