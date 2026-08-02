@@ -25,7 +25,8 @@
     "yearToAria": "กรองถึงปีเกิด",
     "peopleCount_other": "{{count}} คน",
     "filteredFrom": " (กรองจากทั้งหมด {{count}} คน)",
-    "noResults": "ไม่พบบุคคล"
+    "noResults": "ไม่พบบุคคล",
+    "version": "เวอร์ชัน {{version}}"
   },
   "chart": {
     "mapView": "แผนที่",

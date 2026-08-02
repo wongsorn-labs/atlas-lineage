@@ -168,24 +168,31 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between gap-2 border-t border-(--border) px-4 py-2.5">
-        <div className="flex min-w-0 items-center gap-2">
-          {user?.email && <Avatar name={user.email} className="h-7 w-7 text-[10px]" />}
-          <p className="min-w-0 truncate text-xs text-(--text-muted)">{user?.email}</p>
+      <div className="border-t border-(--border)">
+        <div className="flex items-center justify-between gap-2 px-4 py-2.5">
+          <div className="flex min-w-0 items-center gap-2">
+            {user?.email && <Avatar name={user.email} className="h-7 w-7 text-[10px]" />}
+            <p className="min-w-0 truncate text-xs text-(--text-muted)">{user?.email}</p>
+          </div>
+          <div className="flex flex-shrink-0 items-center gap-1">
+            <button
+              type="button"
+              className="btn-ghost p-1.5"
+              onClick={() => void signOut()}
+              aria-label={t('sidebar.signOut')}
+              title={t('sidebar.signOut')}
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+            <PendingLinkRequestsDialog />
+            <SettingsDialog />
+          </div>
         </div>
-        <div className="flex flex-shrink-0 items-center gap-1">
-          <button
-            type="button"
-            className="btn-ghost p-1.5"
-            onClick={() => void signOut()}
-            aria-label={t('sidebar.signOut')}
-            title={t('sidebar.signOut')}
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
-          <PendingLinkRequestsDialog />
-          <SettingsDialog />
-        </div>
+        {__APP_VERSION__ && (
+          <p className="px-4 pb-2 text-[10px] text-(--text-muted)">
+            {t('sidebar.version', { version: __APP_VERSION__ })}
+          </p>
+        )}
       </div>
     </aside>
   );
