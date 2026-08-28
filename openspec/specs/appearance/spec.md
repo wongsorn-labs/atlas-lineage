@@ -14,7 +14,7 @@ The system SHALL let the user switch between a light and dark visual theme, SHAL
 
 #### Scenario: User toggles theme
 - **WHEN** a user clicks the theme toggle in the Sidebar header
-- **THEN** the app switches between light and dark immediately, the choice is saved to `localStorage`, and the map's tile layer switches between CARTO `light_all` and `dark_all` to match
+- **THEN** the app switches between light and dark immediately, the choice is saved to `localStorage`, and the map's tile layer switches between Esri's `World_Light_Gray` and `World_Dark_Gray` Canvas basemaps to match
 
 #### Scenario: Returning with an explicit choice
 - **WHEN** a user who previously toggled the theme reopens the app, regardless of the current OS preference
