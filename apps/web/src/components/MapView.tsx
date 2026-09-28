@@ -27,7 +27,6 @@ export function MapView({ persons, relationships, selectedPerson, onSelectPerson
   const mappable = persons.filter((p) => p.birthLat != null && p.birthLng != null);
   const { theme } = useTheme();
   const { user } = useAuth();
-  const tileStyle = theme === 'dark' ? 'dark_all' : 'light_all';
   const mapDefault = getCountryMapDefault(user?.defaultCountry);
 
   return (
@@ -35,14 +34,14 @@ export function MapView({ persons, relationships, selectedPerson, onSelectPerson
       key={mapDefault.code}
       center={mapDefault.center}
       zoom={mapDefault.zoom}
-      className="isolate h-full w-full"
+      className={`isolate h-full w-full${theme === 'dark' ? ' map-dark' : ''}`}
       style={{ height: '100%', width: '100%' }}
     >
+      {/* CARTO's basemap CDN now serves "API KEY REQUIRED" tiles without a key, so
+          use keyless OSM tiles; dark mode is a CSS filter (`.map-dark` in app.css). */}
       <TileLayer
-        key={tileStyle}
-        url={`https://{s}.basemaps.cartocdn.com/${tileStyle}/{z}/{x}/{y}{r}.png`}
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        subdomains="abcd"
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         maxZoom={19}
       />
       <RelationshipLines persons={mappable} relationships={relationships} />

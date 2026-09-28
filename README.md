@@ -12,7 +12,7 @@ Google/email sign-in, a light/dark theme, and a per-account default map view.
 - **Web**: React 19 + Vite, Tailwind CSS v4, Base UI (`apps/web`)
 - **Shared**: Zod schemas and TypeScript types (`packages/shared`)
 - **Auth**: Supabase (email/password + Google OAuth), httpOnly cookie sessions
-- **Map**: react-leaflet + CARTO tiles (light/dark, theme-aware)
+- **Map**: react-leaflet + OpenStreetMap tiles (light/dark via CSS filter, theme-aware)
 - **E2E**: Playwright (`apps/e2e`)
 
 ## Quick start
