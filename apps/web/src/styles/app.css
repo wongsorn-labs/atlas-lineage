@@ -290,3 +290,8 @@
 .leaflet-container * {
   box-sizing: content-box !important;
 }
+
+/* Dark map: invert the light OSM tiles (only the tile pane, so markers and lines keep their colors) */
+.map-dark .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+}
