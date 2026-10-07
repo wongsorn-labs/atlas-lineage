@@ -62,7 +62,7 @@ export function EditTreeDialog({ tree }: EditTreeDialogProps) {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.editTitle')} data-testid="edit-tree-button" />}
       >
-        <Edit2 className="size-4" />
+        <Edit2 className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -101,7 +101,7 @@ export function EditTreeDialog({ tree }: EditTreeDialogProps) {
             data-testid="delete-tree-button"
             onClick={() => setConfirmDeleteOpen(true)}
           >
-            <Trash2 className="size-4.5" />
+            <Trash2 className="h-3.5 w-3.5" />
             {t('tree.deleteButton')}
           </button>
         </div>

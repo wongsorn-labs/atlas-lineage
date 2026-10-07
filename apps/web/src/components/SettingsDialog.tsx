@@ -44,7 +44,7 @@ export function SettingsDialog() {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('settings.settingsAria')} data-testid="settings-button" />}
       >
-        <Settings className="size-4" />
+        <Settings className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

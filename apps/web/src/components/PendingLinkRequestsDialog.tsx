@@ -18,7 +18,7 @@ export function PendingLinkRequestsDialog() {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5 relative" aria-label={t('tree.pendingRequestsAria')} data-testid="pending-link-requests-button" />}
       >
-        <Inbox className="size-4" />
+        <Inbox className="h-4 w-4" />
         {requests.length > 0 && (
           <span
             className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-(--coral)"

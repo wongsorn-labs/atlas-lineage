@@ -28,7 +28,7 @@ export function ConfirmDialog({
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <div className="flex items-center gap-2">
-            <AlertTriangle className="size-4 flex-shrink-0 text-(--color-error)" aria-hidden="true" />
+            <AlertTriangle className="h-5 w-5 flex-shrink-0 text-(--color-error)" aria-hidden="true" />
             <DialogTitle className="font-display">{title}</DialogTitle>
           </div>
           {description && <p className="text-sm text-(--text-secondary)">{description}</p>}

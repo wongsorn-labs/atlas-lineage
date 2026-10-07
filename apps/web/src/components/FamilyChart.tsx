@@ -137,7 +137,7 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
           disabled={zoom >= MAX_ZOOM}
           aria-label={t('chart.zoomIn')}
         >
-          <ZoomIn className="size-4 text-(--text-primary)" />
+          <ZoomIn className="h-4 w-4 text-(--text-primary)" />
         </button>
         <button
           type="button"
@@ -146,7 +146,7 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
           disabled={zoom <= MIN_ZOOM}
           aria-label={t('chart.zoomOut')}
         >
-          <ZoomOut className="size-4 text-(--text-primary)" />
+          <ZoomOut className="h-4 w-4 text-(--text-primary)" />
         </button>
       </div>
 
