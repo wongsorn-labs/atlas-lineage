@@ -1,14 +1,12 @@
-// A handful of hues from the heritage palette + a few complementary ones,
+// The Tinysoy chart hues (soy yellow, edamame, pod brown, leaf green, kuromame),
 // so avatars stay legible in both themes without needing per-avatar
 // light/dark overrides. Shared between the DOM Avatar component and the
 // SVG-rendered family chart, which can't use the CSS-driven one directly.
-const PALETTE = [
-  { bg: 'rgba(200, 155, 60, 0.18)', fg: '#9C7526' },
-  { bg: 'rgba(74, 124, 89, 0.18)', fg: '#2F5A3D' },
-  { bg: 'rgba(181, 80, 47, 0.18)', fg: '#8C3D22' },
-  { bg: 'rgba(93, 173, 226, 0.18)', fg: '#2E6DA4' },
-  { bg: 'rgba(155, 89, 182, 0.18)', fg: '#6C3483' },
-];
+const PALETTE = [1, 2, 3, 4, 5].map((n) => ({
+  bg: `color-mix(in oklab, var(--chart-${n}) 18%, transparent)`,
+  // Blend toward the text colour so initials stay legible in light and dark.
+  fg: `color-mix(in oklab, var(--chart-${n}) 55%, var(--foreground))`,
+}));
 
 function hashString(value: string): number {
   let hash = 0;

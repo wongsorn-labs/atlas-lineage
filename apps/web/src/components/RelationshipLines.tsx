@@ -2,11 +2,11 @@ import { Polyline } from 'react-leaflet';
 import type { Person, Relationship, RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 
 const COLORS: Record<RelationshipType, string> = {
-  parent: '#16a34a',
-  child: '#2563eb',
-  sibling: '#ca8a04',
-  spouse: '#db2777',
-  partner: '#9333ea',
+  parent: '#4E9432',
+  child: '#9F6532',
+  sibling: '#B98A00',
+  spouse: '#196632',
+  partner: '#2E2821',
 };
 
 interface RelationshipLinesProps {

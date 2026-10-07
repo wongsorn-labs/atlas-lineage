@@ -62,10 +62,10 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         onClick={() => onSelect(isSelected ? null : person)}
         onKeyDown={(e) => e.key === 'Enter' && onSelect(isSelected ? null : person)}
         className={[
-          'group relative cursor-pointer overflow-hidden rounded-xl border bg-gradient-to-br from-(--bg-card) to-(--bg-surface) pl-5 pr-3 py-3.5 shadow-(--shadow-sm) transition-all duration-150',
+          'group relative cursor-pointer overflow-hidden rounded-xl border bg-card pl-5 pr-3 py-3 transition-colors duration-150',
           isSelected
-            ? 'border-(--border-gold) shadow-(--shadow-gold-glow)'
-            : 'border-(--border) hover:border-(--border-gold) hover:shadow-md hover:-translate-y-0.5',
+            ? 'border-primary'
+            : 'border-border hover:bg-muted',
         ].join(' ')}
       >
         <span
