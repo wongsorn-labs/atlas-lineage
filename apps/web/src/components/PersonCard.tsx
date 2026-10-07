@@ -91,7 +91,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               )}
               {isLinked && (
                 <Share2
-                  className="h-3.5 w-3.5 flex-shrink-0 text-(--text-muted)"
+                  className="size-4 flex-shrink-0 text-(--text-muted)"
                   aria-label={t('tree.sharedBadge')}
                   data-testid="shared-person-badge"
                 />
@@ -103,13 +103,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               <div className="mt-0.5 flex items-center gap-3 text-xs text-(--text-muted)">
                 {person.birthYear && (
                   <span className="inline-flex items-center gap-1">
-                    <Cake className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                    <Cake className="size-4 flex-shrink-0" aria-hidden="true" />
                     {formatPartialDate({ year: person.birthYear, month: person.birthMonth, day: person.birthDay, time: person.birthTime, buddhistEra })}
                   </span>
                 )}
                 {person.deathYear && (
                   <span className="inline-flex items-center gap-1">
-                    <Flower2 className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                    <Flower2 className="size-4 flex-shrink-0" aria-hidden="true" />
                     {formatPartialDate({ year: person.deathYear, month: person.deathMonth, day: person.deathDay, time: person.deathTime, buddhistEra })}
                   </span>
                 )}
@@ -119,7 +119,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             {/* Birth place */}
             {person.birthPlace && (
               <div className="mt-1.5 flex items-center gap-1 text-xs text-(--text-secondary)">
-                <MapPin className="h-3 w-3 flex-shrink-0 text-(--gold)" aria-hidden="true" />
+                <MapPin className="size-4 flex-shrink-0 text-(--gold)" aria-hidden="true" />
                 <span className="truncate">{person.birthPlace}</span>
               </div>
             )}
@@ -148,7 +148,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                     aria-label={other ? t('relationship.deleteAria', { name: other.name }) : t('relationship.deleteAriaUnknown')}
                     data-testid="delete-relationship-button"
                   >
-                    <Trash2 className="h-3 w-3" />
+                    <Trash2 className="size-4" />
                   </button>
                 </span>
               );
@@ -185,7 +185,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                   aria-label={t('person.editAria', { name: person.name })}
                   data-testid="edit-person-button"
                 >
-                  <Edit2 className="h-3.5 w-3.5" />
+                  <Edit2 className="size-4.5" />
                 </button>
               )}
               <button
@@ -195,7 +195,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                 aria-label={t('relationship.manageAria', { name: person.name })}
                 data-testid="add-relationship-button"
               >
-                <GitBranch className="h-3.5 w-3.5" />
+                <GitBranch className="size-4.5" />
               </button>
               {isLinked ? (
                 <button
@@ -206,7 +206,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                   data-testid="unlink-person-button"
                   disabled={!link}
                 >
-                  <Link2Off className="h-3.5 w-3.5" />
+                  <Link2Off className="size-4.5" />
                 </button>
               ) : (
                 <button
@@ -216,7 +216,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                   aria-label={t('person.deleteAria', { name: person.name })}
                   data-testid="delete-person-button"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="size-4.5" />
                 </button>
               )}
             </div>

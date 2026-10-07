@@ -40,7 +40,7 @@ export function LinkPersonDialog({ tree }: LinkPersonDialogProps) {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.linkPersonTitle')} data-testid="link-person-button" />}
       >
-        <Link2 className="h-4 w-4" />
+        <Link2 className="size-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

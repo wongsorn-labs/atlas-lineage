@@ -49,7 +49,7 @@ export function InviteMemberDialog({ tree }: InviteMemberDialogProps) {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.inviteTitle')} data-testid="invite-member-button" />}
       >
-        <UserPlus className="h-4 w-4" />
+        <UserPlus className="size-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
