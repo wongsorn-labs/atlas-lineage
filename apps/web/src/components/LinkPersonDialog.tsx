@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Share2 } from 'lucide-react';
+import { Link2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -40,7 +40,7 @@ export function LinkPersonDialog({ tree }: LinkPersonDialogProps) {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.linkPersonTitle')} data-testid="link-person-button" />}
       >
-        <Share2 className="h-4 w-4" />
+        <Link2 className="h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
