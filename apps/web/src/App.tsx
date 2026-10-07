@@ -41,7 +41,7 @@ export default function App() {
     return (
       <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
           Loading…
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function App() {
     return (
       <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
           {t('app.loading')}
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function App() {
     return (
       <div className="flex h-dvh w-screen items-center justify-center bg-(--bg-base) text-(--text-muted)">
         <div className="flex items-center gap-2 text-sm" role="status">
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className="size-4 animate-spin" />
           {t('app.loading')}
         </div>
       </div>
@@ -131,7 +131,7 @@ export default function App() {
           onClick={() => setSidebarOpen(true)}
           aria-label={t('sidebar.openMenu')}
         >
-          <Menu className="h-5 w-5 text-(--text-primary)" />
+          <Menu className="size-4 text-(--text-primary)" />
         </button>
 
         <div className="absolute top-3 left-1/2 -translate-x-1/2 z-(--z-dropdown) glass-card flex items-center gap-1 p-1">
@@ -143,7 +143,7 @@ export default function App() {
             }`}
             aria-pressed={viewMode === 'map'}
           >
-            <MapIcon className="h-3.5 w-3.5" />
+            <MapIcon className="size-4.5" />
             {t('chart.mapView')}
           </button>
           <button
@@ -154,7 +154,7 @@ export default function App() {
             }`}
             aria-pressed={viewMode === 'chart'}
           >
-            <Network className="h-3.5 w-3.5" />
+            <Network className="size-4.5" />
             {t('chart.chartView')}
           </button>
         </div>

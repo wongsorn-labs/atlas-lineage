@@ -22,7 +22,7 @@ export function TrashDialog() {
       <DialogTrigger
         render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.trashAria')} data-testid="trash-button" />}
       >
-        <Trash2 className="h-4 w-4" />
+        <Trash2 className="size-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -55,7 +55,7 @@ export function TrashDialog() {
                     disabled={restoreTree.isPending}
                     onClick={() => restoreTree.mutate(tree.id)}
                   >
-                    <RotateCcw className="h-4 w-4" />
+                    <RotateCcw className="size-4" />
                   </button>
                   <button
                     type="button"
@@ -64,7 +64,7 @@ export function TrashDialog() {
                     data-testid="purge-tree-button"
                     onClick={() => setPurgeTarget(tree)}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="size-4" />
                   </button>
                 </div>
               </li>

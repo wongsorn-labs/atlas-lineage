@@ -20,14 +20,14 @@ const SelectTrigger = React.forwardRef<
   <Combobox.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-md border border-(--border) bg-(--bg-elevated) px-3 py-2 text-sm text-(--text-primary) ring-offset-(--bg-elevated) placeholder:text-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--gold) focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+      'flex h-8 w-full items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent pl-2.5 pr-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50',
       className
     )}
     {...props}
   >
     {children}
     <Combobox.Icon>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="size-4 opacity-50" />
     </Combobox.Icon>
   </Combobox.Trigger>
 ));
@@ -42,7 +42,7 @@ const SelectContent = React.forwardRef<
       <Combobox.Popup
         ref={ref}
         className={cn(
-          'max-h-(--available-height) w-(--anchor-width) min-w-[8rem] overflow-y-auto rounded-md border border-(--border) bg-(--bg-card) p-1 text-(--text-primary) shadow-md outline-none',
+          'max-h-(--available-height) w-(--anchor-width) min-w-[8rem] overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none',
           className
         )}
         {...props}
@@ -61,14 +61,14 @@ const SelectItem = React.forwardRef<
   <Combobox.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[highlighted]:bg-(--gold-muted) data-[highlighted]:text-(--gold) data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex w-full cursor-default select-none items-center rounded-md py-1 pl-7 pr-2 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
     )}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <Combobox.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="size-4" />
       </Combobox.ItemIndicator>
     </span>
     {children}

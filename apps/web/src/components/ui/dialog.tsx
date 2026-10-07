@@ -34,14 +34,14 @@ const DialogContent = React.forwardRef<
     <BaseDialog.Popup
       ref={ref}
       className={cn(
-        'fixed left-[50%] top-[50%] z-(--z-dialog) grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-2xl border border-(--border) bg-(--bg-card) text-(--text-primary) p-6 shadow-lg outline-none',
+        'fixed left-[50%] top-[50%] z-(--z-dialog) grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl bg-popover text-popover-foreground p-4 ring-1 ring-foreground/10 outline-none',
         className
       )}
       {...props}
     >
       {children}
-      <DialogClose className="absolute right-4 top-4 rounded-sm text-(--text-secondary) opacity-70 ring-offset-(--bg-card) transition-opacity hover:opacity-100 hover:text-(--text-primary) focus:outline-none focus:ring-2 focus:ring-(--gold) focus:ring-offset-2">
-        <X className="h-4 w-4" />
+      <DialogClose className="absolute right-3 top-3 rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+        <X className="size-4" />
         <span className="sr-only">Close</span>
       </DialogClose>
     </BaseDialog.Popup>
@@ -50,7 +50,7 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = 'DialogContent';
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
+  <div className={cn('flex flex-col gap-1 text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
@@ -60,7 +60,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <BaseDialog.Title
     ref={ref}
-    className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+    className={cn('text-base font-medium leading-snug', className)}
     {...props}
   />
 ));
