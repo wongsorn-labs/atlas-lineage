@@ -1,30 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4C9B36"/>
-      <stop offset="1" stop-color="#245A1A"/>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFEFA"/>
+      <stop offset="1" stop-color="#F3EFE2"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.3" cy="0.22" r="0.8">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
-      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0"/>
+    <radialGradient id="body" cx="0.32" cy="0.2" r="0.95">
+      <stop offset="0" stop-color="#B6E58F"/>
+      <stop offset="0.5" stop-color="#6DB84C"/>
+      <stop offset="1" stop-color="#3E8A2C"/>
     </radialGradient>
+    <radialGradient id="arm" cx="0.35" cy="0.25" r="0.9">
+      <stop offset="0" stop-color="#A9DE82"/>
+      <stop offset="0.55" stop-color="#6DB84C"/>
+      <stop offset="1" stop-color="#3F8B2D"/>
+    </radialGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDF3E6"/>
+    </linearGradient>
+    <linearGradient id="curl" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#C9DDBC"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#2F6B22" flood-opacity="0.28"/>
+    </filter>
+    <filter id="small" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2F6B22" flood-opacity="0.25"/>
+    </filter>
+    <clipPath id="tileclip"><rect width="512" height="512" rx="112"/></clipPath>
   </defs>
-  <rect width="512" height="512" fill="url(#bg)"/>
-  <rect width="512" height="512" fill="url(#glow)"/>
-  <!-- globe -->
-  <g fill="none" stroke="#FBF9F1" stroke-linecap="round">
-    <circle cx="256" cy="256" r="160" stroke-width="16"/>
-    <ellipse cx="256" cy="256" rx="68" ry="160" stroke-width="9" opacity="0.38"/>
-    <path d="M96 256h320" stroke-width="9" opacity="0.38"/>
-    <path d="M132 168h248M132 344h248" stroke-width="9" opacity="0.22"/>
-  </g>
-  <!-- lineage -->
-  <g fill="none" stroke="#FBF9F1" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M256 190v50M256 240H196v38M256 240h60v38"/>
-  </g>
-  <g stroke="#2F6B22" stroke-width="12">
-    <circle cx="256" cy="170" r="30" fill="#F3C33C"/>
-    <circle cx="196" cy="304" r="26" fill="#FBF9F1"/>
-    <circle cx="316" cy="304" r="26" fill="#FBF9F1"/>
+  <g clip-path="url(#tileclip)">
+    <rect width="512" height="512" fill="url(#tile)"/>
+    <g transform="translate(256 262) scale(0.9) translate(-256 -262)">
+      <ellipse cx="256" cy="476" rx="150" ry="14" fill="#2F6B22" opacity="0.14"/>
+      <!-- body / head -->
+      <g filter="url(#soft)">
+        <path d="M256 92c-86 0-150 62-150 148 0 52 30 100 78 124h144c48-24 78-72 78-124 0-86-64-148-150-148z" fill="url(#body)"/>
+      </g>
+      <!-- sprout tuft -->
+      <path d="M250 96c-4-30 12-52 38-58-2 26-12 48-38 58z" fill="#3E8A2C"/>
+      <path d="M254 96c-16-20-40-26-62-20 12 20 34 30 62 20z" fill="#56A23C"/>
+      <path d="M256 98c-2-18 0-34 6-48" stroke="#2F6B22" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- face -->
+      <ellipse cx="256" cy="248" rx="108" ry="82" fill="#FFFEF8"/>
+      <ellipse cx="203" cy="240" rx="36" ry="30" fill="#8FD06B" opacity="0.8" transform="rotate(-12 203 240)"/>
+      <ellipse cx="309" cy="240" rx="36" ry="30" fill="#8FD06B" opacity="0.8" transform="rotate(12 309 240)"/>
+      <path d="M185 240q18 14 36 0M291 240q18 14 36 0" stroke="#2B5A1E" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="256" cy="264" rx="19" ry="13" fill="#2F6B22"/>
+      <ellipse cx="250" cy="259" rx="6" ry="3.5" fill="#FFFFFF" opacity="0.45"/>
+      <path d="M234 292q22 16 44 0" stroke="#2B5A1E" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+      <circle cx="176" cy="282" r="14" fill="#FF9F86" opacity="0.4"/>
+      <circle cx="336" cy="282" r="14" fill="#FF9F86" opacity="0.4"/>
+      <!-- map paper -->
+      <g filter="url(#small)">
+        <path d="M172 338h168v116c0 8-6 14-14 14H186c-8 0-14-6-14-14z" fill="url(#paper)"/>
+      </g>
+      <path d="M340 416l-52 52h38c8 0 14-6 14-14z" fill="url(#curl)"/>
+      <!-- map content: route + pin -->
+      <path d="M200 448q28-26 54-8t46-14" stroke="#9CC983" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 11"/>
+      <circle cx="200" cy="448" r="7" fill="#6DB84C"/>
+      <path d="M256 366c-13 0-23 10-23 22 0 17 23 36 23 36s23-19 23-36c0-12-10-22-23-22z" fill="#F3C33C"/>
+      <circle cx="256" cy="388" r="8" fill="#FFFEF8"/>
+      <!-- arms -->
+      <g filter="url(#small)">
+        <ellipse cx="146" cy="392" rx="62" ry="54" fill="url(#arm)" transform="rotate(-20 146 392)"/>
+        <ellipse cx="366" cy="392" rx="62" ry="54" fill="url(#arm)" transform="rotate(20 366 392)"/>
+      </g>
+    </g>
   </g>
 </svg>
