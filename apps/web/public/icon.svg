@@ -1,10 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#357426"/>
-  <g transform="translate(76 76) scale(15)" fill="none" stroke="#FBF9F1" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
-    <path d="M12 7.2v2.3M12 9.5l-2.4 2M12 9.5l2.4 2"/>
-    <circle cx="12" cy="6.4" r="1.1" fill="#FBF9F1"/>
-    <circle cx="9.3" cy="12.2" r="1.1" fill="#FBF9F1"/>
-    <circle cx="14.7" cy="12.2" r="1.1" fill="#FBF9F1"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4C9B36"/>
+      <stop offset="1" stop-color="#245A1A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.3" cy="0.22" r="0.8">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <rect width="512" height="512" fill="url(#glow)"/>
+  <!-- globe -->
+  <g fill="none" stroke="#FBF9F1" stroke-linecap="round">
+    <circle cx="256" cy="256" r="160" stroke-width="16"/>
+    <ellipse cx="256" cy="256" rx="68" ry="160" stroke-width="9" opacity="0.38"/>
+    <path d="M96 256h320" stroke-width="9" opacity="0.38"/>
+    <path d="M132 168h248M132 344h248" stroke-width="9" opacity="0.22"/>
+  </g>
+  <!-- lineage -->
+  <g fill="none" stroke="#FBF9F1" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 190v50M256 240H196v38M256 240h60v38"/>
+  </g>
+  <g stroke="#2F6B22" stroke-width="12">
+    <circle cx="256" cy="170" r="30" fill="#F3C33C"/>
+    <circle cx="196" cy="304" r="26" fill="#FBF9F1"/>
+    <circle cx="316" cy="304" r="26" fill="#FBF9F1"/>
   </g>
 </svg>
