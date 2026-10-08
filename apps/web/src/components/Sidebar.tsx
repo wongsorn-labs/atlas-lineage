@@ -58,7 +58,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
           onClick={onClose}
           aria-label={t('sidebar.closeMenu')}
         >
-          <X className="h-4 w-4" />
+          <X className="size-4" />
         </button>
       </div>
 
@@ -71,7 +71,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       <div className="border-b border-(--border) px-3 py-3 space-y-2">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-(--text-muted)" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4.5 text-(--text-muted)" />
             <input
               type="search"
               value={search}
@@ -88,7 +88,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
             aria-label={t('sidebar.toggleFilters')}
             aria-expanded={showFilters}
           >
-            <SlidersHorizontal className="h-3.5 w-3.5" />
+            <SlidersHorizontal className="size-4.5" />
           </button>
         </div>
         {showFilters && (
@@ -149,7 +149,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
               />
             }
           >
-            <UserPlus className="h-5 w-5" />
+            <UserPlus className="size-4" />
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -181,7 +181,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
             aria-label={t('sidebar.signOut')}
             title={t('sidebar.signOut')}
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="size-4" />
           </button>
           <PendingLinkRequestsDialog />
           <SettingsDialog />

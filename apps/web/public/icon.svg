@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFEFA"/>
+      <stop offset="1" stop-color="#F3EFE2"/>
+    </linearGradient>
+    <radialGradient id="fur" cx="0.3" cy="0.18" r="1">
+      <stop offset="0" stop-color="#B2E48C"/>
+      <stop offset="0.5" stop-color="#6DB84C"/>
+      <stop offset="1" stop-color="#3E8A2C"/>
+    </radialGradient>
+    <radialGradient id="arm" cx="0.3" cy="0.2" r="1">
+      <stop offset="0" stop-color="#A6DC80"/>
+      <stop offset="0.55" stop-color="#68B248"/>
+      <stop offset="1" stop-color="#3D8829"/>
+    </radialGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDF3E6"/>
+    </linearGradient>
+    <linearGradient id="curl" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#C9DDBC"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#2F6B22" flood-opacity="0.28"/>
+    </filter>
+    <filter id="small" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2F6B22" flood-opacity="0.25"/>
+    </filter>
+    <clipPath id="tileclip"><rect width="512" height="512" rx="112"/></clipPath>
+  </defs>
+  <g clip-path="url(#tileclip)">
+    <rect width="512" height="512" fill="url(#tile)"/>
+    <g transform="translate(256 262) scale(0.9) translate(-256 -262)">
+      <ellipse cx="256" cy="472" rx="165" ry="14" fill="#2F6B22" opacity="0.14"/>
+      <!-- torso / shoulders -->
+      <g filter="url(#soft)">
+        <ellipse cx="256" cy="388" rx="176" ry="86" fill="url(#fur)"/>
+      </g>
+      <!-- head -->
+      <g filter="url(#soft)">
+        <path d="M256 92c-92 0-150 52-150 122 0 66 58 112 150 112s150-46 150-112c0-70-58-122-150-122z" fill="url(#fur)"/>
+      </g>
+      <!-- fur tuft -->
+      <path d="M232 100c8-16 22-20 34-12 6-14 22-18 36-8-10 2-16 8-18 16-8-6-18-4-24 4-8-6-18-4-28 0z" fill="#4C9B36"/>
+      <!-- face mask -->
+      <path d="M256 140c-60 0-104 34-104 82 0 44 38 76 104 76s104-32 104-76c0-48-44-82-104-82z" fill="#FFFEF8"/>
+      <!-- eye patches -->
+      <ellipse cx="204" cy="224" rx="40" ry="27" fill="#4C9B36" transform="rotate(-30 204 224)"/>
+      <ellipse cx="308" cy="224" rx="40" ry="27" fill="#4C9B36" transform="rotate(30 308 224)"/>
+      <path d="M184 226q16 13 32 0M296 226q16 13 32 0" stroke="#143C0D" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="256" cy="246" rx="19" ry="13" fill="#1F4A15"/>
+      <ellipse cx="250" cy="241" rx="6" ry="3.4" fill="#FFFFFF" opacity="0.45"/>
+      <path d="M232 276q24 16 48 0" stroke="#143C0D" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+      <!-- map paper -->
+      <g filter="url(#small)">
+        <path d="M172 346h168v110c0 8-6 14-14 14H186c-8 0-14-6-14-14z" fill="url(#paper)"/>
+      </g>
+      <path d="M340 420l-50 50h36c8 0 14-6 14-14z" fill="url(#curl)"/>
+      <path d="M204 448q28-26 54-8t46-14" stroke="#9CC983" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 11"/>
+      <circle cx="204" cy="448" r="7" fill="#6DB84C"/>
+      <path d="M256 372c-13 0-23 10-23 22 0 17 23 36 23 36s23-19 23-36c0-12-10-22-23-22z" fill="#F3C33C"/>
+      <circle cx="256" cy="394" r="8" fill="#FFFEF8"/>
+      <!-- arms with claws -->
+      <g filter="url(#small)">
+        <path d="M96 330c-14 40 6 92 62 98l40-30c-14-22-28-38-34-70z" fill="url(#arm)"/>
+        <path d="M416 330c14 40-6 92-62 98l-40-30c14-22 28-38 34-70z" fill="url(#arm)"/>
+      </g>
+      <g stroke="#FFFEF8" stroke-width="7" stroke-linecap="round" fill="none">
+        <path d="M168 420q6 8 14 10M184 410q8 8 16 8M200 398q8 6 16 4"/>
+        <path d="M344 420q-6 8-14 10M328 410q-8 8-16 8M312 398q-8 6-16 4"/>
+      </g>
+    </g>
+  </g>
+</svg>

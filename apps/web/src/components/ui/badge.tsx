@@ -3,19 +3,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors',
+  'inline-flex h-5 w-fit items-center gap-1 rounded-4xl border px-2 text-xs font-medium whitespace-nowrap transition-colors',
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-(--gold-muted) text-(--gold)',
-        secondary: 'border-transparent bg-(--bg-elevated) text-(--text-primary)',
-        destructive: 'border-transparent bg-(--color-error) text-white',
-        outline: 'border-(--border) text-(--text-primary)',
-        parent: 'border-transparent bg-green-500/15 text-green-700',
-        child: 'border-transparent bg-blue-500/15 text-blue-700',
-        sibling: 'border-transparent bg-yellow-500/20 text-yellow-700',
-        spouse: 'border-transparent bg-pink-500/15 text-pink-700',
-        partner: 'border-transparent bg-purple-500/15 text-purple-700',
+        default: 'border-transparent bg-primary text-primary-foreground',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground',
+        destructive: 'border-transparent bg-destructive/10 text-destructive dark:bg-destructive/20',
+        outline: 'border-border text-foreground',
+        parent: 'border-transparent bg-chart-2/15 text-chart-4 dark:text-chart-2',
+        child: 'border-transparent bg-chart-3/15 text-chart-3',
+        sibling: 'border-transparent bg-chart-1/20 text-muted-foreground',
+        spouse: 'border-transparent bg-chart-4/15 text-chart-4 dark:text-chart-2',
+        partner: 'border-transparent bg-chart-5/10 text-foreground',
       },
     },
     defaultVariants: { variant: 'default' },
