@@ -98,6 +98,11 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
               )}
             </p>
 
+            {/* ID: needed to link this person from another tree */}
+            <p className="text-[11px] leading-snug text-(--text-muted)" data-testid="person-id">
+              {t('person.idLabel')} #{person.id}
+            </p>
+
             {/* Lifespan */}
             {(person.birthYear || person.deathYear) && (
               <div className="mt-0.5 flex items-center gap-3 text-xs text-(--text-muted)">

@@ -38,7 +38,7 @@ export function LinkPersonDialog({ tree }: LinkPersonDialogProps) {
   return (
     <Dialog open={open} onOpenChange={(next) => { setOpen(next); if (next) { setResult(null); setPersonId(''); } }}>
       <DialogTrigger
-        render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.linkPersonTitle')} data-testid="link-person-button" />}
+        render={<button type="button" className="btn-ghost p-1.5" aria-label={t('tree.linkPersonTitle')} title={t('tree.linkPersonTitle')} data-testid="link-person-button" />}
       >
         <Link2 className="size-4" />
       </DialogTrigger>

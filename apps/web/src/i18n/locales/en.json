@@ -37,6 +37,7 @@
     "ariaLabel": "Family tree chart"
   },
   "person": {
+    "idLabel": "ID",
     "addTitle": "Add person",
     "editTitle": "Edit {{name}}",
     "name": "Name",
@@ -129,9 +130,8 @@
     "purgeButton": "Delete Forever",
     "purgeError": "Could not permanently delete tree.",
     "linkPersonTitle": "Link person from another tree",
-    "linkPersonHelp": "Enter the person's ID and the ID of the tree they belong to. That tree's owner must approve before you can see them here.",
+    "linkPersonHelp": "Enter the ID shown on the person's card in their original tree. That tree's owner must approve before you can see them here.",
     "linkPersonIdLabel": "Person ID",
-    "linkPersonTreeIdLabel": "Origin tree ID",
     "linkPersonButton": "Send Request",
     "linkPersonSuccess": "Request sent.",
     "linkPersonError": "Could not send request.",
