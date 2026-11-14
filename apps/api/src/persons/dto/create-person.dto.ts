@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsIn, Matches, Min, Max, IsInt, IsPositive, MinLength } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsIn, Matches, Min, Max, IsInt, IsPositive, MinLength, IsArray, ArrayMaxSize, MaxLength } from 'class-validator';
 import { Type } from 'class-transformer';
 
 const GENDERS = ['male', 'female', 'unspecified'] as const;
@@ -13,6 +13,23 @@ export class CreatePersonDto {
   @IsString()
   @MinLength(1)
   name: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  surname?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  maidenName?: string | null;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(10)
+  @IsString({ each: true })
+  @MaxLength(50, { each: true })
+  nicknames?: string[];
 
   @IsOptional()
   @IsIn(GENDERS)

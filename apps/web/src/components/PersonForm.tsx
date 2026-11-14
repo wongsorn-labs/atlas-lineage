@@ -19,6 +19,9 @@ const toUndefIfEmpty = (v: unknown) => (v === '' || v == null ? undefined : v);
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
+  surname: z.string().max(100).optional(),
+  maidenName: z.string().max(100).optional(),
+  nicknames: z.string().max(500).optional(),
   gender: z.enum(['male', 'female', 'unspecified']).nullable().optional(),
   birthYear: z.preprocess(toNum, z.number({ required_error: 'Birth year is required' }).int().positive()),
   birthMonth: z.preprocess(toNum, z.number().int().min(1).max(12).nullable().optional()),
@@ -36,9 +39,24 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+/** Values handed to onSubmit: text fields normalised, nicknames as a list. */
+type PersonFormSubmit = Omit<FormValues, 'surname' | 'maidenName' | 'nicknames'> & {
+  surname: string | null;
+  maidenName: string | null;
+  nicknames: string[];
+};
+
+/** Nicknames are entered as one comma-separated field and stored as a list. */
+export function parseNicknames(raw: string | undefined): string[] {
+  return (raw ?? '')
+    .split(',')
+    .map((n) => n.trim())
+    .filter((n) => n.length > 0);
+}
+
 interface PersonFormProps {
   initial?: Person;
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: PersonFormSubmit) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
@@ -53,6 +71,9 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
     defaultValues: initial
       ? {
           name: initial.name,
+          surname: initial.surname ?? '',
+          maidenName: initial.maidenName ?? '',
+          nicknames: (initial.nicknames ?? []).join(', '),
           gender: initial.gender ?? 'unspecified',
           birthYear: displayYear(initial.birthYear),
           birthMonth: initial.birthMonth ?? undefined,
@@ -71,14 +92,21 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
   });
 
   const handleFormSubmit = (values: FormValues) => {
+    const { nicknames, surname, maidenName, ...rest } = values;
+    const payload = {
+      ...rest,
+      surname: surname?.trim() || null,
+      maidenName: maidenName?.trim() || null,
+      nicknames: parseNicknames(nicknames),
+    };
     onSubmit(
       buddhistEra
         ? {
-            ...values,
+            ...payload,
             birthYear: toGregorianYear(values.birthYear),
             deathYear: values.deathYear != null ? toGregorianYear(values.deathYear) : values.deathYear,
           }
-        : values,
+        : payload,
     );
   };
 
@@ -88,6 +116,23 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
         <Label htmlFor="name">{t('person.name')} *</Label>
         <Input id="name" data-testid="name-input" {...register('name')} placeholder={t('person.namePlaceholder')} />
         {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>}
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label htmlFor="surname">{t('person.surname')}</Label>
+          <Input id="surname" data-testid="surname-input" {...register('surname')} placeholder={t('person.surnamePlaceholder')} />
+        </div>
+        <div>
+          <Label htmlFor="maidenName">{t('person.maidenName')}</Label>
+          <Input id="maidenName" data-testid="maiden-name-input" {...register('maidenName')} placeholder={t('person.maidenNamePlaceholder')} />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="nicknames">{t('person.nicknames')}</Label>
+        <Input id="nicknames" data-testid="nicknames-input" {...register('nicknames')} placeholder={t('person.nicknamesPlaceholder')} />
+        <p className="text-xs text-(--text-muted) mt-1">{t('person.nicknamesHelp')}</p>
       </div>
 
       <div>

@@ -17,6 +17,9 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
     id: row.id,
     treeId: row.treeId,
     name: row.name,
+    surname: row.surname ?? null,
+    maidenName: row.maidenName ?? null,
+    nicknames: row.nicknames ?? [],
     gender: row.gender ?? null,
     birthYear: row.birthYear ?? null,
     birthMonth: row.birthMonth ?? null,
@@ -64,6 +67,9 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
     .values({
       treeId: input.treeId,
       name: input.name,
+      surname: input.surname ?? null,
+      maidenName: input.maidenName ?? null,
+      nicknames: input.nicknames ?? [],
       gender: input.gender ?? null,
       birthYear: input.birthYear,
       birthMonth: input.birthMonth ?? null,
@@ -86,6 +92,9 @@ export async function updatePerson(id: number, treeId: number, input: UpdatePers
   const key = getKey();
   const updates: Partial<typeof persons.$inferInsert> = {};
   if (input.name !== undefined) updates.name = input.name;
+  if ('surname' in input) updates.surname = input.surname ?? null;
+  if ('maidenName' in input) updates.maidenName = input.maidenName ?? null;
+  if (input.nicknames !== undefined) updates.nicknames = input.nicknames;
   if ('gender' in input) updates.gender = input.gender ?? null;
   if (input.birthYear !== undefined) updates.birthYear = input.birthYear;
   if ('birthMonth' in input) updates.birthMonth = input.birthMonth ?? null;

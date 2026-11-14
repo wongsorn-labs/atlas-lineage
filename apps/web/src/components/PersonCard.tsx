@@ -82,7 +82,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
           <div className="min-w-0 flex-1">
             {/* Name */}
             <p className="flex items-center gap-1 font-display text-[15px] font-semibold leading-snug text-(--text-primary)">
-              <span className="truncate">{person.name}</span>
+              <span className="truncate">{[person.name, person.surname].filter(Boolean).join(' ')}</span>
               {person.gender === 'male' && (
                 <span className="flex-shrink-0 text-sm leading-none text-blue-400" aria-label={t('person.genders.male')}>♂</span>
               )}
@@ -101,7 +101,13 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
             {/* ID: needed to link this person from another tree */}
             <p className="text-[11px] leading-snug text-(--text-muted)" data-testid="person-id">
               {t('person.idLabel')} #{person.id}
+              {person.maidenName && <span> · {t('person.maidenNameLabel', { name: person.maidenName })}</span>}
             </p>
+            {(person.nicknames ?? []).length > 0 && (
+              <p className="truncate text-[11px] leading-snug text-(--text-muted)" data-testid="person-nicknames">
+                {t('person.nicknamesLabel', { names: (person.nicknames ?? []).join(', ') })}
+              </p>
+            )}
 
             {/* Lifespan */}
             {(person.birthYear || person.deathYear) && (

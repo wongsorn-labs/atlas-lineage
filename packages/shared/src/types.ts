@@ -5,6 +5,10 @@ export interface Person {
   id: number;
   treeId: number;
   name: string;
+  surname: string | null;
+  /** นามสกุลเดิม (e.g. before marriage). Optional; not required when the surname did not change. */
+  maidenName: string | null;
+  nicknames: string[];
   gender: Gender | null;
   birthYear: number | null;
   birthMonth: number | null;
@@ -34,6 +38,9 @@ export interface Relationship {
 export interface CreatePersonInput {
   treeId: number;
   name: string;
+  surname?: string | null;
+  maidenName?: string | null;
+  nicknames?: string[];
   gender?: Gender | null;
   birthYear: number;
   birthMonth?: number | null;

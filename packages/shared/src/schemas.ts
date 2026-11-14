@@ -8,6 +8,9 @@ const timeStringSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/
 export const CreatePersonSchema = z.object({
   treeId: z.number().int().positive(),
   name: z.string().min(1, 'Name is required'),
+  surname: z.string().max(100).nullable().optional(),
+  maidenName: z.string().max(100).nullable().optional(),
+  nicknames: z.array(z.string().min(1).max(50)).max(10).optional(),
   gender: GenderSchema.nullable().optional(),
   birthYear: z.number().int(),
   birthMonth: z.number().int().min(1).max(12).nullable().optional(),
