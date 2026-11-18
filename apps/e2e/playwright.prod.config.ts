@@ -9,8 +9,15 @@ import { PROD_URL } from './prod.e2e.config';
 export default defineConfig({
   testDir: './tests/prod',
   reporter: process.env.CI ? [['html', { open: 'never' }], ['github']] : 'list',
+  globalSetup: './tests/prod/global-setup.ts',
+  // Real network + a serverless API that can cold-start (see global-setup.ts)
+  // needs more headroom than the default 5s assertion timeout, which is
+  // tuned for the local suite's always-warm dev servers.
+  expect: { timeout: 15_000 },
   use: {
     baseURL: PROD_URL,
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
     ...(process.env.PLAYWRIGHT_CHROMIUM_PATH
       ? { launchOptions: { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } }
       : {}),
