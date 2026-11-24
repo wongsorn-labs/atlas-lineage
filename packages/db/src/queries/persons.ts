@@ -3,7 +3,24 @@ import { db } from '../client';
 import { persons } from '../schema';
 import { encryptField, decryptField } from '../crypto';
 import { findApprovedLinkedPersonIds } from './person-links';
-import type { Person, CreatePersonInput, UpdatePersonInput } from '@wongsorn-labs/atlas-lineage-shared';
+import type { Person, CreatePersonInput, UpdatePersonInput, PersonAttributes } from '@wongsorn-labs/atlas-lineage-shared';
+
+/** Attributes are stored as one encrypted JSON blob so new field definitions never need a migration. */
+function decodeAttributes(raw: string | null, key: string): PersonAttributes {
+  const json = decryptField(raw, key);
+  if (!json) return {};
+  try {
+    const parsed = JSON.parse(json);
+    return parsed && typeof parsed === 'object' ? (parsed as PersonAttributes) : {};
+  } catch {
+    return {};
+  }
+}
+
+function encodeAttributes(attrs: PersonAttributes | undefined, key: string): string | null {
+  if (!attrs || Object.keys(attrs).length === 0) return null;
+  return encryptField(JSON.stringify(attrs), key);
+}
 
 function getKey(): string {
   const key = process.env.ENCRYPTION_KEY;
@@ -17,6 +34,8 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
     id: row.id,
     treeId: row.treeId,
     name: row.name,
+    nickname: row.nickname ?? null,
+    attributes: decodeAttributes(row.attributes, key),
     gender: row.gender ?? null,
     birthYear: row.birthYear ?? null,
     birthMonth: row.birthMonth ?? null,
@@ -63,9 +82,11 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
     .insert(persons)
     .values({
       treeId: input.treeId,
-      name: input.name,
+      name: input.name?.trim() || input.nickname,
+      nickname: input.nickname,
+      attributes: encodeAttributes(input.attributes, key),
       gender: input.gender ?? null,
-      birthYear: input.birthYear,
+      birthYear: input.birthYear ?? null,
       birthMonth: input.birthMonth ?? null,
       birthDay: input.birthDay ?? null,
       birthTime: input.birthTime ?? null,
@@ -85,9 +106,11 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
 export async function updatePerson(id: number, treeId: number, input: UpdatePersonInput): Promise<Person | null> {
   const key = getKey();
   const updates: Partial<typeof persons.$inferInsert> = {};
-  if (input.name !== undefined) updates.name = input.name;
+  if (input.name !== undefined) updates.name = input.name ?? undefined;
+  if (input.nickname !== undefined) updates.nickname = input.nickname;
+  if (input.attributes !== undefined) updates.attributes = encodeAttributes(input.attributes, key);
   if ('gender' in input) updates.gender = input.gender ?? null;
-  if (input.birthYear !== undefined) updates.birthYear = input.birthYear;
+  if ('birthYear' in input) updates.birthYear = input.birthYear ?? null;
   if ('birthMonth' in input) updates.birthMonth = input.birthMonth ?? null;
   if ('birthDay' in input) updates.birthDay = input.birthDay ?? null;
   if ('birthTime' in input) updates.birthTime = input.birthTime ?? null;

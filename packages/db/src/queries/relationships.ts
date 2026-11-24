@@ -10,6 +10,7 @@ function mapRelationship(row: typeof relationships.$inferSelect): Relationship {
     personId: row.personId,
     relatedPersonId: row.relatedPersonId,
     type: row.type as Relationship['type'],
+    side: (row.side as Relationship['side']) ?? null,
     createdAt: row.createdAt?.toISOString() ?? '',
   };
 }
@@ -41,6 +42,7 @@ export async function createRelationship(input: CreateRelationshipInput): Promis
       personId: input.personId,
       relatedPersonId: input.relatedPersonId,
       type: input.type,
+      side: input.side ?? null,
     })
     .returning();
   return mapRelationship(row);

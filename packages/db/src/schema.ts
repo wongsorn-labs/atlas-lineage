@@ -5,6 +5,8 @@ import {
 export const treeRoleEnum = pgEnum('tree_role', ['owner', 'editor', 'viewer']);
 export const genderEnum = pgEnum('gender', ['male', 'female', 'unspecified']);
 export const personTreeLinkStatusEnum = pgEnum('person_tree_link_status', ['pending', 'approved']);
+export const fieldValueTypeEnum = pgEnum('field_value_type', ['text', 'number', 'date', 'longtext']);
+export const fieldVisibilityEnum = pgEnum('field_visibility', ['members', 'restricted']);
 
 export const profiles = pgTable('profiles', {
   id: text('id').primaryKey(),
@@ -40,6 +42,8 @@ export const persons = pgTable('persons', {
   id: serial('id').primaryKey(),
   treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
+  nickname: text('nickname'),
+  attributes: text('attributes'),
   gender: genderEnum('gender'),
   birthYear: integer('birth_year'),
   birthMonth: integer('birth_month'),
@@ -63,8 +67,23 @@ export const relationships = pgTable('relationships', {
   personId: integer('person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
   relatedPersonId: integer('related_person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
   type: text('type').notNull(),
+  side: text('side'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const fieldDefinitions = pgTable('field_definitions', {
+  id: serial('id').primaryKey(),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
+  key: text('key').notNull(),
+  label: text('label').notNull(),
+  category: text('category').notNull().default('general'),
+  valueType: fieldValueTypeEnum('value_type').notNull().default('text'),
+  visibility: fieldVisibilityEnum('visibility').notNull().default('members'),
+  createdBy: text('created_by').references(() => profiles.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at').defaultNow(),
+}, (table) => ({
+  fieldDefinitionsTreeKeyUidx: uniqueIndex('field_definitions_tree_key_uidx').on(table.treeId, table.key),
+}));
 
 export const personTrees = pgTable('person_trees', {
   id: serial('id').primaryKey(),

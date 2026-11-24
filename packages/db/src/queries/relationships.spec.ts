@@ -54,8 +54,8 @@ describe('relationship queries', () => {
       { type: 'or', conditions: [{ column: relationships.personId, value: 1 }, { column: relationships.relatedPersonId, value: 1 }] },
     );
     expect(result).toEqual([
-      { id: 1, treeId: 1, personId: 1, relatedPersonId: 2, type: 'parent', createdAt: '2024-01-01T00:00:00.000Z' },
-      { id: 2, treeId: 1, personId: 3, relatedPersonId: 1, type: 'sibling', createdAt: '2024-01-01T00:00:00.000Z' },
+      { id: 1, treeId: 1, personId: 1, relatedPersonId: 2, type: 'parent', side: null, createdAt: '2024-01-01T00:00:00.000Z' },
+      { id: 2, treeId: 1, personId: 3, relatedPersonId: 1, type: 'sibling', side: null, createdAt: '2024-01-01T00:00:00.000Z' },
     ]);
   });
 });
