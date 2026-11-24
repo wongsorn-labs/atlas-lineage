@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import type { FieldDefinition, Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { toBuddhistYear, toGregorianYear } from '@/lib/formatPartialDate';
+import { PhotoCropper } from './PhotoCropper';
 
 const GENDERS: Gender[] = ['male', 'female', 'unspecified'];
 
@@ -41,7 +42,7 @@ type FormValues = z.infer<typeof schema>;
 interface PersonFormProps {
   initial?: Person;
   fieldDefinitions?: FieldDefinition[];
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: FormValues & { photo: string | null }) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
@@ -51,6 +52,8 @@ export function PersonForm({ initial, fieldDefinitions = [], onSubmit, onCancel,
   const buddhistEra = i18n.language === 'th';
   const displayYear = (y: number | null | undefined) => (y == null ? undefined : buddhistEra ? toBuddhistYear(y) : y);
   const [hasDeathYear, setHasDeathYear] = useState(initial?.deathYear != null);
+  const [photo, setPhoto] = useState<string | null>(initial?.photo ?? null);
+  const [pendingSrc, setPendingSrc] = useState<string | null>(null);
   const { register, handleSubmit, setValue, control, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: initial
@@ -78,15 +81,21 @@ export function PersonForm({ initial, fieldDefinitions = [], onSubmit, onCancel,
   });
 
   const handleFormSubmit = (values: FormValues) => {
-    onSubmit(
-      buddhistEra
-        ? {
-            ...values,
-            birthYear: values.birthYear != null ? toGregorianYear(values.birthYear) : values.birthYear,
-            deathYear: values.deathYear != null ? toGregorianYear(values.deathYear) : values.deathYear,
-          }
-        : values,
-    );
+    const converted = buddhistEra
+      ? {
+          ...values,
+          birthYear: values.birthYear != null ? toGregorianYear(values.birthYear) : values.birthYear,
+          deathYear: values.deathYear != null ? toGregorianYear(values.deathYear) : values.deathYear,
+        }
+      : values;
+    onSubmit({ ...converted, photo });
+  };
+
+  const handleFileChosen = (file: File | undefined) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setPendingSrc(typeof reader.result === 'string' ? reader.result : null);
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -95,6 +104,44 @@ export function PersonForm({ initial, fieldDefinitions = [], onSubmit, onCancel,
         <Label htmlFor="nickname">{t('person.nickname', 'ชื่อที่เรียก')} *</Label>
         <Input id="nickname" data-testid="nickname-input" {...register('nickname')} placeholder={t('person.nicknamePlaceholder', 'เช่น ต้น')} />
         {errors.nickname && <p className="text-xs text-red-500 mt-1">{errors.nickname.message}</p>}
+      </div>
+
+      <div className="space-y-2">
+        <Label>{t('photo.label', 'รูปถ่าย')}</Label>
+        {pendingSrc ? (
+          <PhotoCropper
+            key={pendingSrc}
+            src={pendingSrc}
+            onConfirm={(dataUrl) => {
+              setPhoto(dataUrl);
+              setPendingSrc(null);
+            }}
+            onCancel={() => setPendingSrc(null)}
+          />
+        ) : (
+          <div className="flex items-center gap-3">
+            {photo ? (
+              <img src={photo} alt="" data-testid="photo-preview" className="h-16 w-16 rounded-full object-cover" />
+            ) : (
+              <span className="h-16 w-16 rounded-full bg-(--muted)" aria-hidden="true" />
+            )}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              data-testid="photo-input"
+              className="text-xs"
+              onChange={(e) => {
+                handleFileChosen(e.target.files?.[0]);
+                e.target.value = '';
+              }}
+            />
+            {photo && (
+              <button type="button" data-testid="photo-remove" className="text-xs text-red-500" onClick={() => setPhoto(null)}>
+                {t('photo.remove', 'ลบรูป')}
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div>

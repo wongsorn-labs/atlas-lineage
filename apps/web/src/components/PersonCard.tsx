@@ -79,7 +79,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
         />
 
         <div className="flex items-start gap-3.5">
-          <Avatar name={person.name} className="h-11 w-11 text-sm ring-2 ring-(--bg-card) ring-offset-1 ring-offset-(--border)" />
+          <Avatar name={person.name} photo={person.photo} className="h-11 w-11 text-sm ring-2 ring-(--bg-card) ring-offset-1 ring-offset-(--border)" />
 
           <div className="min-w-0 flex-1">
             {/* Name */}
