@@ -8,6 +8,7 @@
 - [x] Web: nickname-first PersonForm with dynamic fields; side select on parent/child relationships; field-definition dialog for owners; hierarchy view
 - [x] Web tests: PersonForm nickname-first and dynamic fields
 - [x] Verification: service flow against local Postgres (temporary spec, removed); Playwright smoke against dev server with mocked API (hierarchy rows, add person POST body, owner field dialog, no page errors)
+- [x] Photo: upload, square crop, resize to 150px JPEG in the browser; stored encrypted (migration 0009); JSON body limit raised to 300kb
 - [ ] Not done: friend and school groups as timelines
 - [ ] Not done: migration of existing production data (requires explicit approval and a backup first)
 - [ ] Not done: enforce `tree_members` roles (issue #9); owner check currently uses the tree role from membership
