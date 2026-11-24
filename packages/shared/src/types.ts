@@ -1,3 +1,5 @@
+import type { PersonAttributes, LineSide } from './family';
+
 export type RelationshipType = 'parent' | 'child' | 'sibling' | 'spouse' | 'partner';
 export type Gender = 'male' | 'female' | 'unspecified';
 
@@ -5,6 +7,8 @@ export interface Person {
   id: number;
   treeId: number;
   name: string;
+  nickname: string | null;
+  attributes: PersonAttributes;
   gender: Gender | null;
   birthYear: number | null;
   birthMonth: number | null;
@@ -28,14 +32,17 @@ export interface Relationship {
   personId: number;
   relatedPersonId: number;
   type: RelationshipType;
+  side: LineSide | null;
   createdAt: string;
 }
 
 export interface CreatePersonInput {
   treeId: number;
-  name: string;
+  name?: string | null;
+  nickname: string;
+  attributes?: PersonAttributes;
   gender?: Gender | null;
-  birthYear: number;
+  birthYear?: number | null;
   birthMonth?: number | null;
   birthDay?: number | null;
   birthTime?: string | null;
@@ -56,6 +63,7 @@ export interface CreateRelationshipInput {
   personId: number;
   relatedPersonId: number;
   type: RelationshipType;
+  side?: LineSide | null;
 }
 
 export type TreeRole = 'owner' | 'editor' | 'viewer';
