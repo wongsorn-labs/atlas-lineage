@@ -9,6 +9,7 @@ export interface Person {
   name: string;
   nickname: string | null;
   attributes: PersonAttributes;
+  photo: string | null;
   gender: Gender | null;
   birthYear: number | null;
   birthMonth: number | null;
@@ -41,6 +42,7 @@ export interface CreatePersonInput {
   name?: string | null;
   nickname: string;
   attributes?: PersonAttributes;
+  photo?: string | null;
   gender?: Gender | null;
   birthYear?: number | null;
   birthMonth?: number | null;

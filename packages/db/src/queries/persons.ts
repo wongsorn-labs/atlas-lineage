@@ -36,6 +36,7 @@ function mapPerson(row: typeof persons.$inferSelect): Person {
     name: row.name,
     nickname: row.nickname ?? null,
     attributes: decodeAttributes(row.attributes, key),
+    photo: decryptField(row.photo, key),
     gender: row.gender ?? null,
     birthYear: row.birthYear ?? null,
     birthMonth: row.birthMonth ?? null,
@@ -85,6 +86,7 @@ export async function createPerson(input: CreatePersonInput): Promise<Person> {
       name: input.name?.trim() || input.nickname,
       nickname: input.nickname,
       attributes: encodeAttributes(input.attributes, key),
+      photo: encryptField(input.photo ?? null, key),
       gender: input.gender ?? null,
       birthYear: input.birthYear ?? null,
       birthMonth: input.birthMonth ?? null,
@@ -109,6 +111,7 @@ export async function updatePerson(id: number, treeId: number, input: UpdatePers
   if (input.name !== undefined) updates.name = input.name ?? undefined;
   if (input.nickname !== undefined) updates.nickname = input.nickname;
   if (input.attributes !== undefined) updates.attributes = encodeAttributes(input.attributes, key);
+  if ('photo' in input) updates.photo = encryptField(input.photo ?? null, key);
   if ('gender' in input) updates.gender = input.gender ?? null;
   if ('birthYear' in input) updates.birthYear = input.birthYear ?? null;
   if ('birthMonth' in input) updates.birthMonth = input.birthMonth ?? null;

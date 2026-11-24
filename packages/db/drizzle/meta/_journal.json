@@ -64,6 +64,13 @@
       "when": 1795548056986,
       "tag": "0008_family_memory_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795548846431,
+      "tag": "0009_person_photo",
+      "breakpoints": true
     }
   ]
 }

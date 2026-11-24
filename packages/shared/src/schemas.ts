@@ -6,6 +6,13 @@ export const LineSideSchema = z.enum(['paternal', 'maternal']);
 export const FieldValueTypeSchema = z.enum(['text', 'number', 'date', 'longtext']);
 export const FieldVisibilitySchema = z.enum(['members', 'restricted']);
 
+/** Client resizes to a square no larger than 150px; the server only checks type and size. */
+export const PHOTO_MAX_CHARS = 200_000;
+export const PhotoDataUrlSchema = z
+  .string()
+  .max(PHOTO_MAX_CHARS, 'Photo is too large')
+  .regex(/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/, 'Photo must be a jpeg, png or webp data URL');
+
 export const PersonAttributesSchema = z.record(z.string(), z.union([z.string(), z.number(), z.null()]));
 
 const timeStringSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/, 'Use HH:MM');
@@ -15,6 +22,7 @@ export const CreatePersonSchema = z.object({
   name: z.string().max(200).nullable().optional(),
   nickname: z.string().min(1, 'Nickname is required').max(60),
   attributes: PersonAttributesSchema.optional(),
+  photo: PhotoDataUrlSchema.nullable().optional(),
   gender: GenderSchema.nullable().optional(),
   birthYear: z.number().int().nullable().optional(),
   birthMonth: z.number().int().min(1).max(12).nullable().optional(),

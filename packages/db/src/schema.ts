@@ -44,6 +44,7 @@ export const persons = pgTable('persons', {
   name: text('name').notNull(),
   nickname: text('nickname'),
   attributes: text('attributes'),
+  photo: text('photo'),
   gender: genderEnum('gender'),
   birthYear: integer('birth_year'),
   birthMonth: integer('birth_month'),
