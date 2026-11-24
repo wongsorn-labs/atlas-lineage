@@ -12,7 +12,10 @@ import {
   HttpStatus,
   Inject,
   UseGuards,
+  Req,
 } from '@nestjs/common';
+import type { Request } from 'express';
+import type { TreeRole } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonsService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
@@ -26,14 +29,18 @@ export class PersonsController {
 
   @Get()
   @RequireRoles('viewer')
-  findAll(@Query('treeId', ParseIntPipe) treeId: number) {
-    return this.personsService.findAll(treeId);
+  findAll(@Query('treeId', ParseIntPipe) treeId: number, @Req() req: Request & { treeRole?: TreeRole }) {
+    return this.personsService.findAll(treeId, req.treeRole);
   }
 
   @Get(':id')
   @RequireRoles('viewer')
-  findOne(@Param('id', ParseIntPipe) id: number, @Query('treeId', ParseIntPipe) treeId: number) {
-    return this.personsService.findOne(id, treeId);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('treeId', ParseIntPipe) treeId: number,
+    @Req() req: Request & { treeRole?: TreeRole },
+  ) {
+    return this.personsService.findOne(id, treeId, req.treeRole);
   }
 
   @Post()

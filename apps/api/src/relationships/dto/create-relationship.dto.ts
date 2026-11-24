@@ -1,4 +1,4 @@
-import { IsInt, IsPositive, IsEnum } from 'class-validator';
+import { IsInt, IsPositive, IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateRelationshipDto {
@@ -19,4 +19,8 @@ export class CreateRelationshipDto {
 
   @IsEnum(['parent', 'child', 'sibling', 'spouse', 'partner'])
   type: string;
+
+  @IsOptional()
+  @IsIn(['paternal', 'maternal'])
+  side?: 'paternal' | 'maternal' | null;
 }

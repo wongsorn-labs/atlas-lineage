@@ -19,7 +19,7 @@ export class TreeMemberGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest<Request & { user?: { id: string } }>();
+    const req = context.switchToHttp().getRequest<Request & { user?: { id: string }; treeRole?: TreeRole }>();
     const userId = req.user?.id;
     if (!userId) throw new ForbiddenException('No authenticated user');
 
@@ -28,6 +28,7 @@ export class TreeMemberGuard implements CanActivate {
 
     const role = await this.treesService.getMemberRole(treeId, userId);
     if (!role) throw new NotFoundException('Tree not found or no access');
+    req.treeRole = role;
 
     const required = this.reflector.get<TreeRole[]>(REQUIRED_ROLES_KEY, context.getHandler()) ?? [];
     if (required.length === 0) return true;

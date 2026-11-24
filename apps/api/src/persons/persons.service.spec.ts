@@ -29,8 +29,8 @@ describe('PersonsService', () => {
     service = module.get<PersonsService>(PersonsService);
   });
 
-  it('findAll returns array', () => {
-    expect(service.findAll(1)).toEqual([mockPerson]);
+  it('findAll returns array', async () => {
+    await expect(service.findAll(1)).resolves.toEqual([mockPerson]);
   });
 
   it('findOne returns person when found', async () => {

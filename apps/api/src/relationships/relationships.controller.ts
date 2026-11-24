@@ -28,6 +28,15 @@ export class RelationshipsController {
     return this.relationshipsService.findAll(treeId);
   }
 
+  @Get('hierarchy')
+  @RequireRoles('viewer')
+  hierarchy(
+    @Query('treeId', ParseIntPipe) treeId: number,
+    @Query('rootId', ParseIntPipe) rootId: number,
+  ) {
+    return this.relationshipsService.hierarchy(treeId, rootId);
+  }
+
   @Get('person/:personId')
   @RequireRoles('viewer')
   findByPerson(

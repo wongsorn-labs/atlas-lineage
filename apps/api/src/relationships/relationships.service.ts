@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
+  findAllPersons,
   findAllRelationships,
   findRelationshipsByPerson,
   findPersonById,
@@ -7,6 +8,7 @@ import {
   deleteRelationship,
 } from '@wongsorn-labs/atlas-lineage-db';
 import type { CreateRelationshipDto } from './dto/create-relationship.dto';
+import { buildHierarchy } from '@wongsorn-labs/atlas-lineage-shared';
 import type { RelationshipType } from '@wongsorn-labs/atlas-lineage-shared';
 
 @Injectable()
@@ -17,6 +19,22 @@ export class RelationshipsService {
 
   findByPerson(personId: number, treeId: number) {
     return findRelationshipsByPerson(personId, treeId);
+  }
+
+  /** Kinship tree centred on `rootId`, with labels such as พ่อ, แม่, ปู่/ตา resolved from the stored sides. */
+  async hierarchy(treeId: number, rootId: number) {
+    const [people, relationships] = await Promise.all([findAllPersons(treeId), findAllRelationships(treeId)]);
+    if (!people.some((p) => p.id === rootId)) throw new NotFoundException(`Person #${rootId} not found`);
+    const byId = new Map(people.map((p) => [p.id, p]));
+    const nodes = buildHierarchy(
+      rootId,
+      people.map((p) => ({ id: p.id, name: p.name, nickname: p.nickname, gender: p.gender })),
+      relationships.map((r) => ({ personId: r.personId, relatedPersonId: r.relatedPersonId, type: r.type, side: r.side })),
+    );
+    return nodes.map((n) => {
+      const person = byId.get(n.personId)!;
+      return { ...n, name: person.name, nickname: person.nickname };
+    });
   }
 
   async create(dto: CreateRelationshipDto) {
@@ -32,6 +50,7 @@ export class RelationshipsService {
       personId: dto.personId,
       relatedPersonId: dto.relatedPersonId,
       type: dto.type as RelationshipType,
+      side: dto.side ?? null,
     });
   }
 
