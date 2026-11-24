@@ -5,6 +5,8 @@ import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { PersonCard } from './PersonCard';
 import { PersonForm } from './PersonForm';
 import { useCreatePerson } from '@/hooks/usePersons';
+import { useFieldDefinitions } from '@/hooks/useFieldDefinitions';
+import { FieldDefinitionsDialog } from './FieldDefinitionsDialog';
 import { Avatar } from './ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useAuth } from '../contexts/AuthContext';
@@ -29,7 +31,8 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
   const [showFilters, setShowFilters] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const { signOut, user } = useAuth();
-  const { currentTreeId } = useTree();
+  const { currentTreeId, currentTree } = useTree();
+  const { data: fieldDefinitions = [] } = useFieldDefinitions(currentTreeId);
   const createPerson = useCreatePerson(currentTreeId);
 
   const filtered = useMemo(() => {
@@ -156,6 +159,7 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
               <DialogTitle>{t('person.addTitle')}</DialogTitle>
             </DialogHeader>
             <PersonForm
+              fieldDefinitions={fieldDefinitions}
               onSubmit={async (values) => {
                 await createPerson.mutateAsync(values);
                 setAddOpen(false);
@@ -165,6 +169,9 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
             />
           </DialogContent>
         </Dialog>
+        <div className="absolute bottom-20 left-4 z-(--z-dropdown)">
+          <FieldDefinitionsDialog treeId={currentTreeId} canEdit={currentTree?.role === 'owner'} />
+        </div>
       </div>
 
       {/* Footer */}

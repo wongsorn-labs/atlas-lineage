@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import type { Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
+import type { FieldDefinition, Gender, Person } from '@wongsorn-labs/atlas-lineage-shared';
 import { toBuddhistYear, toGregorianYear } from '@/lib/formatPartialDate';
 
 const GENDERS: Gender[] = ['male', 'female', 'unspecified'];
@@ -18,9 +18,11 @@ const toNum = (v: unknown) => (v === '' || v == null ? undefined : Number(v));
 const toUndefIfEmpty = (v: unknown) => (v === '' || v == null ? undefined : v);
 
 const schema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  nickname: z.string().trim().min(1, 'Nickname is required'),
+  name: z.string().optional(),
+  attributes: z.record(z.string(), z.string().nullable()).optional(),
   gender: z.enum(['male', 'female', 'unspecified']).nullable().optional(),
-  birthYear: z.preprocess(toNum, z.number({ required_error: 'Birth year is required' }).int().positive()),
+  birthYear: z.preprocess(toNum, z.number().int().positive().nullable().optional()),
   birthMonth: z.preprocess(toNum, z.number().int().min(1).max(12).nullable().optional()),
   birthDay: z.preprocess(toNum, z.number().int().min(1).max(31).nullable().optional()),
   birthTime: z.preprocess(toUndefIfEmpty, z.string().optional()),
@@ -38,12 +40,13 @@ type FormValues = z.infer<typeof schema>;
 
 interface PersonFormProps {
   initial?: Person;
+  fieldDefinitions?: FieldDefinition[];
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFormProps) {
+export function PersonForm({ initial, fieldDefinitions = [], onSubmit, onCancel, isLoading }: PersonFormProps) {
   const { t, i18n } = useTranslation();
   const buddhistEra = i18n.language === 'th';
   const displayYear = (y: number | null | undefined) => (y == null ? undefined : buddhistEra ? toBuddhistYear(y) : y);
@@ -52,7 +55,11 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
     resolver: zodResolver(schema),
     defaultValues: initial
       ? {
+          nickname: initial.nickname ?? initial.name,
           name: initial.name,
+          attributes: Object.fromEntries(
+            Object.entries(initial.attributes ?? {}).map(([k, v]) => [k, v == null ? null : String(v)]),
+          ),
           gender: initial.gender ?? 'unspecified',
           birthYear: displayYear(initial.birthYear),
           birthMonth: initial.birthMonth ?? undefined,
@@ -75,7 +82,7 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
       buddhistEra
         ? {
             ...values,
-            birthYear: toGregorianYear(values.birthYear),
+            birthYear: values.birthYear != null ? toGregorianYear(values.birthYear) : values.birthYear,
             deathYear: values.deathYear != null ? toGregorianYear(values.deathYear) : values.deathYear,
           }
         : values,
@@ -85,9 +92,14 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
       <div>
-        <Label htmlFor="name">{t('person.name')} *</Label>
+        <Label htmlFor="nickname">{t('person.nickname', 'ชื่อที่เรียก')} *</Label>
+        <Input id="nickname" data-testid="nickname-input" {...register('nickname')} placeholder={t('person.nicknamePlaceholder', 'เช่น ต้น')} />
+        {errors.nickname && <p className="text-xs text-red-500 mt-1">{errors.nickname.message}</p>}
+      </div>
+
+      <div>
+        <Label htmlFor="name">{t('person.name')}</Label>
         <Input id="name" data-testid="name-input" {...register('name')} placeholder={t('person.namePlaceholder')} />
-        {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>}
       </div>
 
       <div>
@@ -115,7 +127,7 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
       </div>
 
       <div>
-        <Label htmlFor="birthYear">{t('person.birthYear')} {buddhistEra && '(พ.ศ.)'} *</Label>
+        <Label htmlFor="birthYear">{t('person.birthYear')} {buddhistEra && '(พ.ศ.)'}</Label>
         <div className="grid grid-cols-4 gap-2">
           <Input id="birthYear" data-testid="birth-year-input" type="number" {...register('birthYear')} placeholder={buddhistEra ? '2443' : '1900'} />
           <Input data-testid="birth-month-input" type="number" min={1} max={12} {...register('birthMonth')} placeholder={t('person.month')} />
@@ -166,6 +178,28 @@ export function PersonForm({ initial, onSubmit, onCancel, isLoading }: PersonFor
           {errors.birthLng && <p className="text-xs text-red-500 mt-1">{errors.birthLng.message}</p>}
         </div>
       </div>
+
+      {fieldDefinitions.length > 0 && (
+        <div className="space-y-3 rounded-lg border border-(--border) p-3" data-testid="attribute-fields">
+          {fieldDefinitions.map((def) => (
+            <div key={def.key}>
+              <Label htmlFor={`attr-${def.key}`}>
+                {def.label} <span className="text-xs text-(--text-muted)">({def.category})</span>
+              </Label>
+              {def.valueType === 'longtext' ? (
+                <Textarea id={`attr-${def.key}`} rows={2} {...register(`attributes.${def.key}`)} />
+              ) : (
+                <Input
+                  id={`attr-${def.key}`}
+                  type={def.valueType === 'number' ? 'number' : 'text'}
+                  placeholder={def.valueType === 'date' ? 'YYYY หรือ YYYY-MM-DD' : undefined}
+                  {...register(`attributes.${def.key}`)}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div>
         <Label htmlFor="birthPlace">{t('person.birthPlace')}</Label>

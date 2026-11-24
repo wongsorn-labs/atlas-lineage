@@ -9,6 +9,7 @@ import { Badge } from './ui/badge';
 import { ConfirmDialog } from './ui/confirm-dialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { useDeletePerson, useUpdatePerson, usePersons } from '../hooks/usePersons';
+import { useFieldDefinitions } from '../hooks/useFieldDefinitions';
 import { useCreateRelationship, useDeleteRelationship, useRelationshipsForPerson } from '../hooks/useRelationships';
 import { usePersonLink, useUnlinkPersonTree } from '../hooks/usePersonLinks';
 import { useTree } from '../contexts/TreeContext';
@@ -42,6 +43,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
   const createRel = useCreateRelationship(currentTreeId);
   const deleteRel = useDeleteRelationship(currentTreeId);
   const { data: allPersons = [] } = usePersons(currentTreeId);
+  const { data: fieldDefinitions = [] } = useFieldDefinitions(currentTreeId);
   const { data: relationships = [] } = useRelationshipsForPerson(person.id, currentTreeId);
 
   const isLinked = currentTreeId != null && person.treeId !== currentTreeId;
@@ -231,6 +233,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
           </DialogHeader>
           <PersonForm
             initial={person}
+            fieldDefinitions={fieldDefinitions}
             onSubmit={async (values) => {
               await updatePerson.mutateAsync({ id: person.id, data: values });
               setEditOpen(false);
@@ -254,6 +257,7 @@ export function PersonCard({ person, isSelected, onSelect }: PersonCardProps) {
                 personId: person.id,
                 relatedPersonId: Number(values.relatedPersonId),
                 type: values.type,
+                side: values.side ?? null,
               });
               setRelOpen(false);
             }}

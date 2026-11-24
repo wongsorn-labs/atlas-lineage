@@ -12,6 +12,8 @@ import type {
   TreeMember,
   PersonTreeLink,
   UpdateProfileSettingsInput,
+  FieldDefinition,
+  HierarchyNode,
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
@@ -19,6 +21,13 @@ let refreshPromise: Promise<boolean> | null = null;
 
 export type CreatePersonRequest = Omit<CreatePersonInput, 'treeId'>;
 export type CreateRelationshipRequest = Omit<CreateRelationshipInput, 'treeId'>;
+export interface CreateFieldDefinitionRequest {
+  label: string;
+  category?: string;
+  valueType?: FieldDefinition['valueType'];
+  visibility?: FieldDefinition['visibility'];
+}
+export type HierarchyEntry = HierarchyNode & { name: string; nickname: string | null };
 
 function refreshSession(): Promise<boolean> {
   if (!refreshPromise) {
@@ -136,5 +145,14 @@ export const api = {
         body: JSON.stringify({ ...data, treeId }),
       }),
     delete: (id: number, treeId: number) => request<void>(`/relationships/${id}?treeId=${treeId}`, { method: 'DELETE' }),
+    hierarchy: (treeId: number, rootId: number) =>
+      request<HierarchyEntry[]>(`/relationships/hierarchy?treeId=${treeId}&rootId=${rootId}`),
+  },
+  fieldDefinitions: {
+    list: (treeId: number) => request<FieldDefinition[]>(`/field-definitions?treeId=${treeId}`),
+    create: (treeId: number, data: CreateFieldDefinitionRequest) =>
+      request<FieldDefinition>(`/field-definitions?treeId=${treeId}`, { method: 'POST', body: JSON.stringify(data) }),
+    delete: (id: number, treeId: number) =>
+      request<void>(`/field-definitions/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
 };

@@ -23,7 +23,10 @@ export function useCreateRelationship(treeId: number | null) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateRelationshipRequest) => api.relationships.create(data, treeId as number),
-    onSuccess: () => qc.invalidateQueries({ queryKey: KEY(treeId) }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: KEY(treeId) });
+      void qc.invalidateQueries({ queryKey: ['hierarchy', treeId] });
+    },
   });
 }
 

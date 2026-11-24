@@ -28,12 +28,43 @@ describe('PersonForm', () => {
     expect(screen.queryByTestId('death-year-input')).not.toBeInTheDocument();
   });
 
-  it('shows "Name is required" error on empty submit', async () => {
+  it('shows "Nickname is required" error on empty submit', async () => {
     const user = userEvent.setup();
     render(<PersonForm onSubmit={noop} onCancel={noop} />);
     await user.click(screen.getByRole('button', { name: /add person/i }));
     await waitFor(() => {
-      expect(screen.getByText('Name is required')).toBeInTheDocument();
+      expect(screen.getByText('Nickname is required')).toBeInTheDocument();
+    });
+  });
+
+  it('submits with only a nickname (birth year optional)', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(<PersonForm onSubmit={onSubmit} onCancel={noop} />);
+    await user.type(screen.getByTestId('nickname-input'), 'ต้น');
+    await user.click(screen.getByRole('button', { name: /add person/i }));
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ nickname: 'ต้น' }));
+    });
+  });
+
+  it('renders dynamic fields from the tree definitions and submits their values', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(
+      <PersonForm
+        onSubmit={onSubmit}
+        onCancel={noop}
+        fieldDefinitions={[
+          { id: 1, treeId: 1, key: 'school', label: 'โรงเรียน', category: 'education', valueType: 'text', visibility: 'members', createdBy: null, createdAt: '' },
+        ]}
+      />,
+    );
+    await user.type(screen.getByTestId('nickname-input'), 'ต้น');
+    await user.type(screen.getByLabelText(/โรงเรียน/), 'ม.4');
+    await user.click(screen.getByRole('button', { name: /add person/i }));
+    await waitFor(() => {
+      expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ attributes: { school: 'ม.4' } }));
     });
   });
 
@@ -41,12 +72,12 @@ describe('PersonForm', () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
     render(<PersonForm onSubmit={onSubmit} onCancel={noop} />);
-    await user.type(screen.getByTestId('name-input'), 'Ada Lovelace');
+    await user.type(screen.getByTestId('nickname-input'), 'Ada');
     await user.type(screen.getByTestId('birth-year-input'), '1815');
     await user.click(screen.getByRole('button', { name: /add person/i }));
     await waitFor(() => {
       expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ name: 'Ada Lovelace', birthYear: 1815 }),
+        expect.objectContaining({ nickname: 'Ada', birthYear: 1815 }),
       );
     });
   });
@@ -64,7 +95,7 @@ describe('PersonForm', () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
     render(<PersonForm onSubmit={onSubmit} onCancel={noop} />);
-    await user.type(screen.getByTestId('name-input'), 'Somchai');
+    await user.type(screen.getByTestId('nickname-input'), 'Somchai');
     await user.type(screen.getByTestId('birth-year-input'), '2533');
     await user.click(screen.getByRole('button', { name: /add person/i }));
     await waitFor(() => {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2, Map as MapIcon, Menu, Network } from 'lucide-react';
+import { AlertCircle, Loader2, Map as MapIcon, Menu, Network, GitBranch } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FamilyChart } from './components/FamilyChart';
 import { MapView } from './components/MapView';
+import { HierarchyView } from './components/HierarchyView';
 import { Sidebar } from './components/Sidebar';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
@@ -19,7 +20,7 @@ export default function App() {
   const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'map' | 'chart'>('map');
+  const [viewMode, setViewMode] = useState<'map' | 'chart' | 'hierarchy'>('hierarchy');
   const { t } = useTranslation();
 
   const persons = personsQuery.data ?? [];
@@ -157,9 +158,22 @@ export default function App() {
             <Network className="size-4.5" />
             {t('chart.chartView')}
           </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('hierarchy')}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === 'hierarchy' ? 'bg-(--gold) text-(--text-primary)' : 'text-(--text-muted) hover:text-(--text-primary)'
+            }`}
+            aria-pressed={viewMode === 'hierarchy'}
+          >
+            <GitBranch className="size-4.5" />
+            {t('chart.hierarchyView', 'ลำดับชั้น')}
+          </button>
         </div>
 
-        {viewMode === 'map' ? (
+        {viewMode === 'hierarchy' ? (
+          <HierarchyView treeId={currentTreeId} persons={persons} />
+        ) : viewMode === 'map' ? (
           <MapView
             persons={persons}
             relationships={relationships}

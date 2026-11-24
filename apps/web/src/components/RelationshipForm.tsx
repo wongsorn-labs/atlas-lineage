@@ -10,6 +10,7 @@ const TYPES: RelationshipType[] = ['parent', 'child', 'sibling', 'spouse', 'part
 interface RelationshipFormValues {
   relatedPersonId: string;
   type: RelationshipType;
+  side?: 'paternal' | 'maternal' | null;
 }
 
 interface RelationshipFormProps {
@@ -28,7 +29,8 @@ export function RelationshipForm({
   isLoading,
 }: RelationshipFormProps) {
   const { t } = useTranslation();
-  const { handleSubmit, control, formState: { errors } } = useForm<RelationshipFormValues>();
+  const { handleSubmit, control, watch, formState: { errors } } = useForm<RelationshipFormValues>();
+  const type = watch('type');
 
   const others = allPersons.filter((p) => p.id !== currentPerson.id);
 
@@ -63,6 +65,28 @@ export function RelationshipForm({
         />
         {errors.type && <p className="text-xs text-red-500 mt-1">Required</p>}
       </div>
+
+      {(type === 'parent' || type === 'child') && (
+        <div>
+          <Label>{t('relationship.side', 'ฝั่งของครอบครัว')}</Label>
+          <Controller
+            name="side"
+            control={control}
+            render={({ field }) => (
+              <select
+                data-testid="relationship-side-select"
+                className="h-8 w-full rounded-lg border border-(--border) bg-transparent px-2 text-sm"
+                value={field.value ?? ''}
+                onChange={(e) => field.onChange(e.target.value || null)}
+              >
+                <option value="">{t('relationship.sideUnknown', 'ไม่ระบุ')}</option>
+                <option value="paternal">{t('relationship.sidePaternal', 'ฝั่งพ่อ')}</option>
+                <option value="maternal">{t('relationship.sideMaternal', 'ฝั่งแม่')}</option>
+              </select>
+            )}
+          />
+        </div>
+      )}
 
       <div>
         <Label>{t('relationship.relatedPerson')}</Label>
