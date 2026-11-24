@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { PersonsModule } from './persons.module';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
@@ -19,7 +20,7 @@ jest.mock('@wongsorn-labs/atlas-lineage-db', () => ({
 }));
 
 describe('PersonsController (integration)', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,7 +34,8 @@ describe('PersonsController (integration)', () => {
       .useValue({})
       .compile();
 
-    app = module.createNestApplication();
+    app = module.createNestApplication<NestExpressApplication>({ bodyParser: false });
+    app.useBodyParser('json', { limit: '300kb' });
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
     app.useGlobalFilters(new HttpExceptionFilter());
@@ -54,6 +56,24 @@ describe('PersonsController (integration)', () => {
 
   it('POST /api/persons {treeId:1, nickname:"Ada"} without birthYear → 201 (nickname-first)', () =>
     request(app.getHttpServer()).post('/api/persons').send({ treeId: 1, nickname: 'Ada' }).expect(201));
+
+  it('POST /api/persons with a jpeg data URL photo → 201', () =>
+    request(app.getHttpServer())
+      .post('/api/persons')
+      .send({ treeId: 1, nickname: 'Ada', photo: 'data:image/jpeg;base64,/9j/4AAQ' })
+      .expect(201));
+
+  it('POST /api/persons with a non-image photo → 400', () =>
+    request(app.getHttpServer())
+      .post('/api/persons')
+      .send({ treeId: 1, nickname: 'Ada', photo: 'data:text/html;base64,PGgxPg==' })
+      .expect(400));
+
+  it('POST /api/persons with an oversized photo → 400', () =>
+    request(app.getHttpServer())
+      .post('/api/persons')
+      .send({ treeId: 1, nickname: 'Ada', photo: 'data:image/png;base64,' + 'A'.repeat(200_001) })
+      .expect(400));
 
   it('POST /api/persons missing treeId → 400', () =>
     request(app.getHttpServer()).post('/api/persons').send({ nickname: 'Ada', birthYear: 1815 }).expect(400));

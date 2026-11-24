@@ -1,4 +1,5 @@
-import { IsString, IsNumber, IsObject, IsOptional, IsIn, Matches, Min, Max, IsInt } from 'class-validator';
+import { IsString, IsNumber, IsObject, IsOptional, IsIn, Matches, Min, Max, IsInt, MaxLength } from 'class-validator';
+import { PHOTO_MAX_CHARS } from '@wongsorn-labs/atlas-lineage-shared';
 import { Type } from 'class-transformer';
 
 const GENDERS = ['male', 'female', 'unspecified'] as const;
@@ -16,6 +17,11 @@ export class UpdatePersonDto {
   @IsOptional()
   @IsObject()
   attributes?: Record<string, string | number | null>;
+
+  @IsOptional()
+  @MaxLength(PHOTO_MAX_CHARS)
+  @Matches(/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/, { message: 'photo must be a jpeg, png or webp data URL' })
+  photo?: string | null;
 
   @IsOptional()
   @IsIn(GENDERS)
