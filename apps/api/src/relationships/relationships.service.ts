@@ -33,7 +33,7 @@ export class RelationshipsService {
     );
     return nodes.map((n) => {
       const person = byId.get(n.personId)!;
-      return { ...n, name: person.name, nickname: person.nickname };
+      return { ...n, name: person.name, nickname: person.nickname, photo: person.photo };
     });
   }
 
