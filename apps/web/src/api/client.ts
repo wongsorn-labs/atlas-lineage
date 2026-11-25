@@ -27,7 +27,7 @@ export interface CreateFieldDefinitionRequest {
   valueType?: FieldDefinition['valueType'];
   visibility?: FieldDefinition['visibility'];
 }
-export type HierarchyEntry = HierarchyNode & { name: string; nickname: string | null };
+export type HierarchyEntry = HierarchyNode & { name: string; nickname: string | null; photo: string | null };
 
 function refreshSession(): Promise<boolean> {
   if (!refreshPromise) {

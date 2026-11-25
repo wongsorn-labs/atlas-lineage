@@ -49,7 +49,12 @@ export function HierarchyView({ treeId, persons }: HierarchyViewProps) {
               style={{ marginLeft: `${Math.max(0, n.generation + 2) * 12}px` }}
             >
               <span className="font-medium">{n.label}</span>
-              <span className="text-(--text-secondary)">{n.nickname ?? n.name}</span>
+              <span className="flex items-center gap-2 text-(--text-secondary)">
+                {n.photo ? (
+                  <img src={n.photo} alt="" className="h-7 w-7 rounded-full object-cover" style={{ maxWidth: 150, maxHeight: 150 }} />
+                ) : null}
+                {n.nickname ?? n.name}
+              </span>
             </li>
           ))}
         </ul>

@@ -57,7 +57,26 @@ function PersonMark({
           strokeWidth={1.5}
         />
       )}
-      <circle cx={CARD_WIDTH / 2} cy={26} r={22} fill={bg} />
+      {person.photo ? (
+        <>
+          <defs>
+            <clipPath id={`photo-clip-${person.id}`}>
+              <circle cx={CARD_WIDTH / 2} cy={26} r={22} />
+            </clipPath>
+          </defs>
+          <image
+            href={person.photo}
+            x={CARD_WIDTH / 2 - 22}
+            y={4}
+            width={44}
+            height={44}
+            preserveAspectRatio="xMidYMid slice"
+            clipPath={`url(#photo-clip-${person.id})`}
+          />
+        </>
+      ) : (
+        <circle cx={CARD_WIDTH / 2} cy={26} r={22} fill={bg} />
+      )}
       <text
         x={CARD_WIDTH / 2}
         y={26}
