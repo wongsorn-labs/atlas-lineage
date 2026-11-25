@@ -117,9 +117,12 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
       </div>
 
       {/* Person count */}
-      <div className="px-4 py-2 text-xs text-(--text-muted)">
-        {t('sidebar.peopleCount', { count: filtered.length })}
-        {(search || yearFrom || yearTo) ? t('sidebar.filteredFrom', { count: persons.length }) : ''}
+      <div className="flex items-center justify-between px-4 py-2 text-xs text-(--text-muted)">
+        <span>
+          {t('sidebar.peopleCount', { count: filtered.length })}
+          {(search || yearFrom || yearTo) ? t('sidebar.filteredFrom', { count: persons.length }) : ''}
+        </span>
+        <FieldDefinitionsDialog treeId={currentTreeId} canEdit={currentTree?.role === 'owner'} />
       </div>
 
       {/* Person list */}
@@ -169,9 +172,6 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
             />
           </DialogContent>
         </Dialog>
-        <div className="absolute bottom-20 left-4 z-(--z-dropdown)">
-          <FieldDefinitionsDialog treeId={currentTreeId} canEdit={currentTree?.role === 'owner'} />
-        </div>
       </div>
 
       {/* Footer */}
