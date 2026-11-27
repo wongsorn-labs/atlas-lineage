@@ -54,34 +54,35 @@ const makePerson = (id: number, name: string, overrides: Partial<Person> = {}): 
 });
 
 describe('Sidebar', () => {
-  it('shows empty state when persons is empty', () => {
-    render(<Sidebar persons={[]} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
-    expect(screen.getByText('No people found')).toBeInTheDocument();
-  });
 
-  it('renders person names when persons provided', () => {
-    const persons = [makePerson(1, 'Ada Lovelace'), makePerson(2, 'Grace Hopper')];
-    render(<Sidebar persons={persons} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
-    expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
-    expect(screen.getByText('Grace Hopper')).toBeInTheDocument();
-  });
 
-  it('renders a PersonCard for each person', () => {
-    const persons = [makePerson(1, 'Ada Lovelace')];
-    render(<Sidebar persons={persons} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
-    expect(screen.getByTestId('person-item-1')).toBeInTheDocument();
-  });
 
-  it('filters persons by search input', async () => {
+  it('shows matches only while typing, and selecting one selects that person', async () => {
+    const onSelect = vi.fn();
     const mockPersons = [
       { id: 1, name: 'Alice', birthYear: 1990, deathYear: null, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '', updatedAt: '' },
       { id: 2, name: 'Bob', birthYear: 1985, deathYear: null, birthLat: null, birthLng: null, birthPlace: null, notes: null, createdAt: '', updatedAt: '' },
     ];
-    render(<Sidebar persons={mockPersons} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
-    const searchInput = screen.getByPlaceholderText('Search people…');
-    await userEvent.type(searchInput, 'Alice');
-    expect(screen.getByText('Alice')).toBeInTheDocument();
-    expect(screen.queryByText('Bob')).not.toBeInTheDocument();
+    render(<Sidebar persons={mockPersons} selectedPerson={null} onSelectPerson={onSelect} />, { wrapper });
+    expect(screen.queryByTestId('person-search-results')).not.toBeInTheDocument();
+    await userEvent.type(screen.getByTestId('person-search'), 'Alice');
+    const results = screen.getByTestId('person-search-results');
+    expect(results).toHaveTextContent('Alice');
+    expect(results).not.toHaveTextContent('Bob');
+    await userEvent.click(screen.getByRole('button', { name: /Alice/ }));
+    expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
+  });
+
+  it('shows the no-results message when nothing matches', async () => {
+    render(<Sidebar persons={[makePerson(1, 'Ada Lovelace')]} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
+    await userEvent.type(screen.getByTestId('person-search'), 'zzz');
+    expect(screen.getByText('No people found')).toBeInTheDocument();
+  });
+
+  it('does not render a list of people', () => {
+    render(<Sidebar persons={[makePerson(1, 'Ada Lovelace')]} selectedPerson={null} onSelectPerson={vi.fn()} />, { wrapper });
+    expect(screen.queryByTestId('person-item-1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Ada Lovelace')).not.toBeInTheDocument();
   });
 
   it('Add button opens dialog', async () => {

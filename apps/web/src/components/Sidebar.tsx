@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react';
-import { LogOut, Search, SlidersHorizontal, UserPlus, X } from 'lucide-react';
+import { LogOut, Search, UserPlus, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Person } from '@wongsorn-labs/atlas-lineage-shared';
-import { PersonCard } from './PersonCard';
 import { PersonForm } from './PersonForm';
 import { useCreatePerson } from '@/hooks/usePersons';
 import { useFieldDefinitions } from '@/hooks/useFieldDefinitions';
@@ -26,24 +25,20 @@ interface SidebarProps {
 export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true, onClose }: SidebarProps) {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
-  const [yearFrom, setYearFrom] = useState('');
-  const [yearTo, setYearTo] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const { signOut, user } = useAuth();
   const { currentTreeId, currentTree } = useTree();
   const { data: fieldDefinitions = [] } = useFieldDefinitions(currentTreeId);
   const createPerson = useCreatePerson(currentTreeId);
 
-  const filtered = useMemo(() => {
-    return persons.filter((p) => {
-      const matchesName = p.name.toLowerCase().includes(search.toLowerCase()) ||
-        (p.birthPlace ?? '').toLowerCase().includes(search.toLowerCase());
-      const matchesFrom = !yearFrom || (p.birthYear != null && p.birthYear >= Number(yearFrom));
-      const matchesTo = !yearTo || (p.birthYear != null && p.birthYear <= Number(yearTo));
-      return matchesName && matchesFrom && matchesTo;
-    });
-  }, [persons, search, yearFrom, yearTo]);
+  // Search is a jump-to-person lookup, not a list: at most a few matches shown while typing.
+  const matches = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return [];
+    return persons
+      .filter((p) => [p.nickname, p.name, p.birthPlace].some((v) => (v ?? '').toLowerCase().includes(q)))
+      .slice(0, 8);
+  }, [persons, search]);
 
   return (
     <aside
@@ -70,80 +65,49 @@ export function Sidebar({ persons, selectedPerson, onSelectPerson, isOpen = true
         <TreeSwitcher />
       </div>
 
-      {/* Search */}
-      <div className="border-b border-(--border) px-3 py-3 space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4.5 text-(--text-muted)" />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t('sidebar.searchPlaceholder')}
-              className="input-glass w-full pl-8 text-xs py-1.5"
-              aria-label={t('sidebar.searchAria')}
-            />
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowFilters((v) => !v)}
-            className={`btn-ghost flex-shrink-0 p-1.5 ${showFilters || yearFrom || yearTo ? 'text-(--gold)' : 'text-(--text-muted)'}`}
-            aria-label={t('sidebar.toggleFilters')}
-            aria-expanded={showFilters}
-          >
-            <SlidersHorizontal className="size-4.5" />
-          </button>
+      {/* Find a person: results appear only while typing, then jump the view to them */}
+      <div className="relative border-b border-(--border) px-3 py-3 space-y-2">
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4.5 text-(--text-muted)" />
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={t('sidebar.searchPlaceholder')}
+            className="input-glass w-full pl-8 text-xs py-1.5"
+            aria-label={t('sidebar.searchAria')}
+            data-testid="person-search"
+          />
         </div>
-        {showFilters && (
-          <div className="flex items-center gap-2">
-            <input
-              type="number"
-              value={yearFrom}
-              onChange={(e) => setYearFrom(e.target.value)}
-              placeholder={t('sidebar.yearFromPlaceholder')}
-              className="input-glass w-1/2 text-xs py-1.5"
-              aria-label={t('sidebar.yearFromAria')}
-            />
-            <input
-              type="number"
-              value={yearTo}
-              onChange={(e) => setYearTo(e.target.value)}
-              placeholder={t('sidebar.yearToPlaceholder')}
-              className="input-glass w-1/2 text-xs py-1.5"
-              aria-label={t('sidebar.yearToAria')}
-            />
-          </div>
+        {search.trim() && (
+          <ul className="absolute inset-x-3 top-full z-(--z-dropdown) mt-1 max-h-72 overflow-y-auto rounded-xl border border-(--border) bg-(--bg-card) p-1 shadow-md" data-testid="person-search-results">
+            {matches.length === 0 && (
+              <li className="px-3 py-2 text-xs text-(--text-muted)">{t('sidebar.noResults')}</li>
+            )}
+            {matches.map((person) => (
+              <li key={person.id}>
+                <button
+                  type="button"
+                  className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-sm hover:bg-(--muted) focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
+                  onClick={() => {
+                    onSelectPerson(person);
+                    setSearch('');
+                  }}
+                >
+                  <Avatar name={person.name} photo={person.photo} className="h-7 w-7 text-[10px]" />
+                  <span className="min-w-0 truncate">{person.nickname ?? person.name}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
-      </div>
-
-      {/* Person count */}
-      <div className="flex items-center justify-between px-4 py-2 text-xs text-(--text-muted)">
-        <span>
-          {t('sidebar.peopleCount', { count: filtered.length })}
-          {(search || yearFrom || yearTo) ? t('sidebar.filteredFrom', { count: persons.length }) : ''}
-        </span>
-        <FieldDefinitionsDialog treeId={currentTreeId} canEdit={currentTree?.role === 'owner'} />
-      </div>
-
-      {/* Person list */}
-      <div className="relative flex-1 min-h-0">
-        <div className="h-full overflow-y-auto px-2 pb-20 pt-0 space-y-2">
-          {filtered.length === 0 ? (
-            <div className="flex flex-col items-center gap-2 py-12 text-center">
-              <p className="text-sm text-(--text-muted)">{t('sidebar.noResults')}</p>
-            </div>
-          ) : (
-            filtered.map((person) => (
-              <PersonCard
-                key={person.id}
-                person={person}
-                isSelected={selectedPerson?.id === person.id}
-                onSelect={onSelectPerson}
-              />
-            ))
-          )}
+        <div className="flex items-center justify-between text-xs text-(--text-muted)">
+          <span>{t('sidebar.peopleCount', { count: persons.length })}</span>
+          <FieldDefinitionsDialog treeId={currentTreeId} canEdit={currentTree?.role === 'owner'} />
         </div>
+      </div>
 
+      <div className="relative flex-1 min-h-0">
         <Dialog open={addOpen} onOpenChange={setAddOpen}>
           <DialogTrigger
             render={

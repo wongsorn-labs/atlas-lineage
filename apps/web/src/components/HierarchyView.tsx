@@ -7,6 +7,7 @@ import { Avatar } from './ui/avatar';
 interface HierarchyViewProps {
   treeId: number | null;
   persons: Person[];
+  onSelectPerson?: (person: Person | null) => void;
 }
 
 /** Generations are relative to the centre person: negative = older, positive = younger. */
@@ -25,7 +26,7 @@ function generationTitle(generation: number, t: (key: string, fallback: string) 
  * Family list centred on one person. Each generation is its own section,
  * oldest first. Tapping a card makes that person the new centre.
  */
-export function HierarchyView({ treeId, persons }: HierarchyViewProps) {
+export function HierarchyView({ treeId, persons, onSelectPerson }: HierarchyViewProps) {
   const { t } = useTranslation();
   const tr = (key: string, fallback: string) => t(key, fallback);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -88,7 +89,10 @@ export function HierarchyView({ treeId, persons }: HierarchyViewProps) {
                   <li key={n.personId}>
                     <button
                       type="button"
-                      onClick={() => setChosen(n.personId)}
+                      onClick={() => {
+                        setChosen(n.personId);
+                        onSelectPerson?.(persons.find((p) => p.id === n.personId) ?? null);
+                      }}
                       aria-current={isCentre ? 'true' : undefined}
                       aria-label={`${n.label}: ${shown}`}
                       className={`flex min-h-12 w-full items-center gap-3 rounded-xl border bg-(--bg-card) px-3 py-2 text-left transition-colors hover:bg-(--muted) focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 outline-none ${

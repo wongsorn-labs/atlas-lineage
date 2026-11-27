@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2, Map as MapIcon, Menu, Network, GitBranch } from 'lucide-react';
+import { AlertCircle, Loader2, Map as MapIcon, Menu, Network, GitBranch, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FamilyChart } from './components/FamilyChart';
 import { MapView } from './components/MapView';
 import { HierarchyView } from './components/HierarchyView';
 import { Sidebar } from './components/Sidebar';
+import { PersonCard } from './components/PersonCard';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
 import { useAuth } from './contexts/AuthContext';
@@ -172,7 +173,7 @@ export default function App() {
         </div>
 
         {viewMode === 'hierarchy' ? (
-          <HierarchyView treeId={currentTreeId} persons={persons} />
+          <HierarchyView treeId={currentTreeId} persons={persons} onSelectPerson={setSelectedPerson} />
         ) : viewMode === 'map' ? (
           <MapView
             persons={persons}
@@ -187,6 +188,25 @@ export default function App() {
             selectedPerson={selectedPerson}
             onSelectPerson={setSelectedPerson}
           />
+        )}
+        {selectedPerson && (
+          <aside
+            data-testid="person-panel"
+            aria-label={selectedPerson.nickname ?? selectedPerson.name}
+            className="absolute inset-x-3 bottom-3 z-(--z-dropdown) max-h-[60dvh] overflow-y-auto md:inset-x-auto md:right-3 md:top-16 md:bottom-auto md:w-80 md:max-h-[calc(100dvh-5rem)]"
+          >
+            <div className="mb-2 flex justify-end">
+              <button
+                type="button"
+                className="glass-card flex size-10 items-center justify-center text-(--text-primary)"
+                onClick={() => setSelectedPerson(null)}
+                aria-label={t('sidebar.closeMenu')}
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+            <PersonCard person={selectedPerson} isSelected onSelect={setSelectedPerson} />
+          </aside>
         )}
       </main>
     </div>
