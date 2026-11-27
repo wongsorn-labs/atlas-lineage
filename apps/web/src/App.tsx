@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2, Map as MapIcon, Menu, Network, GitBranch, X } from 'lucide-react';
+import { AlertCircle, Loader2, Map as MapIcon, Network, GitBranch, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FamilyChart } from './components/FamilyChart';
 import { MapView } from './components/MapView';
 import { HierarchyView } from './components/HierarchyView';
-import { Sidebar } from './components/Sidebar';
+import { TopBar } from './components/TopBar';
 import { PersonCard } from './components/PersonCard';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
@@ -20,7 +20,6 @@ export default function App() {
   const personsQuery = usePersons(currentTreeId);
   const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'map' | 'chart' | 'hierarchy'>('hierarchy');
   const { t } = useTranslation();
 
@@ -111,31 +110,10 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-dvh w-screen overflow-hidden bg-(--bg-base)">
-      <Sidebar
-        persons={persons}
-        selectedPerson={selectedPerson}
-        onSelectPerson={setSelectedPerson}
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-(--z-overlay) bg-black/40 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-      <main className="flex-1 relative">
-        <button
-          type="button"
-          className="absolute top-3 right-3 z-(--z-dropdown) glass-card p-2 md:hidden"
-          onClick={() => setSidebarOpen(true)}
-          aria-label={t('sidebar.openMenu')}
-        >
-          <Menu className="size-4 text-(--text-primary)" />
-        </button>
-
+    <div className="relative h-dvh w-screen overflow-hidden bg-(--bg-base)">
+      <TopBar persons={persons} onSelectPerson={setSelectedPerson} />
+      {/* Views fill everything below the top bar; nothing else takes screen width. */}
+      <main className="absolute inset-x-0 bottom-0 top-14">
         <div className="absolute top-3 left-1/2 -translate-x-1/2 z-(--z-dropdown) glass-card flex items-center gap-1 p-1">
           <button
             type="button"
@@ -193,7 +171,7 @@ export default function App() {
           <aside
             data-testid="person-panel"
             aria-label={selectedPerson.nickname ?? selectedPerson.name}
-            className="absolute inset-x-3 bottom-3 z-(--z-dropdown) max-h-[60dvh] overflow-y-auto md:inset-x-auto md:right-3 md:top-16 md:bottom-auto md:w-80 md:max-h-[calc(100dvh-5rem)]"
+            className="absolute inset-x-3 bottom-3 z-(--z-dropdown) max-h-[60dvh] overflow-y-auto md:inset-x-auto md:right-3 md:top-3 md:bottom-auto md:w-80 md:max-h-[calc(100dvh-4rem)]"
           >
             <div className="mb-2 flex justify-end">
               <button

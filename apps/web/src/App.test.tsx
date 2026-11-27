@@ -21,9 +21,9 @@ vi.mock('./contexts/TreeContext', () => ({
   }),
   TreeProvider: ({ children }: { children: import('react').ReactNode }) => <>{children}</>,
 }));
-vi.mock('./components/Sidebar', () => ({
-  Sidebar: ({ persons }: { persons: Person[] }) => (
-    <div data-testid="sidebar" data-person-count={persons.length} />
+vi.mock('./components/TopBar', () => ({
+  TopBar: ({ persons }: { persons: Person[] }) => (
+    <div data-testid="top-bar" data-person-count={persons.length} />
   ),
 }));
 vi.mock('./components/MapView', () => ({
@@ -68,7 +68,7 @@ describe('App', () => {
     render(<App />);
 
     expect(screen.getByRole('status')).toHaveTextContent('Loading family data');
-    expect(screen.queryByTestId('sidebar')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('top-bar')).not.toBeInTheDocument();
   });
 
   it('shows an error state with retry actions for failed queries', async () => {

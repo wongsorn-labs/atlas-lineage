@@ -38,7 +38,7 @@ export function HierarchyView({ treeId, persons, onSelectPerson }: HierarchyView
   const orderedGenerations = [...groups.keys()].sort((a, b) => a - b);
 
   return (
-    <div className="h-dvh overflow-auto bg-(--bg-base) px-4 pt-16 pb-8" data-testid="hierarchy-view">
+    <div className="h-full overflow-auto bg-(--bg-base) px-4 pt-16 pb-24" data-testid="hierarchy-view">
       <div className="mx-auto max-w-lg space-y-5">
         <header className="space-y-2">
           <label htmlFor="hierarchy-root" className="block text-sm font-medium text-(--text-primary)">

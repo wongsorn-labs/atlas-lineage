@@ -149,7 +149,7 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
 
   return (
     <div className="relative h-full w-full bg-(--bg-base)">
-      <div className="absolute bottom-3 right-3 z-(--z-dropdown) flex flex-col gap-1">
+      <div className="absolute bottom-20 right-4 z-(--z-dropdown) flex flex-col gap-1">
         <button
           type="button"
           className="glass-card flex size-10 items-center justify-center disabled:opacity-40"
