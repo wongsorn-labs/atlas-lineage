@@ -93,19 +93,19 @@ function PersonMark({
         y={62}
         textAnchor="middle"
         className="fill-(--text-primary)"
-        fontSize={12}
+        fontSize={14}
         fontWeight={600}
         fontFamily="var(--font-display)"
       >
-        {person.name.length > 18 ? `${person.name.slice(0, 17)}…` : person.name}
+        {(person.nickname ?? person.name).length > 14 ? `${(person.nickname ?? person.name).slice(0, 13)}…` : (person.nickname ?? person.name)}
       </text>
       {years && (
         <text
           x={CARD_WIDTH / 2}
-          y={76}
+          y={78}
           textAnchor="middle"
           className="fill-(--text-muted)"
-          fontSize={10}
+          fontSize={12}
         >
           {years}
         </text>
@@ -145,13 +145,14 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
   }
   const centerX = (node: PersonNode) => mergedCenterXById.get(node.person.id) ?? node.x + CARD_WIDTH / 2;
   const SEAM_OFFSET = MERGED_CARD_WIDTH - CARD_WIDTH;
+  const generationRows = [...new Set(layout.nodes.map((n) => n.y))].sort((a, b) => a - b);
 
   return (
     <div className="relative h-full w-full bg-(--bg-base)">
       <div className="absolute bottom-3 right-3 z-(--z-dropdown) flex flex-col gap-1">
         <button
           type="button"
-          className="glass-card p-2 disabled:opacity-40"
+          className="glass-card flex size-10 items-center justify-center disabled:opacity-40"
           onClick={() => setZoom((z) => Math.min(MAX_ZOOM, z + ZOOM_STEP))}
           disabled={zoom >= MAX_ZOOM}
           aria-label={t('chart.zoomIn')}
@@ -160,13 +161,19 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
         </button>
         <button
           type="button"
-          className="glass-card p-2 disabled:opacity-40"
+          className="glass-card flex size-10 items-center justify-center disabled:opacity-40"
           onClick={() => setZoom((z) => Math.max(MIN_ZOOM, z - ZOOM_STEP))}
           disabled={zoom <= MIN_ZOOM}
           aria-label={t('chart.zoomOut')}
         >
           <ZoomOut className="size-4 text-(--text-primary)" />
         </button>
+      </div>
+
+      <div className="absolute bottom-3 left-3 z-(--z-dropdown) glass-card max-w-[60%] px-3 py-2 text-xs text-(--text-secondary)" data-testid="chart-legend">
+        <p>{t('chart.legendLines', { defaultValue: 'เส้น = พ่อแม่ไปหาลูก' })}</p>
+        <p>{t('chart.legendCouple', { defaultValue: '♥ = คู่สมรสหรือคู่ชีวิต' })}</p>
+        <p>{t('chart.legendTap', { defaultValue: 'แตะคนเพื่อดูรายละเอียด' })}</p>
       </div>
 
       <div className="absolute inset-0 overflow-auto">
@@ -179,6 +186,25 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
           aria-label={t('chart.ariaLabel')}
         >
           <g transform={`translate(${MARGIN}, ${MARGIN})`}>
+            {generationRows.map((y, i) => (
+              <g key={`band-${y}`} aria-hidden="true">
+                {i > 0 && (
+                  <line
+                    x1={-MARGIN + 8}
+                    x2={layout.width}
+                    y1={y - 18}
+                    y2={y - 18}
+                    className="stroke-(--border)"
+                    strokeDasharray="4 4"
+                    strokeWidth={1}
+                  />
+                )}
+                <text x={-MARGIN + 8} y={y + CARD_HEIGHT / 2 + 4} fontSize={12} fontWeight={600} className="fill-(--text-muted)">
+                  {t('chart.generation', { number: i + 1, defaultValue: `รุ่น ${i + 1}` })}
+                </text>
+              </g>
+            ))}
+
             {layout.parentGroupLinks.map((link, i) => {
               const parentXs = link.parents.map(centerX);
               const parentAnchorX = parentXs.reduce((a, b) => a + b, 0) / parentXs.length;
@@ -238,14 +264,10 @@ export function FamilyChart({ persons, relationships, selectedPerson, onSelectPe
                     className="fill-(--bg-card) stroke-(--border)"
                     strokeWidth={1}
                   />
-                  <line
-                    x1={seamX}
-                    y1={14}
-                    x2={seamX}
-                    y2={CARD_HEIGHT - 14}
-                    className="stroke-(--border)"
-                    strokeWidth={1}
-                  />
+                  <g aria-label={t('chart.coupleLabel', { defaultValue: 'คู่สมรสหรือคู่ชีวิต' })} role="img">
+                    <circle cx={seamX} cy={-8} r={10} className="fill-(--gold)" />
+                    <text x={seamX} y={-4} textAnchor="middle" fontSize={11} className="fill-(--text-primary)">♥</text>
+                  </g>
                   <PersonMark
                     node={pair.a}
                     isSelected={aSelected}
