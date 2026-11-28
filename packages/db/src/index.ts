@@ -6,4 +6,5 @@ export * from './queries/relationships';
 export * from './queries/trees';
 export * from './queries/person-links';
 export * from './queries/field-definitions';
+export * from './queries/periods';
 export { runMigrations } from './migrate';

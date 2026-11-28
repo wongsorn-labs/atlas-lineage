@@ -135,3 +135,22 @@ export interface RequestPersonLinkInput {
   personId: number;
   treeId: number;
 }
+
+export interface KnowledgePeriod {
+  id: number;
+  treeId: number;
+  personId: number;
+  groupName: string;
+  fromYear: number;
+  /** null means the connection is still ongoing. */
+  toYear: number | null;
+  createdAt: string;
+}
+
+export interface CreatePeriodInput {
+  treeId: number;
+  personId: number;
+  groupName: string;
+  fromYear: number;
+  toYear?: number | null;
+}

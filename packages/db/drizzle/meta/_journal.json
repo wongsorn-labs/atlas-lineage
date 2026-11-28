@@ -71,6 +71,13 @@
       "when": 1795548846431,
       "tag": "0009_person_photo",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1795872887487,
+      "tag": "0010_knowledge_periods",
+      "breakpoints": true
     }
   ]
 }

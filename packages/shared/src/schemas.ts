@@ -87,3 +87,21 @@ export const UpdateFieldDefinitionSchema = z.object({
   category: z.string().min(1).max(40).optional(),
   visibility: FieldVisibilitySchema.optional(),
 });
+
+// ---- Knowledge periods: "I knew this person in this group during these years" ----
+
+export const PERIOD_MIN_YEAR = 1800;
+export const PERIOD_MAX_YEAR = 2600;
+
+export const CreatePeriodSchema = z
+  .object({
+    treeId: z.number().int().positive(),
+    personId: z.number().int().positive(),
+    groupName: z.string().trim().min(1, 'Group name is required').max(60),
+    fromYear: z.number().int().min(PERIOD_MIN_YEAR).max(PERIOD_MAX_YEAR),
+    toYear: z.number().int().min(PERIOD_MIN_YEAR).max(PERIOD_MAX_YEAR).nullable().optional(),
+  })
+  .refine((d) => d.toYear == null || d.toYear >= d.fromYear, {
+    message: 'toYear must be on or after fromYear',
+    path: ['toYear'],
+  });

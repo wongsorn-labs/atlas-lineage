@@ -72,6 +72,16 @@ export const relationships = pgTable('relationships', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+export const knowledgePeriods = pgTable('knowledge_periods', {
+  id: serial('id').primaryKey(),
+  treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
+  personId: integer('person_id').notNull().references(() => persons.id, { onDelete: 'cascade' }),
+  groupName: text('group_name').notNull(),
+  fromYear: integer('from_year').notNull(),
+  toYear: integer('to_year'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 export const fieldDefinitions = pgTable('field_definitions', {
   id: serial('id').primaryKey(),
   treeId: integer('tree_id').notNull().references(() => familyTrees.id, { onDelete: 'cascade' }),
