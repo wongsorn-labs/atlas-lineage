@@ -14,6 +14,8 @@ import type {
   UpdateProfileSettingsInput,
   FieldDefinition,
   HierarchyNode,
+  KnowledgePeriod,
+  CreatePeriodInput,
 } from '@wongsorn-labs/atlas-lineage-shared';
 
 const BASE = '/api';
@@ -147,6 +149,13 @@ export const api = {
     delete: (id: number, treeId: number) => request<void>(`/relationships/${id}?treeId=${treeId}`, { method: 'DELETE' }),
     hierarchy: (treeId: number, rootId: number) =>
       request<HierarchyEntry[]>(`/relationships/hierarchy?treeId=${treeId}&rootId=${rootId}`),
+  },
+  periods: {
+    list: (treeId: number) => request<KnowledgePeriod[]>(`/periods?treeId=${treeId}`),
+    create: (data: CreatePeriodInput) =>
+      request<KnowledgePeriod>('/periods', { method: 'POST', body: JSON.stringify(data) }),
+    delete: (id: number, treeId: number) =>
+      request<void>(`/periods/${id}?treeId=${treeId}`, { method: 'DELETE' }),
   },
   fieldDefinitions: {
     list: (treeId: number) => request<FieldDefinition[]>(`/field-definitions?treeId=${treeId}`),

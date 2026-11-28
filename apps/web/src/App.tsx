@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, Loader2, Map as MapIcon, Network, GitBranch, X } from 'lucide-react';
+import { AlertCircle, Clock, Loader2, Map as MapIcon, Network, GitBranch, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FamilyChart } from './components/FamilyChart';
 import { MapView } from './components/MapView';
 import { HierarchyView } from './components/HierarchyView';
 import { TopBar } from './components/TopBar';
+import { TimelineView } from './components/TimelineView';
 import { PersonCard } from './components/PersonCard';
 import { usePersons } from './hooks/usePersons';
 import { useRelationships } from './hooks/useRelationships';
@@ -20,7 +21,7 @@ export default function App() {
   const personsQuery = usePersons(currentTreeId);
   const relationshipsQuery = useRelationships(currentTreeId);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
-  const [viewMode, setViewMode] = useState<'map' | 'chart' | 'hierarchy'>('hierarchy');
+  const [viewMode, setViewMode] = useState<'map' | 'chart' | 'hierarchy' | 'timeline'>('hierarchy');
   const { t } = useTranslation();
 
   const persons = personsQuery.data ?? [];
@@ -148,9 +149,22 @@ export default function App() {
             <GitBranch className="size-4.5" />
             {t('chart.hierarchyView', 'ลำดับชั้น')}
           </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('timeline')}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === 'timeline' ? 'bg-(--gold) text-(--text-primary)' : 'text-(--text-muted) hover:text-(--text-primary)'
+            }`}
+            aria-pressed={viewMode === 'timeline'}
+          >
+            <Clock className="size-4.5" />
+            {t('chart.timelineView', { defaultValue: 'ไทม์ไลน์' })}
+          </button>
         </div>
 
-        {viewMode === 'hierarchy' ? (
+        {viewMode === 'timeline' ? (
+          <TimelineView persons={persons} onSelectPerson={setSelectedPerson} />
+        ) : viewMode === 'hierarchy' ? (
           <HierarchyView treeId={currentTreeId} persons={persons} onSelectPerson={setSelectedPerson} />
         ) : viewMode === 'map' ? (
           <MapView
